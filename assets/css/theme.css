@@ -1,0 +1,513 @@
+/**
+ * RF Prestige — Luxury Automotive Design System
+ * Inspired by ultra-high-end automotive dealerships (Porsche Exclusive Manufaktur, Ferrari Tailor Made)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Surfaces & Backgrounds */
+  --rf-bg-obsidian: #090b0f;
+  --rf-bg-charcoal: #12151e;
+  --rf-bg-card: #151a26;
+  --rf-bg-card-hover: #1b2130;
+  --rf-bg-dark-alt: #0d1017;
+  --rf-bg-elevated: #1f2738;
+
+  /* Metallic Champagne / Warm Gold Accent */
+  --rf-gold: #c5a880;
+  --rf-gold-light: #dfc8a9;
+  --rf-gold-dark: #997e59;
+  --rf-gold-subtle: rgba(197, 168, 128, 0.15);
+  --rf-gold-glow: rgba(197, 168, 128, 0.28);
+  --rf-gold-border: rgba(197, 168, 128, 0.22);
+
+  /* Typography Colors (WCAG AA Compliant) */
+  --rf-text-primary: #f5f6f8;
+  --rf-text-secondary: #9da4b4;
+  --rf-text-muted: #6a7384;
+  --rf-border-light: rgba(255, 255, 255, 0.08);
+
+  /* Typography Families */
+  --rf-font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --rf-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Functional Status */
+  --rf-sold: #ef4444;
+  --rf-available: #10b981;
+  --rf-pending: #f59e0b;
+}
+
+/* Base Body Styles */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+.input-group > .form-control {
+  min-width: 0 !important;
+}
+
+/* Ensure images never cause overflow */
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  background-color: var(--rf-bg-obsidian);
+  color: var(--rf-text-primary);
+  font-family: var(--rf-font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--rf-font-serif) !important;
+}
+
+.font-sans {
+  font-family: var(--rf-font-sans) !important;
+}
+
+.tracking-wide {
+  letter-spacing: 0.08em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.15em;
+}
+
+.tracking-widest {
+  letter-spacing: 0.25em;
+}
+
+/* Gold Text & Surface Helpers */
+.text-gold {
+  color: var(--rf-gold) !important;
+}
+
+.text-gold-light {
+  color: var(--rf-gold-light) !important;
+}
+
+.text-gold-subtle {
+  color: #bfa480 !important;
+}
+
+.bg-obsidian {
+  background-color: var(--rf-bg-obsidian) !important;
+}
+
+.bg-charcoal {
+  background-color: var(--rf-bg-charcoal) !important;
+}
+
+.bg-card-luxury {
+  background-color: var(--rf-bg-card) !important;
+}
+
+.bg-dark-alt {
+  background-color: var(--rf-bg-dark-alt) !important;
+}
+
+.bg-gold {
+  background-color: var(--rf-gold) !important;
+}
+
+.bg-gold-subtle {
+  background-color: var(--rf-gold-subtle) !important;
+}
+
+.border-gold {
+  border-color: var(--rf-gold) !important;
+}
+
+.border-gold-subtle {
+  border-color: var(--rf-gold-border) !important;
+}
+
+/* Hover Utilities */
+.hover-gold:hover {
+  color: var(--rf-gold) !important;
+  transition: color 0.2s ease;
+}
+
+/* Buttons */
+.btn-gold {
+  background-color: var(--rf-gold);
+  color: #0d0f14 !important;
+  border: 1px solid var(--rf-gold);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+}
+
+.btn-gold:hover, .btn-gold:focus {
+  background-color: var(--rf-gold-light);
+  border-color: var(--rf-gold-light);
+  color: #000000 !important;
+  box-shadow: 0 0 15px var(--rf-gold-glow);
+}
+
+.btn-outline-gold {
+  background-color: transparent;
+  color: var(--rf-gold) !important;
+  border: 1px solid var(--rf-gold);
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.btn-outline-gold:hover, .btn-outline-gold:focus, .btn-outline-gold.active {
+  background-color: rgba(197, 168, 128, 0.2) !important;
+  border-color: var(--rf-gold) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px var(--rf-gold-glow);
+}
+
+/* Navbar Mobile Consistency */
+#rf-main-navbar .container-fluid {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+}
+
+.navbar-brand {
+  margin-right: 0 !important;
+}
+
+.navbar-brand img {
+  max-width: 180px;
+  height: auto;
+  max-height: 34px;
+}
+
+@media (max-width: 576px) {
+  .navbar-brand img {
+    max-width: 150px;
+    max-height: 30px;
+  }
+}
+
+.btn-outline-gold-subtle {
+  background-color: rgba(197, 168, 128, 0.06);
+  color: var(--rf-text-primary) !important;
+  border: 1px solid var(--rf-gold-border);
+  transition: all 0.2s ease;
+}
+
+.btn-outline-gold-subtle:hover {
+  background-color: rgba(197, 168, 128, 0.15);
+  border-color: var(--rf-gold);
+  color: var(--rf-gold) !important;
+}
+
+/* Focus Accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--rf-gold) !important;
+  outline-offset: 2px;
+}
+
+/* Luxury Cards */
+.card-luxury {
+  background-color: var(--rf-bg-card);
+  border: 1px solid var(--rf-gold-border);
+  border-radius: 8px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.card-luxury:hover {
+  transform: translateY(-4px);
+  border-color: rgba(197, 168, 128, 0.45);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--rf-gold-subtle);
+}
+
+.car-card-img-wrapper {
+  position: relative;
+  background-color: #0b0e14;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.car-card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card-luxury:hover .car-card-img-wrapper img {
+  transform: scale(1.03);
+}
+
+/* Badges */
+.badge-sold {
+  background-color: rgba(239, 68, 68, 0.85);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.badge-stock {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.badge-gold {
+  background-color: var(--rf-gold-subtle);
+  color: var(--rf-gold);
+  border: 1px solid var(--rf-gold-border);
+}
+
+/* Wishlist Button Overlay */
+.btn-wishlist {
+  background-color: rgba(11, 14, 20, 0.75);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-wishlist:hover {
+  background-color: rgba(11, 14, 20, 0.95);
+  color: var(--rf-gold);
+  border-color: var(--rf-gold);
+  transform: scale(1.1);
+}
+
+.btn-wishlist.active {
+  background-color: rgba(197, 168, 128, 0.2);
+  color: var(--rf-gold);
+  border-color: var(--rf-gold);
+}
+
+/* Forms & Inputs */
+.form-control, .form-select {
+  background-color: #0c0f17 !important;
+  border: 1px solid rgba(197, 168, 128, 0.25) !important;
+  color: #ffffff !important;
+  padding: 0.65rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: #10141f !important;
+  border-color: var(--rf-gold) !important;
+  box-shadow: 0 0 0 0.2rem var(--rf-gold-subtle) !important;
+  color: #ffffff !important;
+}
+
+.form-control::placeholder {
+  color: #64748b !important;
+}
+
+.form-check-input {
+  background-color: #0c0f17;
+  border-color: rgba(197, 168, 128, 0.35);
+}
+
+.form-check-input:checked {
+  background-color: var(--rf-gold);
+  border-color: var(--rf-gold);
+}
+
+/* Range Slider */
+input[type="range"] {
+  accent-color: var(--rf-gold);
+}
+
+/* Stepper for Checkout */
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  color: var(--rf-text-muted);
+}
+
+.step-number {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--rf-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.step-item.active {
+  color: var(--rf-gold);
+}
+
+.step-item.active .step-number {
+  border-color: var(--rf-gold);
+  background-color: var(--rf-gold-subtle);
+  color: var(--rf-gold);
+}
+
+.step-item.completed {
+  color: #10b981;
+}
+
+.step-item.completed .step-number {
+  border-color: #10b981;
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.step-divider {
+  flex: 1;
+  max-width: 80px;
+  height: 2px;
+  background-color: var(--rf-border-light);
+  margin: 0 1rem;
+}
+
+.step-divider.active {
+  background-color: var(--rf-gold);
+}
+
+/* Thumbnails Gallery */
+.gallery-thumb {
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  aspect-ratio: 16 / 10;
+  background-color: #0b0e14;
+}
+
+.gallery-thumb:hover {
+  border-color: rgba(197, 168, 128, 0.5);
+}
+
+.gallery-thumb.active {
+  border-color: var(--rf-gold);
+  box-shadow: 0 0 10px var(--rf-gold-subtle);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Spec Pills & Details */
+.spec-box {
+  background-color: var(--rf-bg-dark-alt);
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+}
+
+.spec-box .label {
+  color: var(--rf-text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.spec-box .value {
+  color: var(--rf-text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+
+/* Tables */
+.table-luxury {
+  color: var(--rf-text-primary);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-luxury th {
+  background-color: #0d1017;
+  color: var(--rf-gold);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1rem 0.85rem;
+  border-bottom: 1px solid var(--rf-gold-border);
+}
+
+.table-luxury td {
+  padding: 1rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: var(--rf-bg-card);
+}
+
+.table-luxury tr:hover td {
+  background-color: var(--rf-bg-card-hover);
+}
+
+/* Star Rating Widget */
+.star-rating-select i {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #4b5563;
+  transition: color 0.15s ease;
+}
+
+.star-rating-select i.active, .star-rating-select i:hover {
+  color: #fbbf24;
+}
+
+/* Print Invoice Styling */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printableInvoiceArea, #printableInvoiceArea * {
+    visibility: visible;
+  }
+  #printableInvoiceArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  #printableInvoiceArea .text-light, #printableInvoiceArea .text-secondary {
+    color: #000000 !important;
+  }
+  #printableInvoiceArea .text-gold {
+    color: #8c6f47 !important;
+  }
+  #printableInvoiceArea .bg-charcoal, #printableInvoiceArea .bg-dark-alt {
+    background-color: #ffffff !important;
+  }
+}

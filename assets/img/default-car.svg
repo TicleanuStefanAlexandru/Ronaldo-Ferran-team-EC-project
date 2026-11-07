@@ -1,0 +1,42 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' width='100%' height='100%'>
+  <defs>
+    <radialGradient id='spotlight' cx='50%' cy='20%' r='75%' fx='50%' fy='15%'>
+      <stop offset='0%' stop-color='#252d3d' stop-opacity='0.9'/>
+      <stop offset='60%' stop-color='#10141d' stop-opacity='0.98'/>
+      <stop offset='100%' stop-color='#07090d' stop-opacity='1'/>
+    </radialGradient>
+    <linearGradient id='floorGrad' x1='0%' y1='0%' x2='0%' y2='100%'>
+      <stop offset='0%' stop-color='#121722'/>
+      <stop offset='40%' stop-color='#0a0c12'/>
+      <stop offset='100%' stop-color='#040507'/>
+    </linearGradient>
+    <linearGradient id='goldBadge' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#f5e3b5'/>
+      <stop offset='50%' stop-color='#c5a880'/>
+      <stop offset='100%' stop-color='#8c6f47'/>
+    </linearGradient>
+    <filter id='blurShadow' x='-20%' y='-20%' width='140%' height='140%'>
+      <feGaussianBlur stdDeviation='16'/>
+    </filter>
+  </defs>
+
+  <rect x='0' y='0' width='1200' height='560' fill='url(#spotlight)'/>
+  <rect x='0' y='560' width='1200' height='240' fill='url(#floorGrad)'/>
+  <line x1='0' y1='560' x2='1200' y2='560' stroke='#c5a880' stroke-width='1' opacity='0.25'/>
+
+  <ellipse cx='600' cy='585' rx='440' ry='35' fill='#000000' opacity='0.85' filter='url(#blurShadow)'/>
+
+  <!-- Supercar Low Wedge Silhouette -->
+  <path d='M 100 550 Q 180 500 320 470 L 460 370 Q 560 330 720 340 L 910 440 L 1080 490 Q 1120 530 1080 550 L 120 550 Z' fill='#3b82f6' opacity='0.9' stroke='#ffffff' stroke-width='1.5'/>
+  <path d='M 450 380 Q 580 340 700 350 L 840 430 L 410 430 Z' fill='#0b0f19' stroke='#333e50' stroke-width='2'/>
+  <circle cx='290' cy='540' r='65' fill='#11141c' stroke='#c5a880' stroke-width='6'/>
+  <circle cx='910' cy='540' r='65' fill='#11141c' stroke='#c5a880' stroke-width='6'/>
+
+  <rect x='40' y='36' width='320' height='42' rx='4' fill='#0c0f17' stroke='#c5a880' stroke-width='1.2' opacity='0.92'/>
+  <text x='55' y='63' fill='#c5a880' font-family='serif' font-size='15' letter-spacing='2' font-weight='bold'>RF PRESTIGE</text>
+  <text x='200' y='63' fill='#8b92a4' font-family='sans-serif' font-size='12' letter-spacing='1.5'>VERIFIED FLEET</text>
+
+  <rect x='40' y='670' width='1120' height='90' rx='8' fill='#0b0e15' stroke='rgba(197, 168, 128, 0.25)' stroke-width='1' opacity='0.95'/>
+  <text x='70' y='715' fill='#f5f6f8' font-family='serif' font-size='30' font-weight='bold'>RF Prestige Verified Luxury</text>
+  <text x='70' y='745' fill='#8d95a5' font-family='sans-serif' font-size='14' letter-spacing='1.5'>CERTIFIED EUROPEAN AUTOMOBILE</text>
+</svg>

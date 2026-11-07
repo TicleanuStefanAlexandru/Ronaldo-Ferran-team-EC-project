@@ -1,0 +1,13 @@
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Temporary files & logs
+*.log
+shot-*.png
+test.png
+
+# IDE & Editor folders
+.vscode/
+.vs/
+.idea/

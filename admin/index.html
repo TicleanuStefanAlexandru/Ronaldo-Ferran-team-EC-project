@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard &amp; Metrics | RF Prestige Back-Office</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Admin Subheader -->
+  <header class="py-3 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container-fluid px-4 px-lg-5">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <span class="badge bg-danger text-white font-monospace text-uppercase px-2 py-1">STAFF BACK-OFFICE (A9)</span>
+          <h1 class="h4 font-serif text-light mb-0">Management Dashboard &amp; Sales Metrics</h1>
+        </div>
+        <div class="d-flex align-items-center gap-2 small text-secondary">
+          <span>Logged in as: <strong class="text-gold" id="admin-user-name">Roberto (Admin)</strong></span>
+          <span>•</span>
+          <a href="../catalog/index.html" class="text-secondary hover-gold text-decoration-none">Exit to Public Site</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Navigation Tabs -->
+  <nav class="bg-dark-alt border-bottom border-secondary border-opacity-25 py-2">
+    <div class="container-fluid px-4 px-lg-5">
+      <ul class="nav nav-pills gap-2 small">
+        <li class="nav-item">
+          <a class="nav-link active bg-gold text-dark fw-bold" href="index.html">
+            <i class="bi bi-speedometer2 me-1"></i> Metrics &amp; Overview
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="cars.html">
+            <i class="bi bi-car-front me-1"></i> Car Inventory (30+)
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="orders.html">
+            <i class="bi bi-receipt me-1"></i> Orders &amp; Shipping
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="reviews.html">
+            <i class="bi bi-chat-left-quote me-1"></i> Site Reviews Moderation
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Dashboard Main Content -->
+  <main class="py-5">
+    <div class="container-fluid px-4 px-lg-5">
+
+      <!-- KPI Metrics Cards Row -->
+      <div class="row g-4 mb-5">
+        
+        <!-- Metric 1: Total Realized Revenue -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card-luxury p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-secondary small text-uppercase tracking-wider">Total Sales Revenue</span>
+              <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-currency-euro fs-5"></i></div>
+            </div>
+            <div class="display-6 font-serif text-gold fw-bold mb-1" id="metric-revenue">€0</div>
+            <div class="small text-success"><i class="bi bi-arrow-up-right"></i> Settled via Stripe Sandbox</div>
+          </div>
+        </div>
+
+        <!-- Metric 2: Paid Orders -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card-luxury p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-secondary small text-uppercase tracking-wider">Paid Acquisitions</span>
+              <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-check-circle fs-5"></i></div>
+            </div>
+            <div class="display-6 font-serif text-light fw-bold mb-1" id="metric-paid-orders">0</div>
+            <div class="small text-secondary" id="metric-total-orders">Total 0 Orders Placed</div>
+          </div>
+        </div>
+
+        <!-- Metric 3: Fleet in Stock -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card-luxury p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-secondary small text-uppercase tracking-wider">Vehicles In Stock</span>
+              <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-car-front fs-5"></i></div>
+            </div>
+            <div class="display-6 font-serif text-success fw-bold mb-1" id="metric-stock">0</div>
+            <div class="small text-secondary" id="metric-total-cars">Out of 32 total inventory</div>
+          </div>
+        </div>
+
+        <!-- Metric 4: Average Client Rating -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card-luxury p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-secondary small text-uppercase tracking-wider">Client Rating</span>
+              <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-star fs-5"></i></div>
+            </div>
+            <div class="display-6 font-serif text-warning fw-bold mb-1" id="metric-rating">5.0</div>
+            <div class="small text-secondary">Verified purchaser feedback (B7)</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Charts & Tables Row -->
+      <div class="row g-4">
+
+        <!-- Left: Luxury Revenue Performance Chart -->
+        <div class="col-lg-7">
+          <div class="card-luxury p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h2 class="h5 font-serif text-gold mb-1">Monthly Acquisition Volume (€)</h2>
+                <div class="text-secondary small">Realized luxury vehicle acquisition turnover in Romania</div>
+              </div>
+              <span class="badge bg-gold-subtle text-gold border border-gold-subtle">H2 2026</span>
+            </div>
+
+            <!-- Precision Scalable Vector Revenue Chart -->
+            <div class="bg-dark-alt p-3 rounded border border-secondary border-opacity-25" style="height: 320px;">
+              <svg viewBox="0 0 700 280" width="100%" height="100%" class="d-block">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#c5a880" stop-opacity="0.4"/>
+                    <stop offset="100%" stop-color="#c5a880" stop-opacity="0.0"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Grid Horizontal Lines -->
+                <line x1="60" y1="40" x2="660" y2="40" stroke="#252d3d" stroke-width="1"/>
+                <text x="50" y="45" fill="#64748b" font-size="11" text-anchor="end">€500k</text>
+
+                <line x1="60" y1="100" x2="660" y2="100" stroke="#252d3d" stroke-width="1"/>
+                <text x="50" y="105" fill="#64748b" font-size="11" text-anchor="end">€350k</text>
+
+                <line x1="60" y1="160" x2="660" y2="160" stroke="#252d3d" stroke-width="1"/>
+                <text x="50" y="165" fill="#64748b" font-size="11" text-anchor="end">€200k</text>
+
+                <line x1="60" y1="220" x2="660" y2="220" stroke="#252d3d" stroke-width="1"/>
+                <text x="50" y="225" fill="#64748b" font-size="11" text-anchor="end">€0</text>
+
+                <!-- Area Fill -->
+                <polygon points="100,220 100,170 200,140 300,165 400,95 500,110 600,60 600,220" fill="url(#chartGrad)"/>
+
+                <!-- Trend Line -->
+                <polyline points="100,170 200,140 300,165 400,95 500,110 600,60" fill="none" stroke="#c5a880" stroke-width="3"/>
+
+                <!-- Data Points & Labels -->
+                <circle cx="100" cy="170" r="5" fill="#c5a880" stroke="#0e1118" stroke-width="2"/>
+                <text x="100" y="245" fill="#94a3b8" font-size="12" text-anchor="middle">Jun</text>
+
+                <circle cx="200" cy="140" r="5" fill="#c5a880" stroke="#0e1118" stroke-width="2"/>
+                <text x="200" y="245" fill="#94a3b8" font-size="12" text-anchor="middle">Jul</text>
+
+                <circle cx="300" cy="165" r="5" fill="#c5a880" stroke="#0e1118" stroke-width="2"/>
+                <text x="300" y="245" fill="#94a3b8" font-size="12" text-anchor="middle">Aug</text>
+
+                <circle cx="400" cy="95" r="5" fill="#c5a880" stroke="#0e1118" stroke-width="2"/>
+                <text x="400" y="245" fill="#94a3b8" font-size="12" text-anchor="middle">Sep</text>
+
+                <circle cx="500" cy="110" r="5" fill="#c5a880" stroke="#0e1118" stroke-width="2"/>
+                <text x="500" y="245" fill="#94a3b8" font-size="12" text-anchor="middle">Oct</text>
+
+                <circle cx="600" cy="60" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+                <text x="600" y="245" fill="#10b981" font-size="12" text-anchor="middle" font-weight="bold">Nov</text>
+                <text x="600" y="45" fill="#10b981" font-size="12" text-anchor="middle" font-weight="bold">€463,490</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Recent Order Activity -->
+        <div class="col-lg-5">
+          <div class="card-luxury p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="h5 font-serif text-gold mb-0">Recent Order Activity</h2>
+              <a href="orders.html" class="text-secondary small hover-gold text-decoration-none">Manage All Orders &rarr;</a>
+            </div>
+
+            <div id="recent-orders-list" class="d-flex flex-column gap-3">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Enforce admin authentication
+      if (!window.Auth.requireAdmin()) return;
+
+      var user = window.Auth.getCurrentUser();
+      if (user) {
+        document.getElementById('admin-user-name').textContent = user.FirstName + ' (' + user.Role + ')';
+      }
+
+      var revEl = document.getElementById('metric-revenue');
+      var paidOrdersEl = document.getElementById('metric-paid-orders');
+      var totalOrdersEl = document.getElementById('metric-total-orders');
+      var stockEl = document.getElementById('metric-stock');
+      var totalCarsEl = document.getElementById('metric-total-cars');
+      var ratingEl = document.getElementById('metric-rating');
+      var recentList = document.getElementById('recent-orders-list');
+
+      window.Api.adminGetMetrics().then(function (metrics) {
+        revEl.textContent = window.UI.formatCurrency(metrics.totalRevenue);
+        paidOrdersEl.textContent = metrics.paidOrdersCount;
+        totalOrdersEl.textContent = 'Total ' + metrics.totalOrdersCount + ' Orders Placed';
+        stockEl.textContent = metrics.carsInStock;
+        totalCarsEl.textContent = 'Out of ' + metrics.totalCars + ' total inventory';
+        ratingEl.textContent = metrics.averageRating.toFixed(1) + ' / 5.0';
+
+        var recHtml = '';
+        (metrics.recentOrders || []).forEach(function (order) {
+          var badgeClass = order.Status === 'Paid' ? 'bg-success' : (order.Status === 'Pending' ? 'bg-warning text-dark' : 'bg-primary');
+          recHtml += '<div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">' +
+            '<div>' +
+              '<div class="fw-bold text-light small">' +
+                'Order #' + window.UI.escapeHtml(order.Id) + ' — ' + window.UI.escapeHtml(order.CustomerName || 'Client') +
+              '</div>' +
+              '<div class="text-secondary" style="font-size:0.75rem;">' + window.UI.formatDate(order.CreatedAt) + ' • ' + (order.ShippingAddressText || 'Bucharest') + '</div>' +
+            '</div>' +
+            '<div class="text-end">' +
+              '<div class="font-monospace text-gold fw-bold small">' + window.UI.formatCurrency(order.TotalAmount) + '</div>' +
+              '<span class="badge ' + badgeClass + '" style="font-size:0.65rem;">' + window.UI.escapeHtml(order.Status) + '</span>' +
+            '</div>' +
+          '</div>';
+        });
+
+        recentList.innerHTML = recHtml;
+      });
+
+    })();
+  </script>
+</body>
+</html>
+

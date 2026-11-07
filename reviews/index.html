@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Reviews &amp; Testimonials | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="py-4 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container px-4 px-lg-5">
+      <div class="row align-items-center g-3">
+        <div class="col-md-8">
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-1">
+            CLIENT SATISFACTION &amp; FEEDBACK (B7)
+          </span>
+          <h1 class="h2 font-serif text-light mb-1">What Our Clients Say About RF Prestige</h1>
+          <p class="text-secondary small mb-0">Verified client testimonials regarding vehicle condition, concierge delivery, and boutique transparency.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <div class="d-inline-flex align-items-center gap-3 p-3 bg-dark-alt rounded border border-gold-subtle text-start">
+            <div>
+              <div class="display-6 font-serif text-gold fw-bold mb-0" id="summary-avg-rating">4.7</div>
+              <div class="text-warning small" id="summary-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+              </div>
+            </div>
+            <div class="border-start border-secondary border-opacity-25 ps-3 small text-secondary">
+              <span class="text-light fw-bold" id="summary-total-reviews">6 Verified</span><br>
+              Client Reviews
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <div class="row g-5">
+
+        <!-- Left Column: Reviews List -->
+        <div class="col-lg-7">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h5 font-serif text-gold mb-0">Recent Client Testimonials</h2>
+            <span class="text-secondary small" id="reviews-count-pill">Showing 6 reviews</span>
+          </div>
+
+          <div id="reviews-list" class="d-flex flex-column gap-3" data-testid="reviews-container">
+            <!-- Dynamically populated via reviews script -->
+          </div>
+        </div>
+
+        <!-- Right Column: Submit Review Form (B7) -->
+        <div class="col-lg-5">
+          <div class="p-4 p-md-5 bg-charcoal rounded-3 border border-gold-subtle sticky-top" style="top: 100px;">
+            <h2 class="h4 font-serif text-gold mb-1">Share Your Experience</h2>
+            <p class="text-secondary small mb-4">Your review helps maintain the highest standards of automotive excellence across Romania.</p>
+
+            <!-- Guest notice (if not signed in) -->
+            <div id="review-guest-prompt" class="p-3 bg-dark-alt rounded border border-warning text-warning small mb-3 d-none">
+              <i class="bi bi-person-lock me-1"></i> Authentication required: please <a href="../account/login.html" class="text-gold fw-bold">sign in</a> to submit a verified site review.
+            </div>
+
+            <form id="site-review-form" novalidate data-testid="review-form">
+              <!-- Hidden Anti-Forgery Token (A10) -->
+              <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-review-submit">
+
+              <!-- Star Rating Selector -->
+              <div class="mb-4">
+                <label class="form-label text-gold small text-uppercase tracking-wider fw-semibold d-block mb-2">
+                  Overall Rating (1 to 5 Stars) <span class="text-danger">*</span>
+                </label>
+                <div class="star-rating-select d-flex gap-2" id="star-selector" data-testid="star-rating-selector">
+                  <i class="bi bi-star-fill active text-warning fs-3" data-rating="1"></i>
+                  <i class="bi bi-star-fill active text-warning fs-3" data-rating="2"></i>
+                  <i class="bi bi-star-fill active text-warning fs-3" data-rating="3"></i>
+                  <i class="bi bi-star-fill active text-warning fs-3" data-rating="4"></i>
+                  <i class="bi bi-star-fill active text-warning fs-3" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="selected-rating" value="5">
+                <div class="text-secondary small mt-1" id="rating-label">5 Stars — Exceptional Service</div>
+              </div>
+
+              <!-- Comment Input -->
+              <div class="mb-4">
+                <label for="review-comment" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                  Client Review &amp; Comments <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" id="review-comment" rows="4" placeholder="Detail your experience with vehicle condition, documentation, delivery, or showroom concierge..." required></textarea>
+                <div class="invalid-feedback">Please provide your feedback comment.</div>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-gold btn-lg py-3 rounded-2 fw-bold tracking-wide" id="review-submit-btn" data-testid="submit-review-btn">
+                  Submit Client Review
+                </button>
+              </div>
+            </form>
+
+            <div class="mt-4 p-3 bg-dark-alt rounded small text-secondary border border-secondary border-opacity-25">
+              <i class="bi bi-shield-check text-gold me-2"></i>
+              All site reviews are subject to administrative moderation in accordance with European consumer protection directives.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var listEl = document.getElementById('reviews-list');
+      var avgEl = document.getElementById('summary-avg-rating');
+      var starsSummaryEl = document.getElementById('summary-stars');
+      var totalReviewsEl = document.getElementById('summary-total-reviews');
+      var countPillEl = document.getElementById('reviews-count-pill');
+
+      var form = document.getElementById('site-review-form');
+      var commentInput = document.getElementById('review-comment');
+      var selectedRatingInput = document.getElementById('selected-rating');
+      var ratingLabel = document.getElementById('rating-label');
+      var submitBtn = document.getElementById('review-submit-btn');
+      var guestPrompt = document.getElementById('review-guest-prompt');
+
+      var user = window.Auth ? window.Auth.getCurrentUser() : null;
+      if (!user) {
+        guestPrompt.classList.remove('d-none');
+      }
+
+      var ratingLabels = {
+        1: "1 Star — Poor Experience",
+        2: "2 Stars — Fair Experience",
+        3: "3 Stars — Satisfactory",
+        4: "4 Stars — Highly Commended",
+        5: "5 Stars — Exceptional Service"
+      };
+
+      // Interactive Star Rating Selector
+      var starIcons = document.querySelectorAll('#star-selector i');
+      function setRating(val) {
+        selectedRatingInput.value = val;
+        ratingLabel.textContent = ratingLabels[val] || (val + " Stars");
+        starIcons.forEach(function (icon) {
+          var r = Number(icon.getAttribute('data-rating'));
+          if (r <= val) {
+            icon.className = 'bi bi-star-fill text-warning fs-3';
+          } else {
+            icon.className = 'bi bi-star text-secondary fs-3';
+          }
+        });
+      }
+
+      starIcons.forEach(function (icon) {
+        icon.addEventListener('click', function () {
+          var r = Number(this.getAttribute('data-rating'));
+          setRating(r);
+        });
+        icon.addEventListener('mouseenter', function () {
+          var r = Number(this.getAttribute('data-rating'));
+          ratingLabel.textContent = ratingLabels[r];
+        });
+        icon.addEventListener('mouseleave', function () {
+          ratingLabel.textContent = ratingLabels[selectedRatingInput.value];
+        });
+      });
+
+      function renderStarsHtml(rating) {
+        var h = '';
+        for (var i = 1; i <= 5; i++) {
+          if (i <= rating) {
+            h += '<i class="bi bi-star-fill text-warning"></i>';
+          } else {
+            h += '<i class="bi bi-star text-secondary"></i>';
+          }
+        }
+        return h;
+      }
+
+      function loadReviews() {
+        window.Api.getReviews().then(function (data) {
+          avgEl.textContent = data.averageRating.toFixed(1);
+          starsSummaryEl.innerHTML = renderStarsHtml(Math.round(data.averageRating));
+          totalReviewsEl.textContent = data.totalCount + ' Verified';
+          countPillEl.textContent = 'Showing ' + data.totalCount + ' reviews';
+
+          var revHtml = '';
+          data.reviews.forEach(function (r) {
+            revHtml += '<div class="p-4 bg-charcoal rounded-3 border border-secondary border-opacity-50" data-testid="review-card-' + r.Id + '">' +
+              '<div class="d-flex justify-content-between align-items-center mb-2">' +
+                '<div class="d-flex align-items-center gap-2">' +
+                  '<div class="bg-dark-alt text-gold rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 38px; height: 38px; border: 1px solid var(--rf-gold);">' +
+                    window.UI.escapeHtml(r.UserName ? r.UserName.charAt(0) : 'C') +
+                  '</div>' +
+                  '<div>' +
+                    '<div class="fw-bold text-light">' + window.UI.escapeHtml(r.UserName || 'Verified Client') + '</div>' +
+                    '<div class="text-secondary small"><i class="bi bi-patch-check-fill text-gold me-1"></i> Verified Purchaser</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="text-end">' +
+                  '<div class="text-warning small mb-1">' + renderStarsHtml(r.Rating) + '</div>' +
+                  '<div class="text-secondary small font-monospace">' + window.UI.formatDate(r.CreatedAt) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<p class="text-light mt-3 mb-0 small lh-lg fst-italic">“' + window.UI.escapeHtml(r.Comment) + '”</p>' +
+            '</div>';
+          });
+
+          listEl.innerHTML = revHtml;
+        });
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!window.Auth.isAuthenticated()) {
+          window.UI.showToast("Please sign in before submitting a client review.", "error");
+          setTimeout(function () {
+            var currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = '../account/login.html?returnUrl=' + currentUrl;
+          }, 1200);
+          return;
+        }
+
+        var comment = commentInput.value.trim();
+        if (!comment) {
+          commentInput.classList.add('is-invalid');
+          return;
+        } else {
+          commentInput.classList.remove('is-invalid');
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Submitting...';
+
+        var user = window.Auth.getCurrentUser();
+        var payload = {
+          UserId: user.Id,
+          UserName: user.FirstName + ' ' + (user.LastName ? user.LastName.charAt(0) + '.' : ''),
+          Rating: Number(selectedRatingInput.value),
+          Comment: comment
+        };
+
+        window.Api.createReview(payload).then(function () {
+          window.UI.showToast("Thank you for submitting your site review!", "success");
+          commentInput.value = '';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Client Review';
+          loadReviews();
+        }).catch(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Client Review';
+          window.UI.showToast(err.message, "error");
+        });
+
+      });
+
+      loadReviews();
+
+    })();
+  </script>
+</body>
+</html>
+

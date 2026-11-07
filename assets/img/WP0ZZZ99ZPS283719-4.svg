@@ -1,0 +1,76 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' width='100%' height='100%'>
+  <defs>
+    <radialGradient id='spotlight' cx='50%' cy='20%' r='75%' fx='50%' fy='15%'>
+      <stop offset='0%' stop-color='#252d3d' stop-opacity='0.9'/>
+      <stop offset='60%' stop-color='#10141d' stop-opacity='0.98'/>
+      <stop offset='100%' stop-color='#07090d' stop-opacity='1'/>
+    </radialGradient>
+    <linearGradient id='floorGrad' x1='0%' y1='0%' x2='0%' y2='100%'>
+      <stop offset='0%' stop-color='#121722'/>
+      <stop offset='40%' stop-color='#0a0c12'/>
+      <stop offset='100%' stop-color='#040507'/>
+    </linearGradient>
+    <linearGradient id='goldBadge' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#f5e3b5'/>
+      <stop offset='50%' stop-color='#c5a880'/>
+      <stop offset='100%' stop-color='#8c6f47'/>
+    </linearGradient>
+    <filter id='blurShadow' x='-20%' y='-20%' width='140%' height='140%'>
+      <feGaussianBlur stdDeviation='16'/>
+    </filter>
+  </defs>
+
+  <!-- Studio Background -->
+  <rect x='0' y='0' width='1200' height='560' fill='url(#spotlight)'/>
+  <rect x='0' y='560' width='1200' height='240' fill='url(#floorGrad)'/>
+
+  <!-- Studio Floor Light Reflections & Grid -->
+  <line x1='0' y1='560' x2='1200' y2='560' stroke='#c5a880' stroke-width='1' opacity='0.25'/>
+  <line x1='100' y1='560' x2='-100' y2='800' stroke='#333c4d' stroke-width='1' opacity='0.3'/>
+  <line x1='400' y1='560' x2='300' y2='800' stroke='#333c4d' stroke-width='1' opacity='0.3'/>
+  <line x1='800' y1='560' x2='900' y2='800' stroke='#333c4d' stroke-width='1' opacity='0.3'/>
+  <line x1='1100' y1='560' x2='1300' y2='800' stroke='#333c4d' stroke-width='1' opacity='0.3'/>
+
+  <!-- Shadow below car -->
+  <ellipse cx='600' cy='585' rx='440' ry='35' fill='#000000' opacity='0.85' filter='url(#blurShadow)'/>
+
+  <!-- Vehicle Silhouette Vector Graphic -->
+          <!-- Cockpit Luxury Interior Graphics -->
+        <circle cx='600' cy='520' r='180' fill='none' stroke='#c5a880' stroke-width='16' opacity='0.9'/>
+        <circle cx='600' cy='520' r='160' fill='none' stroke='#262b35' stroke-width='6'/>
+        <circle cx='600' cy='520' r='60' fill='#151922' stroke='#c5a880' stroke-width='4'/>
+        <line x1='440' y1='520' x2='540' y2='520' stroke='#c5a880' stroke-width='14'/>
+        <line x1='660' y1='520' x2='760' y2='520' stroke='#c5a880' stroke-width='14'/>
+        <line x1='600' y1='580' x2='600' y2='680' stroke='#c5a880' stroke-width='14'/>
+        <!-- Digital Cockpit Screen -->
+        <rect x='340' y='260' width='520' height='140' rx='12' fill='#080b11' stroke='#333c4d' stroke-width='3'/>
+        <path d='M380 340 A 50 50 0 0 1 480 340' fill='none' stroke='#334155' stroke-width='5'/>
+        <path d='M720 340 A 50 50 0 0 1 820 340' fill='none' stroke='#c5a880' stroke-width='5'/>
+        <text x='600' y='330' fill='#f5f6f8' font-size='24' font-family='sans-serif' text-anchor='middle' font-weight='bold'>RF DIGITAL DISPLAY</text>
+        <text x='600' y='360' fill='#c5a880' font-size='15' font-family='sans-serif' text-anchor='middle'>ACTIVE CHASSIS - SPORT PLUS</text>
+        <!-- Carbon fiber dash trim -->
+        <path d='M100 420 L1100 420 L1040 500 L160 500 Z' fill='#1b202c' stroke='#2d3545' stroke-width='2'/>
+        <line x1='120' y1='460' x2='1080' y2='460' stroke='#c5a880' stroke-width='2' stroke-dasharray='12,6'/>
+
+  <!-- Top Luxury Header Badge -->
+  <rect x='40' y='36' width='320' height='42' rx='4' fill='#0c0f17' stroke='#c5a880' stroke-width='1.2' opacity='0.92'/>
+  <text x='55' y='63' fill='#c5a880' font-family='serif' font-size='15' letter-spacing='2' font-weight='bold'>RF PRESTIGE</text>
+  <text x='200' y='63' fill='#8b92a4' font-family='sans-serif' font-size='12' letter-spacing='1.5'>VERIFIED STOCK</text>
+  <circle cx='335' cy='57' r='4' fill='#10b981'/>
+
+  <!-- View Angle Tag -->
+  <rect x='980' y='36' width='180' height='36' rx='4' fill='#141923' stroke='#2c3445' stroke-width='1'/>
+  <text x='1070' y='60' fill='#c5a880' font-family='sans-serif' font-size='12' text-anchor='middle' font-weight='600'>VIEW 4 OF 4</text>
+
+  <!-- Lower Overlay with Title & VIN -->
+  <rect x='40' y='670' width='1120' height='90' rx='8' fill='#0b0e15' stroke='rgba(197, 168, 128, 0.25)' stroke-width='1' opacity='0.95'/>
+  <text x='70' y='715' fill='#f5f6f8' font-family='serif' font-size='30' font-weight='bold'>2023 Porsche 911 Turbo S</text>
+  <text x='70' y='745' fill='#8d95a5' font-family='sans-serif' font-size='14' letter-spacing='1.5'>VIN: <tspan fill='#c5a880' font-family='monospace'>WP0ZZZ99ZPS283719</tspan> | COCKPIT AND BESPOKE TRIM</text>
+
+  <!-- Golden Certification Seal -->
+  <g transform='translate(1070, 715)'>
+    <circle cx='0' cy='0' r='24' fill='none' stroke='url(#goldBadge)' stroke-width='2'/>
+    <text x='0' y='-4' fill='#c5a880' font-size='8' font-family='sans-serif' text-anchor='middle' font-weight='bold'>100%</text>
+    <text x='0' y='7' fill='#f5f6f8' font-size='7' font-family='sans-serif' text-anchor='middle'>VERIFIED</text>
+  </g>
+</svg>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Specification Editor | RF Prestige Back-Office</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Admin Subheader -->
+  <header class="py-3 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container-fluid px-4 px-lg-5">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <span class="badge bg-danger text-white font-monospace text-uppercase px-2 py-1">STAFF BACK-OFFICE (A9)</span>
+          <h1 class="h4 font-serif text-light mb-0" id="car-edit-page-title">Add New Vehicle Specification</h1>
+        </div>
+        <a href="cars.html" class="btn btn-outline-secondary btn-sm text-light">
+          <i class="bi bi-arrow-left me-1"></i> Back to Inventory
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Edit Form Main Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5" style="max-width: 900px;">
+
+      <div class="card-luxury p-4 p-md-5">
+        
+        <form id="car-edit-form" novalidate data-testid="car-edit-form">
+          <!-- Hidden Anti-Forgery Token (A10) -->
+          <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-car-edit">
+
+          <div class="border-bottom border-secondary border-opacity-25 pb-3 mb-4">
+            <h2 class="h5 font-serif text-gold mb-1">Primary Identification &amp; Core Data</h2>
+            <div class="text-secondary small">Every vehicle is uniquely identified by its 17-character VIN primary key.</div>
+          </div>
+
+          <!-- Alert for Error -->
+          <div class="alert alert-danger bg-danger bg-opacity-10 border-danger text-danger small py-2 d-none mb-4" id="car-edit-alert" role="alert"></div>
+
+          <!-- Row 1: VIN -->
+          <div class="mb-4">
+            <label for="car-vin" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+              Vehicle Identification Number (VIN — 17 Characters) <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control font-monospace text-uppercase" id="car-vin" placeholder="e.g. WP0ZZZ99ZPS291047" maxlength="17" required data-testid="car-vin-input">
+            <div class="form-text text-secondary" style="font-size:0.75rem;">
+              Strict automotive standard: exactly 17 alphanumeric characters. Letters <strong>I, O, and Q</strong> are prohibited.
+            </div>
+            <div class="invalid-feedback" id="car-vin-feedback">Invalid VIN format. Exactly 17 characters without I, O, Q required.</div>
+          </div>
+
+          <!-- Row 2: Make, Model, Year, Category -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <label for="car-make" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Make <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="car-make" placeholder="e.g. Porsche" required>
+              <div class="invalid-feedback">Make is required.</div>
+            </div>
+            <div class="col-md-3">
+              <label for="car-model" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Model <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="car-model" placeholder="e.g. 911 GT3" required>
+              <div class="invalid-feedback">Model is required.</div>
+            </div>
+            <div class="col-md-3">
+              <label for="car-year" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Year <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="car-year" placeholder="2023" min="1990" max="2027" required>
+              <div class="invalid-feedback">Valid year required.</div>
+            </div>
+            <div class="col-md-3">
+              <label for="car-category" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Category <span class="text-danger">*</span></label>
+              <select class="form-select" id="car-category" required>
+                <option value="Sports">Sports</option>
+                <option value="Grand Tourer">Grand Tourer</option>
+                <option value="Luxury Sedan">Luxury Sedan</option>
+                <option value="SUV">SUV</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 3: Price, Power, Mileage, Transmission -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <label for="car-price" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Price (€ EUR) <span class="text-danger">*</span></label>
+              <input type="number" class="form-control font-monospace" id="car-price" placeholder="215000" min="1000" step="500" required>
+              <div class="invalid-feedback">Price is required.</div>
+            </div>
+            <div class="col-md-3">
+              <label for="car-hp" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Horsepower (HP) <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="car-hp" placeholder="510" min="50" max="2000" required>
+              <div class="invalid-feedback">Horsepower is required.</div>
+            </div>
+            <div class="col-md-3">
+              <label for="car-mileage" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Mileage (km) <span class="text-danger">*</span></label>
+              <input type="number" class="form-control font-monospace" id="car-mileage" placeholder="4200" min="0" required>
+              <div class="invalid-feedback">Mileage is required.</div>
+            </div>
+            <div class="col-md-3">
+              <label for="car-transmission" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Transmission <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="car-transmission" placeholder="e.g. 7-Speed PDK" required>
+              <div class="invalid-feedback">Transmission required.</div>
+            </div>
+          </div>
+
+          <!-- Row 4: Fuel, Powertrain, Stock, Availability -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <label for="car-fuel" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Fuel Type</label>
+              <select class="form-select" id="car-fuel">
+                <option value="Petrol">Petrol</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <label for="car-engine-desc" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Engine Displacement &amp; Architecture</label>
+              <input type="text" class="form-control" id="car-engine-desc" placeholder="e.g. 4.0L Naturally Aspirated Flat-6">
+            </div>
+            <div class="col-md-2">
+              <label for="car-stock" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Stock Qty</label>
+              <input type="number" class="form-control" id="car-stock" value="1" min="0" max="1">
+            </div>
+            <div class="col-md-2 d-flex align-items-center pt-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="car-available" checked>
+                <label class="form-check-label small text-light fw-semibold" for="car-available">
+                  Available for Sale
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 5: Detailed Description -->
+          <div class="mb-4">
+            <label for="car-description" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Bespoke Equipment &amp; Inspection Provenance</label>
+            <textarea class="form-control" id="car-description" rows="4" placeholder="Factory options, exterior finish, upholstery color, official service history..."></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-25">
+            <a href="cars.html" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+            <button type="submit" class="btn btn-gold btn-lg px-5 py-2 fw-bold" id="car-save-btn" data-testid="save-car-submit-btn">
+              Save Vehicle Record
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      if (!window.Auth.requireAdmin()) return;
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var editVin = urlParams.get('vin');
+      var isEdit = Boolean(editVin);
+
+      var titleEl = document.getElementById('car-edit-page-title');
+      var alertBox = document.getElementById('car-edit-alert');
+      var form = document.getElementById('car-edit-form');
+      var saveBtn = document.getElementById('car-save-btn');
+
+      var vinInput = document.getElementById('car-vin');
+      var makeInput = document.getElementById('car-make');
+      var modelInput = document.getElementById('car-model');
+      var yearInput = document.getElementById('car-year');
+      var catSelect = document.getElementById('car-category');
+      var priceInput = document.getElementById('car-price');
+      var hpInput = document.getElementById('car-hp');
+      var mileageInput = document.getElementById('car-mileage');
+      var transInput = document.getElementById('car-transmission');
+      var fuelSelect = document.getElementById('car-fuel');
+      var engineInput = document.getElementById('car-engine-desc');
+      var stockInput = document.getElementById('car-stock');
+      var availCheck = document.getElementById('car-available');
+      var descInput = document.getElementById('car-description');
+
+      if (isEdit) {
+        titleEl.textContent = 'Edit Vehicle Record — ' + editVin;
+        vinInput.value = editVin;
+        vinInput.readOnly = true;
+        vinInput.style.backgroundColor = '#1e2433';
+
+        window.Api.getCarByVin(editVin).then(function (car) {
+          if (!car) {
+            alertBox.textContent = 'Vehicle VIN not found in inventory.';
+            alertBox.classList.remove('d-none');
+            return;
+          }
+          makeInput.value = car.Make;
+          modelInput.value = car.Model;
+          yearInput.value = car.Year;
+          catSelect.value = car.Category;
+          priceInput.value = car.Price;
+          hpInput.value = car.Horsepower;
+          mileageInput.value = car.Mileage;
+          transInput.value = car.Transmission;
+          fuelSelect.value = car.Fuel;
+          engineInput.value = car.EngineDescription;
+          stockInput.value = car.StockQuantity;
+          availCheck.checked = Boolean(car.IsAvailable);
+          descInput.value = car.Description;
+        });
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var vin = vinInput.value.trim().toUpperCase();
+        var make = makeInput.value.trim();
+        var model = modelInput.value.trim();
+        var year = Number(yearInput.value);
+        var price = Number(priceInput.value);
+        var hp = Number(hpInput.value);
+        var mileage = Number(mileageInput.value);
+
+        var isValid = true;
+
+        // VIN validation: 17 chars, no I, O, Q
+        var vinRegex = /^[A-HJ-NPR-Z0-9]{17}$/;
+        if (!vinRegex.test(vin)) {
+          vinInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          vinInput.classList.remove('is-invalid');
+        }
+
+        if (!make) { makeInput.classList.add('is-invalid'); isValid = false; } else { makeInput.classList.remove('is-invalid'); }
+        if (!model) { modelInput.classList.add('is-invalid'); isValid = false; } else { modelInput.classList.remove('is-invalid'); }
+        if (!year) { yearInput.classList.add('is-invalid'); isValid = false; } else { yearInput.classList.remove('is-invalid'); }
+        if (!price) { priceInput.classList.add('is-invalid'); isValid = false; } else { priceInput.classList.remove('is-invalid'); }
+        if (!hp) { hpInput.classList.add('is-invalid'); isValid = false; } else { hpInput.classList.remove('is-invalid'); }
+
+        if (!isValid) return;
+
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Saving...';
+        alertBox.classList.add('d-none');
+
+        var payload = {
+          Vin: vin,
+          Make: make,
+          Model: model,
+          Year: year,
+          Category: catSelect.value,
+          Price: price,
+          Horsepower: hp,
+          Mileage: mileage,
+          Transmission: transInput.value.trim() || 'Automatic',
+          Fuel: fuelSelect.value,
+          EngineDescription: engineInput.value.trim(),
+          StockQuantity: Number(stockInput.value) || 0,
+          IsAvailable: availCheck.checked,
+          Description: descInput.value.trim()
+        };
+
+        window.Api.adminSaveCar(payload, isEdit).then(function () {
+          window.UI.showToast("Vehicle " + vin + " successfully saved.", "success");
+          setTimeout(function () {
+            window.location.href = 'cars.html';
+          }, 600);
+        }).catch(function (err) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save Vehicle Record';
+          alertBox.textContent = err.message;
+          alertBox.classList.remove('d-none');
+        });
+
+      });
+
+    })();
+  </script>
+</body>
+</html>
+

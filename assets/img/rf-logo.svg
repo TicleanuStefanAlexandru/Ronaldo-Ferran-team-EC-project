@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 52" width="260" height="52">
+  <defs>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e3b5"/>
+      <stop offset="50%" stop-color="#c5a880"/>
+      <stop offset="100%" stop-color="#9d7d51"/>
+    </linearGradient>
+  </defs>
+  <!-- Monogram Crest -->
+  <polygon points="26,6 46,18 46,42 26,50 6,42 6,18" fill="none" stroke="url(#goldText)" stroke-width="2"/>
+  <polygon points="26,11 41,20 41,38 26,45 11,38 11,20" fill="#131722" stroke="none"/>
+  <text x="26" y="34" font-family="'Cormorant Garamond', 'Playfair Display', Georgia, serif" font-size="20" font-weight="bold" fill="url(#goldText)" text-anchor="middle" letter-spacing="1">RF</text>
+  
+  <!-- Brand Name -->
+  <text x="58" y="28" font-family="'Cormorant Garamond', 'Playfair Display', Georgia, serif" font-size="22" font-weight="700" letter-spacing="3" fill="#ffffff">PRESTIGE</text>
+  <text x="59" y="44" font-family="'Inter', -apple-system, sans-serif" font-size="8.5" font-weight="500" letter-spacing="4" fill="#c5a880">BUCHAREST • AUTOMOTIVE</text>
+</svg>

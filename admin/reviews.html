@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Moderation | RF Prestige Back-Office</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Admin Subheader -->
+  <header class="py-3 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container-fluid px-4 px-lg-5">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <span class="badge bg-danger text-white font-monospace text-uppercase px-2 py-1">STAFF BACK-OFFICE (A9)</span>
+          <h1 class="h4 font-serif text-light mb-0">Site Review Moderation (B7)</h1>
+        </div>
+        <div class="small text-secondary">
+          Admins can remove spam or inappropriate client comments.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Navigation Tabs -->
+  <nav class="bg-dark-alt border-bottom border-secondary border-opacity-25 py-2">
+    <div class="container-fluid px-4 px-lg-5">
+      <ul class="nav nav-pills gap-2 small">
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="index.html">
+            <i class="bi bi-speedometer2 me-1"></i> Metrics &amp; Overview
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="cars.html">
+            <i class="bi bi-car-front me-1"></i> Car Inventory (30+)
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="orders.html">
+            <i class="bi bi-receipt me-1"></i> Orders &amp; Shipping
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active bg-gold text-dark fw-bold" href="reviews.html">
+            <i class="bi bi-chat-left-quote me-1"></i> Site Reviews Moderation
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Reviews Moderation Main Content -->
+  <main class="py-5">
+    <div class="container-fluid px-4 px-lg-5">
+
+      <div class="card-luxury p-0 overflow-hidden">
+        
+        <div class="p-4 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+          <div>
+            <h2 class="h5 font-serif text-gold mb-0">Moderation Queue</h2>
+            <div class="text-secondary small" id="admin-reviews-count">Loading site reviews...</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-luxury align-middle mb-0" data-testid="admin-reviews-table">
+            <thead>
+              <tr>
+                <th>User / Author</th>
+                <th class="text-center" style="width: 120px;">Rating</th>
+                <th>Client Comment</th>
+                <th>Submission Date</th>
+                <th class="text-end" style="width: 120px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reviews-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      if (!window.Auth.requireAdmin()) return;
+
+      var tbody = document.getElementById('admin-reviews-tbody');
+      var countEl = document.getElementById('admin-reviews-count');
+
+      function loadReviews() {
+        window.Api.adminGetReviews().then(function (reviews) {
+          countEl.textContent = 'Showing ' + reviews.length + ' published client site reviews';
+
+          var rowsHtml = '';
+          reviews.forEach(function (r) {
+            var stars = '';
+            for (var i = 1; i <= 5; i++) {
+              stars += (i <= r.Rating) ? '<i class="bi bi-star-fill text-warning"></i>' : '<i class="bi bi-star text-secondary"></i>';
+            }
+
+            rowsHtml += '<tr data-testid="admin-review-row-' + r.Id + '">' +
+              '<td class="fw-bold text-light">' +
+                window.UI.escapeHtml(r.UserName || 'Verified Client') +
+                '<div class="text-secondary small font-monospace">' + window.UI.escapeHtml(r.UserId) + '</div>' +
+              '</td>' +
+              '<td class="text-center">' +
+                '<div class="small">' + stars + '</div>' +
+                '<span class="badge bg-gold-subtle text-gold small">' + r.Rating + ' / 5</span>' +
+              '</td>' +
+              '<td class="small text-light fst-italic" style="max-width: 450px;">“' +
+                window.UI.escapeHtml(r.Comment) +
+              '”</td>' +
+              '<td class="text-secondary small font-monospace">' + window.UI.formatDate(r.CreatedAt) + '</td>' +
+              '<td class="text-end">' +
+                '<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteReview(' + r.Id + ')" data-testid="delete-review-' + r.Id + '">' +
+                  '<i class="bi bi-trash me-1"></i> Delete' +
+                '</button>' +
+              '</td>' +
+            '</tr>';
+          });
+
+          tbody.innerHTML = rowsHtml;
+        });
+      }
+
+      window.deleteReview = function (id) {
+        if (confirm("Permanently delete this site review from public display?")) {
+          window.Api.adminDeleteReview(id).then(function () {
+            window.UI.showToast("Review deleted.", "info");
+            loadReviews();
+          });
+        }
+      };
+
+      loadReviews();
+
+    })();
+  </script>
+</body>
+</html>
+

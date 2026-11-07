@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History &amp; Invoices | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="py-4 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container px-4 px-lg-5">
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+        <div>
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-1">
+            CLIENT ACCOUNT (A8)
+          </span>
+          <h1 class="h2 font-serif text-light mb-0">Vehicle Order History &amp; Fiscal Invoices</h1>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="addresses.html" class="btn btn-outline-secondary btn-sm text-light">
+            <i class="bi bi-geo-alt me-1"></i> Delivery Addresses
+          </a>
+          <a href="../wishlist/index.html" class="btn btn-outline-secondary btn-sm text-light">
+            <i class="bi bi-heart me-1"></i> Wishlist
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Orders Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <!-- Orders Table Container -->
+      <div class="card-luxury p-0 overflow-hidden mb-4">
+        <div class="p-4 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+          <h2 class="h5 font-serif text-gold mb-0">All Vehicle Acquisitions</h2>
+          <span class="text-secondary small" id="orders-count-text">Loading orders...</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-luxury align-middle mb-0" data-testid="orders-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Vehicle &amp; VIN</th>
+                <th>Acquisition Date</th>
+                <th>Fulfillment</th>
+                <th class="text-end">Total Amount</th>
+                <th class="text-center">Status</th>
+                <th class="text-end">Invoice</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="orders-empty-state" class="text-center py-5 d-none">
+          <i class="bi bi-box-seam fs-1 text-secondary mb-2 d-block"></i>
+          <h3 class="h5 font-serif text-gold">No Acquisition Orders Placed Yet</h3>
+          <p class="text-secondary small mx-auto" style="max-width: 420px;">
+            You have not acquired any vehicles under this account. Explore our current fleet of sports cars and grand tourers.
+          </p>
+          <a href="../catalog/index.html" class="btn btn-outline-gold btn-sm px-4 py-2 mt-2">Browse Catalog</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Check authentication
+      if (!window.Auth.requireAuth()) return;
+
+      var user = window.Auth.getCurrentUser();
+      var tbody = document.getElementById('orders-table-body');
+      var emptyState = document.getElementById('orders-empty-state');
+      var countText = document.getElementById('orders-count-text');
+
+      window.Api.getOrderHistory(user ? user.Id : null).then(function (orders) {
+        if (!orders || !orders.length) {
+          emptyState.classList.remove('d-none');
+          countText.textContent = '0 Orders';
+          return;
+        }
+
+        countText.textContent = orders.length + (orders.length === 1 ? ' Record' : ' Records');
+
+        var rowsHtml = '';
+        orders.forEach(function (order) {
+          var statusBadge = '';
+          if (order.Status === 'Paid') {
+            statusBadge = '<span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-1">PAID</span>';
+          } else if (order.Status === 'Delivered') {
+            statusBadge = '<span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-50 px-3 py-1">DELIVERED</span>';
+          } else if (order.Status === 'Shipped') {
+            statusBadge = '<span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-50 px-3 py-1">SHIPPED</span>';
+          } else if (order.Status === 'Pending') {
+            statusBadge = '<span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-50 px-3 py-1">PENDING</span>';
+          } else {
+            statusBadge = '<span class="badge bg-secondary px-3 py-1">' + window.UI.escapeHtml(order.Status) + '</span>';
+          }
+
+          var deliveryLabel = order.DeliveryOption === 1
+            ? '<span class="text-light small"><i class="bi bi-truck text-gold me-1"></i> Trailer</span>'
+            : '<span class="text-light small"><i class="bi bi-building text-gold me-1"></i> Showroom</span>';
+
+          var vehiclesHtml = '';
+          (order.Items || []).forEach(function (it) {
+            vehiclesHtml += '<div>' +
+              '<div class="fw-bold text-light">' + window.UI.escapeHtml(it.VehicleTitle || 'Luxury Automobile') + '</div>' +
+              '<div class="text-secondary small font-monospace">' +
+                'VIN: <span class="text-gold">' + window.UI.escapeHtml(it.CarVin) + '</span>' +
+                '<button type="button" class="btn btn-link btn-sm text-secondary p-0 ms-1 hover-gold" onclick="window.UI.copyVin(\'' + window.UI.escapeHtml(it.CarVin) + '\', this)" title="Copy VIN" aria-label="Copy VIN">' +
+                  '<i class="bi bi-clipboard"></i>' +
+                '</button>' +
+              '</div>' +
+            '</div>';
+          });
+
+          rowsHtml += '<tr data-testid="order-row-' + window.UI.escapeHtml(order.Id) + '">' +
+            '<td class="font-monospace fw-bold text-gold">#' + window.UI.escapeHtml(order.Id) + '</td>' +
+            '<td>' + vehiclesHtml + '</td>' +
+            '<td class="text-secondary small">' + window.UI.formatDate(order.CreatedAt) + '</td>' +
+            '<td>' + deliveryLabel + '</td>' +
+            '<td class="text-end font-monospace text-gold fw-bold">' + window.UI.formatCurrency(order.TotalAmount) + '</td>' +
+            '<td class="text-center">' + statusBadge + '</td>' +
+            '<td class="text-end">' +
+              '<button type="button" class="btn btn-outline-gold btn-sm px-3 py-1" onclick="openInvoice(' + window.UI.escapeHtml(order.Id) + ')" data-testid="invoice-btn-' + window.UI.escapeHtml(order.Id) + '">' +
+                '<i class="bi bi-receipt me-1"></i> PDF / Tax Invoice' +
+              '</button>' +
+            '</td>' +
+          '</tr>';
+        });
+
+        tbody.innerHTML = rowsHtml;
+      });
+
+      window.openInvoice = function (orderId) {
+        window.Api.getOrderById(orderId).then(function (order) {
+          if (order) {
+            window.UI.openInvoiceModal(order);
+          } else {
+            window.UI.showToast("Could not retrieve invoice details.", "error");
+          }
+        });
+      };
+
+    })();
+  </script>
+</body>
+</html>
+

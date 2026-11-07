@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Collection | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder (mirrors _Layout.cshtml) -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero Header Section -->
+  <header class="py-5 bg-charcoal border-bottom border-gold-subtle position-relative overflow-hidden">
+    <div class="container px-4 px-lg-5 position-relative" style="z-index: 2;">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-8">
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase tracking-widest px-3 py-2 mb-3">
+            VERIFIED PRE-OWNED ACQUISITION
+          </span>
+          <h1 class="display-6 font-serif fw-bold text-light mb-2">Curated Luxury &amp; Performance Fleet</h1>
+          <p class="lead text-secondary mb-0" style="max-width: 650px;">
+            Single-unit European verified inventory. Thoroughly inspected, titled, and ready for private showroom viewing in Bucharest or discreet enclosed trailer delivery.
+          </p>
+        </div>
+        <div class="col-12 col-lg-4 text-lg-end">
+          <div class="p-3 bg-dark-alt rounded border border-gold-subtle d-inline-block text-start w-100 w-lg-auto">
+            <div class="small text-gold text-uppercase tracking-wider fw-semibold mb-1">
+              <i class="bi bi-shield-check me-1"></i> The RF Prestige Standard
+            </div>
+            <div class="small text-secondary">
+              • 180-Point Technical Check<br>
+              • 100% Verified VIN Provenance<br>
+              • Transparent Fixed Pricing (€60k–€250k)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Catalog Content -->
+  <main class="py-5">
+    <div class="container-fluid px-3 px-lg-5">
+
+      <!-- Search & Controls Bar -->
+      <div class="row g-2 align-items-center mb-4">
+        <div class="col-12 col-md-6 col-lg-5">
+          <div class="input-group">
+            <span class="input-group-text bg-dark-alt border-gold-subtle text-gold px-2">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="catalog-search-input" class="form-control" placeholder="Search Make, Model, VIN..." aria-label="Search vehicles" data-testid="catalog-search">
+            <button class="btn btn-outline-gold px-3" type="button" id="catalog-search-btn">Search</button>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3 col-lg-4 text-start">
+          <button class="btn btn-outline-gold-subtle d-lg-none w-100 text-truncate px-2 py-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterSidebar" aria-controls="filterSidebar">
+            <i class="bi bi-funnel me-1"></i> Filter Fleet
+          </button>
+          <span class="text-secondary small d-none d-lg-inline" id="catalog-results-count">Showing verified vehicles...</span>
+        </div>
+
+        <div class="col-6 col-md-3 col-lg-3 text-end">
+          <select id="catalog-sort-select" class="form-select form-select-sm w-100 py-2" aria-label="Sort catalog">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low-High</option>
+            <option value="price-desc">Price: High-Low</option>
+            <option value="year-desc">Year: Newest</option>
+            <option value="hp-desc">Power: Highest</option>
+            <option value="mileage-asc">Mileage: Lowest</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grid Layout: Filter Sidebar (Left) + Vehicle Cards (Right) -->
+      <div class="row g-4">
+
+        <!-- Left Filter Sidebar (Offcanvas on Mobile, Col on Desktop) -->
+        <aside class="col-12 col-lg-3">
+          <div class="offcanvas-lg offcanvas-start bg-charcoal text-light p-lg-4 p-3 rounded-3 border border-gold-subtle" tabindex="-1" id="filterSidebar" aria-labelledby="filterSidebarLabel">
+            
+            <div class="offcanvas-header border-bottom border-secondary border-opacity-25 pb-3 mb-3 d-lg-none">
+              <h5 class="offcanvas-title font-serif text-gold" id="filterSidebarLabel">Filter Fleet</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#filterSidebar" aria-label="Close"></button>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="text-gold text-uppercase tracking-wider fw-bold mb-0 small">
+                <i class="bi bi-sliders me-1"></i> Refine Fleet (B1)
+              </h6>
+              <button type="button" class="btn btn-link btn-sm text-secondary text-decoration-none p-0 hover-gold" id="catalog-reset-filters">
+                Reset All
+              </button>
+            </div>
+
+            <form id="catalog-filter-form" onsubmit="return false;">
+              <!-- Hidden CSRF Dummy -->
+              <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-catalog">
+
+              <!-- Category Filter -->
+              <div class="mb-4">
+                <label class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-2">Category</label>
+                <div class="d-flex flex-column gap-2" id="filter-category-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterCategory" id="cat-all" value="all" checked>
+                    <label class="form-check-label small" for="cat-all">All Categories</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterCategory" id="cat-sports" value="Sports">
+                    <label class="form-check-label small" for="cat-sports">Sports Supercars</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterCategory" id="cat-gt" value="Grand Tourer">
+                    <label class="form-check-label small" for="cat-gt">Grand Tourers</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterCategory" id="cat-sedan" value="Luxury Sedan">
+                    <label class="form-check-label small" for="cat-sedan">Luxury Sedans</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterCategory" id="cat-suv" value="SUV">
+                    <label class="form-check-label small" for="cat-suv">Performance SUVs</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Range Slider -->
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label for="price-range" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-0">Max Budget</label>
+                  <span class="font-monospace text-light fw-bold small" id="price-range-display">€250,000</span>
+                </div>
+                <input type="range" class="form-range" id="price-range" min="60000" max="250000" step="5000" value="250000">
+                <div class="d-flex justify-content-between text-muted small" style="font-size: 0.75rem;">
+                  <span>€60,000</span>
+                  <span>€250,000</span>
+                </div>
+              </div>
+
+              <!-- Year Filter -->
+              <div class="mb-4">
+                <label for="filter-min-year" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-2">Minimum Model Year</label>
+                <select id="filter-min-year" class="form-select form-select-sm">
+                  <option value="">Any Year (2020+)</option>
+                  <option value="2021">2021 or newer</option>
+                  <option value="2022">2022 or newer</option>
+                  <option value="2023">2023 only</option>
+                </select>
+              </div>
+
+              <!-- Min Horsepower -->
+              <div class="mb-4">
+                <label for="filter-min-hp" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-2">Power Output</label>
+                <select id="filter-min-hp" class="form-select form-select-sm">
+                  <option value="">Any Horsepower</option>
+                  <option value="500">500+ HP</option>
+                  <option value="600">600+ HP</option>
+                  <option value="650">650+ HP</option>
+                  <option value="700">700+ HP</option>
+                </select>
+              </div>
+
+              <!-- Transmission -->
+              <div class="mb-4">
+                <label for="filter-transmission" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-2">Transmission</label>
+                <select id="filter-transmission" class="form-select form-select-sm">
+                  <option value="all">All Transmissions</option>
+                  <option value="PDK">PDK / Dual-Clutch</option>
+                  <option value="Automatic">Automatic / Tiptronic</option>
+                </select>
+              </div>
+
+              <!-- Fuel Type -->
+              <div class="mb-4">
+                <label for="filter-fuel" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-2">Powertrain</label>
+                <select id="filter-fuel" class="form-select form-select-sm">
+                  <option value="all">All Powertrains</option>
+                  <option value="Petrol">Petrol</option>
+                  <option value="Hybrid">Hybrid / Mild-Hybrid</option>
+                </select>
+              </div>
+
+              <!-- Availability -->
+              <div class="mb-4">
+                <label class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-2">Status</label>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterAvailability" id="avail-all" value="all" checked>
+                    <label class="form-check-label small" for="avail-all">All Inventory</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterAvailability" id="avail-instock" value="available">
+                    <label class="form-check-label small text-success fw-semibold" for="avail-instock">Available Now Only</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="filterAvailability" id="avail-sold" value="sold">
+                    <label class="form-check-label small text-secondary" for="avail-sold">Sold Archive</label>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-gold w-100 py-2 d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#filterSidebar">
+                Apply Filters
+              </button>
+
+            </form>
+          </div>
+        </aside>
+
+        <!-- Right Main Vehicle Grid -->
+        <section class="col-12 col-lg-9">
+          <!-- Loading State Spinner -->
+          <div id="catalog-loading" class="text-center py-5 d-none">
+            <div class="spinner-border text-gold" role="status">
+              <span class="visually-hidden">Loading vehicles...</span>
+            </div>
+            <div class="text-secondary mt-2">Loading verified fleet...</div>
+          </div>
+
+          <!-- Empty State (No vehicles found) -->
+          <div id="catalog-empty-state" class="text-center py-5 p-4 bg-charcoal rounded-3 border border-secondary border-opacity-25 d-none">
+            <i class="bi bi-car-front fs-1 text-secondary mb-3 d-block"></i>
+            <h3 class="font-serif text-gold">No Vehicles Found</h3>
+            <p class="text-secondary mx-auto" style="max-width: 480px;">
+              No vehicles currently match your specific filter criteria. Try adjusting the maximum price, horsepower, or category filters.
+            </p>
+            <button class="btn btn-outline-gold px-4 py-2" id="catalog-empty-reset-btn">Reset All Filters</button>
+          </div>
+
+          <!-- Vehicle Cards Row -->
+          <div class="row g-4" id="catalog-grid" data-testid="car-grid">
+            <!-- Dynamically populated via catalog.js -->
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <!-- Page-specific Catalog Logic -->
+  <script>
+    (function () {
+      'use strict';
+
+      var gridEl = document.getElementById('catalog-grid');
+      var loadingEl = document.getElementById('catalog-loading');
+      var emptyEl = document.getElementById('catalog-empty-state');
+      var countEl = document.getElementById('catalog-results-count');
+      var searchInput = document.getElementById('catalog-search-input');
+      var searchBtn = document.getElementById('catalog-search-btn');
+      var sortSelect = document.getElementById('catalog-sort-select');
+      var priceRange = document.getElementById('price-range');
+      var priceRangeDisplay = document.getElementById('price-range-display');
+      var minYearSelect = document.getElementById('filter-min-year');
+      var minHpSelect = document.getElementById('filter-min-hp');
+      var transmissionSelect = document.getElementById('filter-transmission');
+      var fuelSelect = document.getElementById('filter-fuel');
+      var resetBtn = document.getElementById('catalog-reset-filters');
+      var emptyResetBtn = document.getElementById('catalog-empty-reset-btn');
+
+      // Read query params if any
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('query')) {
+        searchInput.value = urlParams.get('query');
+      }
+      if (urlParams.has('category')) {
+        var catRadio = document.querySelector('input[name="filterCategory"][value="' + urlParams.get('category') + '"]');
+        if (catRadio) catRadio.checked = true;
+      }
+
+      function getSelectedCategory() {
+        var checked = document.querySelector('input[name="filterCategory"]:checked');
+        return checked ? checked.value : 'all';
+      }
+
+      function getSelectedAvailability() {
+        var checked = document.querySelector('input[name="filterAvailability"]:checked');
+        return checked ? checked.value : 'all';
+      }
+
+      function fetchAndRender() {
+        loadingEl.classList.remove('d-none');
+        gridEl.innerHTML = '';
+        emptyEl.classList.add('d-none');
+
+        var filters = {
+          query: searchInput.value.trim(),
+          category: getSelectedCategory(),
+          maxPrice: priceRange.value,
+          minYear: minYearSelect.value,
+          minHp: minHpSelect.value,
+          transmission: transmissionSelect.value,
+          fuel: fuelSelect.value,
+          availability: getSelectedAvailability(),
+          sortBy: sortSelect.value
+        };
+
+        window.Api.getCars(filters).then(function (cars) {
+          loadingEl.classList.add('d-none');
+          countEl.textContent = 'Showing ' + cars.length + ' verified ' + (cars.length === 1 ? 'vehicle' : 'vehicles');
+
+          if (!cars.length) {
+            emptyEl.classList.remove('d-none');
+            return;
+          }
+
+          var cardsHtml = '';
+          cars.forEach(function (car) {
+            var isSold = !car.IsAvailable || car.StockQuantity <= 0;
+            var badgeHtml = isSold
+              ? '<span class="badge badge-sold position-absolute top-0 start-0 m-3 px-3 py-2 z-2"><i class="bi bi-x-circle me-1"></i> Sold</span>'
+              : '<span class="badge badge-stock position-absolute top-0 start-0 m-3 px-3 py-2 z-2"><i class="bi bi-check2-circle me-1"></i> In Stock (1 Unit)</span>';
+
+            var categoryBadge = '<span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">' + window.UI.escapeHtml(car.Category) + '</span>';
+
+            cardsHtml += '<div class="col-12 col-md-6 col-xl-4">' +
+              '<article class="card-luxury h-100 d-flex flex-column" data-testid="car-card-' + window.UI.escapeHtml(car.Vin) + '">' +
+                '<!-- Image Wrapper -->' +
+                '<div class="car-card-img-wrapper">' +
+                  badgeHtml +
+                  '<!-- Wishlist Heart Button -->' +
+                  '<button type="button" class="btn btn-wishlist position-absolute top-0 end-0 m-3 z-2" data-wishlist-vin="' + window.UI.escapeHtml(car.Vin) + '" aria-label="Add ' + window.UI.escapeHtml(car.Make + ' ' + car.Model) + ' to private wishlist" title="Save to Wishlist">' +
+                    '<i class="bi bi-heart"></i>' +
+                  '</button>' +
+                  '<a href="details.html?vin=' + encodeURIComponent(car.Vin) + '" tabindex="-1">' +
+                    '<img src="' + window.UI.escapeHtml(car.PrimaryImageUrl) + '" alt="' + window.UI.escapeHtml(car.Year + ' ' + car.Make + ' ' + car.Model) + '" loading="lazy">' +
+                  '</a>' +
+                '</div>' +
+
+                '<!-- Card Body -->' +
+                '<div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">' +
+                  '<div>' +
+                    '<div class="d-flex justify-content-between align-items-center mb-1">' +
+                      categoryBadge +
+                      '<span class="text-secondary small font-monospace" title="Vehicle Identification Number">' +
+                        'VIN: <span class="text-gold">' + window.UI.escapeHtml(car.Vin) + '</span>' +
+                        '<button type="button" class="btn btn-link btn-sm text-secondary p-0 ms-1 hover-gold" onclick="window.UI.copyVin(\'' + window.UI.escapeHtml(car.Vin) + '\', this)" title="Copy VIN" aria-label="Copy VIN">' +
+                          '<i class="bi bi-clipboard"></i>' +
+                        '</button>' +
+                      '</span>' +
+                    '</div>' +
+
+                    '<h2 class="h5 font-serif fw-bold text-light mb-2">' +
+                      '<a href="details.html?vin=' + encodeURIComponent(car.Vin) + '" class="text-light text-decoration-none hover-gold">' +
+                        window.UI.escapeHtml(car.Year + ' ' + car.Make + ' ' + car.Model) +
+                      '</a>' +
+                    '</h2>' +
+
+                    '<!-- Specs Line -->' +
+                    '<div class="text-secondary small mb-3 text-truncate" title="' + window.UI.escapeHtml(car.EngineDescription) + '">' +
+                      '<i class="bi bi-speedometer2 text-gold me-1"></i> ' + window.UI.escapeHtml(car.EngineDescription) +
+                    '</div>' +
+
+                    '<div class="row g-2 mb-3 text-center">' +
+                      '<div class="col-4">' +
+                        '<div class="spec-box py-1 px-1">' +
+                          '<div class="label" style="font-size:0.65rem;">POWER</div>' +
+                          '<div class="value" style="font-size:0.85rem;">' + window.UI.escapeHtml(car.Horsepower) + ' HP</div>' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="col-4">' +
+                        '<div class="spec-box py-1 px-1">' +
+                          '<div class="label" style="font-size:0.65rem;">MILEAGE</div>' +
+                          '<div class="value" style="font-size:0.85rem;">' + window.UI.formatNumber(car.Mileage) + ' km</div>' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="col-4">' +
+                        '<div class="spec-box py-1 px-1">' +
+                          '<div class="label" style="font-size:0.65rem;">YEAR</div>' +
+                          '<div class="value" style="font-size:0.85rem;">' + window.UI.escapeHtml(car.Year) + '</div>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+
+                  '<!-- Price and CTA -->' +
+                  '<div class="pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center justify-content-between">' +
+                    '<div>' +
+                      '<div class="text-secondary small" style="font-size:0.75rem;">ACQUISITION PRICE</div>' +
+                      '<div class="h4 font-serif text-gold mb-0 fw-bold">' + window.UI.formatCurrency(car.Price) + '</div>' +
+                    '</div>' +
+                    '<a href="details.html?vin=' + encodeURIComponent(car.Vin) + '" class="btn btn-outline-gold btn-sm px-3 py-2 rounded-2">' +
+                      'View Details <i class="bi bi-arrow-right ms-1"></i>' +
+                    '</a>' +
+                  '</div>' +
+                '</div>' +
+              '</article>' +
+            '</div>';
+          });
+
+          gridEl.innerHTML = cardsHtml;
+
+          // Re-sync wishlist heart icons
+          if (window.Wishlist && window.Wishlist.syncHeartIcons) {
+            window.Wishlist.syncHeartIcons();
+          }
+        });
+      }
+
+      // Event listeners for live filtering
+      priceRange.addEventListener('input', function () {
+        priceRangeDisplay.textContent = window.UI.formatCurrency(this.value);
+        fetchAndRender();
+      });
+
+      document.querySelectorAll('input[name="filterCategory"]').forEach(function (radio) {
+        radio.addEventListener('change', fetchAndRender);
+      });
+
+      document.querySelectorAll('input[name="filterAvailability"]').forEach(function (radio) {
+        radio.addEventListener('change', fetchAndRender);
+      });
+
+      minYearSelect.addEventListener('change', fetchAndRender);
+      minHpSelect.addEventListener('change', fetchAndRender);
+      transmissionSelect.addEventListener('change', fetchAndRender);
+      fuelSelect.addEventListener('change', fetchAndRender);
+      sortSelect.addEventListener('change', fetchAndRender);
+
+      searchInput.addEventListener('input', function () {
+        fetchAndRender();
+      });
+
+      searchBtn.addEventListener('click', function () {
+        fetchAndRender();
+      });
+
+      function resetAllFilters() {
+        searchInput.value = '';
+        document.getElementById('cat-all').checked = true;
+        document.getElementById('avail-all').checked = true;
+        priceRange.value = 250000;
+        priceRangeDisplay.textContent = '€250,000';
+        minYearSelect.value = '';
+        minHpSelect.value = '';
+        transmissionSelect.value = 'all';
+        fuelSelect.value = 'all';
+        sortSelect.value = 'featured';
+        fetchAndRender();
+      }
+
+      resetBtn.addEventListener('click', resetAllFilters);
+      emptyResetBtn.addEventListener('click', resetAllFilters);
+
+      // Initial load
+      fetchAndRender();
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Inventory Management | RF Prestige Back-Office</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Admin Subheader -->
+  <header class="py-3 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container-fluid px-4 px-lg-5">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <span class="badge bg-danger text-white font-monospace text-uppercase px-2 py-1">STAFF BACK-OFFICE (A9)</span>
+          <h1 class="h4 font-serif text-light mb-0">Vehicle Fleet Inventory Management</h1>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <a href="car-edit.html" class="btn btn-gold btn-sm px-3 py-2" data-testid="add-new-car-btn">
+            <i class="bi bi-plus-lg me-1"></i> Add New Vehicle
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Navigation Tabs -->
+  <nav class="bg-dark-alt border-bottom border-secondary border-opacity-25 py-2">
+    <div class="container-fluid px-4 px-lg-5">
+      <ul class="nav nav-pills gap-2 small">
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="index.html">
+            <i class="bi bi-speedometer2 me-1"></i> Metrics &amp; Overview
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active bg-gold text-dark fw-bold" href="cars.html">
+            <i class="bi bi-car-front me-1"></i> Car Inventory (30+)
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="orders.html">
+            <i class="bi bi-receipt me-1"></i> Orders &amp; Shipping
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light hover-gold" href="reviews.html">
+            <i class="bi bi-chat-left-quote me-1"></i> Site Reviews Moderation
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Inventory Main Content -->
+  <main class="py-5">
+    <div class="container-fluid px-4 px-lg-5">
+
+      <div class="card-luxury p-0 overflow-hidden">
+        
+        <!-- Search & Counter Header -->
+        <div class="p-4 border-bottom border-secondary border-opacity-25 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+          <div>
+            <h2 class="h5 font-serif text-gold mb-0">Registered Inventory Fleet</h2>
+            <div class="text-secondary small" id="admin-cars-count">Loading fleet records...</div>
+          </div>
+          <div class="d-flex gap-2">
+            <input type="text" id="admin-cars-search" class="form-control form-control-sm" placeholder="Filter by Make, Model, or VIN..." style="min-width: 260px;">
+          </div>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="table-responsive">
+          <table class="table table-luxury align-middle mb-0" data-testid="admin-cars-table">
+            <thead>
+              <tr>
+                <th style="width: 80px;">Preview</th>
+                <th>VIN (Primary Key)</th>
+                <th>Make &amp; Model</th>
+                <th>Year</th>
+                <th>Category</th>
+                <th class="text-end">Price</th>
+                <th class="text-center">Stock</th>
+                <th class="text-center">Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-cars-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      if (!window.Auth.requireAdmin()) return;
+
+      var tbody = document.getElementById('admin-cars-tbody');
+      var countEl = document.getElementById('admin-cars-count');
+      var searchInput = document.getElementById('admin-cars-search');
+
+      var allCars = [];
+
+      function renderCars(list) {
+        countEl.textContent = 'Showing ' + list.length + ' of ' + allCars.length + ' total fleet vehicles';
+
+        var html = '';
+        list.forEach(function (car) {
+          var isSold = !car.IsAvailable || car.StockQuantity <= 0;
+          var stockLabel = isSold
+            ? '<span class="badge bg-danger bg-opacity-25 text-danger border border-danger">0 (Sold)</span>'
+            : '<span class="badge bg-success bg-opacity-25 text-success border border-success">1 (Avail)</span>';
+
+          var statusPill = isSold
+            ? '<span class="badge bg-secondary">Sold</span>'
+            : '<span class="badge bg-success">Available</span>';
+
+          html += '<tr data-testid="admin-car-row-' + window.UI.escapeHtml(car.Vin) + '">' +
+            '<td>' +
+              '<img src="' + window.UI.escapeHtml(car.PrimaryImageUrl) + '" alt="' + window.UI.escapeHtml(car.Make) + '" class="rounded border border-secondary border-opacity-25 object-fit-cover" style="width: 70px; height: 46px;">' +
+            '</td>' +
+            '<td class="font-monospace text-gold fw-bold small">' +
+              window.UI.escapeHtml(car.Vin) +
+              '<button type="button" class="btn btn-link btn-sm text-secondary p-0 ms-1 hover-gold" onclick="window.UI.copyVin(\'' + window.UI.escapeHtml(car.Vin) + '\', this)" title="Copy VIN" aria-label="Copy VIN">' +
+                '<i class="bi bi-clipboard"></i>' +
+              '</button>' +
+            '</td>' +
+            '<td class="fw-bold text-light">' +
+              '<a href="../catalog/details.html?vin=' + encodeURIComponent(car.Vin) + '" target="_blank" class="text-light text-decoration-none hover-gold">' +
+                window.UI.escapeHtml(car.Make + ' ' + car.Model) +
+              '</a>' +
+            '</td>' +
+            '<td>' + window.UI.escapeHtml(car.Year) + '</td>' +
+            '<td><span class="badge bg-gold-subtle text-gold small">' + window.UI.escapeHtml(car.Category) + '</span></td>' +
+            '<td class="text-end font-monospace text-gold fw-bold">' + window.UI.formatCurrency(car.Price) + '</td>' +
+            '<td class="text-center">' + stockLabel + '</td>' +
+            '<td class="text-center">' + statusPill + '</td>' +
+            '<td class="text-end text-nowrap">' +
+              '<a href="car-edit.html?vin=' + encodeURIComponent(car.Vin) + '" class="btn btn-outline-secondary btn-sm me-2" data-testid="edit-car-' + window.UI.escapeHtml(car.Vin) + '">' +
+                '<i class="bi bi-pencil"></i> Edit' +
+              '</a>' +
+              '<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteCar(\'' + window.UI.escapeHtml(car.Vin) + '\')" data-testid="delete-car-' + window.UI.escapeHtml(car.Vin) + '">' +
+                '<i class="bi bi-trash"></i>' +
+              '</button>' +
+            '</td>' +
+          '</tr>';
+        });
+
+        tbody.innerHTML = html;
+      }
+
+      function loadCars() {
+        window.Api.adminGetCars().then(function (cars) {
+          allCars = cars;
+          renderCars(cars);
+        });
+      }
+
+      window.deleteCar = function (vin) {
+        if (confirm("Permanently remove vehicle with VIN " + vin + " from inventory?")) {
+          window.Api.adminDeleteCar(vin).then(function () {
+            window.UI.showToast("Vehicle " + vin + " removed from inventory.", "info");
+            loadCars();
+          });
+        }
+      };
+
+      searchInput.addEventListener('input', function () {
+        var q = this.value.trim().toLowerCase();
+        var filtered = allCars.filter(function (c) {
+          return c.Make.toLowerCase().indexOf(q) !== -1 ||
+                 c.Model.toLowerCase().indexOf(q) !== -1 ||
+                 c.Vin.toLowerCase().indexOf(q) !== -1 ||
+                 (c.Make + ' ' + c.Model).toLowerCase().indexOf(q) !== -1;
+        });
+        renderCars(filtered);
+      });
+
+      loadCars();
+
+    })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Wishlist | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="py-4 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container px-4 px-lg-5">
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+        <div>
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-1">
+            SAVED COLLECTION (B2)
+          </span>
+          <h1 class="h2 font-serif text-light mb-0">Your Private Wishlist</h1>
+        </div>
+        <a href="../catalog/index.html" class="btn btn-outline-gold btn-sm px-3 py-2">
+          <i class="bi bi-grid me-1"></i> Browse Fleet
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <!-- Guest Prompt Banner (if not logged in) -->
+      <div id="wishlist-guest-banner" class="alert bg-dark-alt border-gold text-light p-4 rounded-3 mb-4 d-none">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+          <div>
+            <div class="text-gold fw-bold font-serif fs-5 mb-1">Sign in to sync your Private Wishlist</div>
+            <div class="text-secondary small">Saved luxury vehicles are linked to your authenticated client account (UserId + CarVin).</div>
+          </div>
+          <a href="../account/login.html" class="btn btn-gold px-4 py-2 text-nowrap">Sign In Now</a>
+        </div>
+      </div>
+
+      <!-- Wishlist Table Card -->
+      <div id="wishlist-container" class="card-luxury p-0 overflow-hidden mb-4">
+        <div class="p-4 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+          <h2 class="h5 font-serif text-gold mb-0">Bookmarked Automobiles</h2>
+          <span class="text-secondary small" id="wishlist-count-text">Loading collection...</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-luxury align-middle mb-0" data-testid="wishlist-table">
+            <thead>
+              <tr>
+                <th style="width: 140px;">Vehicle</th>
+                <th>Specifications</th>
+                <th>VIN</th>
+                <th>Acquisition Price</th>
+                <th class="text-center">Availability</th>
+                <th>Bookmarked On</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="wishlist-table-body">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="wishlist-empty" class="text-center py-5 d-none">
+          <i class="bi bi-heart fs-1 text-secondary mb-2 d-block"></i>
+          <h3 class="h5 font-serif text-gold">Your Private Wishlist is Empty</h3>
+          <p class="text-secondary small mx-auto" style="max-width: 420px;">
+            Bookmark supercars and grand tourers while exploring our catalog by clicking the heart icon on any vehicle card.
+          </p>
+          <a href="../catalog/index.html" class="btn btn-outline-gold btn-sm px-4 py-2 mt-2">Explore Vehicle Catalog</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var user = window.Auth ? window.Auth.getCurrentUser() : null;
+      var guestBanner = document.getElementById('wishlist-guest-banner');
+      var tbody = document.getElementById('wishlist-table-body');
+      var emptyEl = document.getElementById('wishlist-empty');
+      var countText = document.getElementById('wishlist-count-text');
+
+      if (!user) {
+        guestBanner.classList.remove('d-none');
+        emptyEl.classList.remove('d-none');
+        countText.textContent = 'Guest Session';
+        return;
+      }
+
+      function loadWishlist() {
+        window.Api.getWishlist(user.Id).then(function (items) {
+          if (!items || !items.length) {
+            tbody.innerHTML = '';
+            emptyEl.classList.remove('d-none');
+            countText.textContent = '0 Bookmarked Vehicles';
+            return;
+          }
+
+          emptyEl.classList.add('d-none');
+          countText.textContent = items.length + (items.length === 1 ? ' Vehicle' : ' Vehicles');
+
+          var rowsHtml = '';
+          items.forEach(function (item) {
+            var car = item.Car;
+            var isSold = !car.IsAvailable || car.StockQuantity <= 0;
+            var fullTitle = car.Year + ' ' + car.Make + ' ' + car.Model;
+
+            var availBadge = isSold
+              ? '<span class="badge badge-sold px-2 py-1">Sold</span>'
+              : '<span class="badge badge-stock px-2 py-1">In Stock</span>';
+
+            var addToCartBtn = isSold
+              ? '<button type="button" class="btn btn-secondary btn-sm me-2 disabled" style="opacity:0.5;">Sold</button>'
+              : '<button type="button" class="btn btn-gold btn-sm me-2" onclick="addCarToCart(\'' + window.UI.escapeHtml(car.Vin) + '\', this)" data-testid="wishlist-cart-btn-' + window.UI.escapeHtml(car.Vin) + '">' +
+                  '<i class="bi bi-bag-plus me-1"></i> Add to Cart' +
+                '</button>';
+
+            rowsHtml += '<tr data-testid="wishlist-row-' + window.UI.escapeHtml(car.Vin) + '">' +
+              '<td>' +
+                '<a href="../catalog/details.html?vin=' + encodeURIComponent(car.Vin) + '">' +
+                  '<img src="' + window.UI.escapeHtml(car.PrimaryImageUrl) + '" alt="' + window.UI.escapeHtml(fullTitle) + '" class="rounded border border-secondary border-opacity-25 object-fit-cover" style="width: 130px; height: 85px;">' +
+                '</a>' +
+              '</td>' +
+              '<td>' +
+                '<div class="badge bg-gold-subtle text-gold small mb-1">' + window.UI.escapeHtml(car.Category) + '</div>' +
+                '<div class="fw-bold text-light">' +
+                  '<a href="../catalog/details.html?vin=' + encodeURIComponent(car.Vin) + '" class="text-light text-decoration-none hover-gold">' +
+                    window.UI.escapeHtml(fullTitle) +
+                  '</a>' +
+                '</div>' +
+                '<div class="text-secondary small">' + car.Horsepower + ' HP • ' + window.UI.formatNumber(car.Mileage) + ' km</div>' +
+              '</td>' +
+              '<td class="font-monospace text-gold small">' +
+                window.UI.escapeHtml(car.Vin) +
+                '<button type="button" class="btn btn-link btn-sm text-secondary p-0 ms-1 hover-gold" onclick="window.UI.copyVin(\'' + window.UI.escapeHtml(car.Vin) + '\', this)" title="Copy VIN" aria-label="Copy VIN">' +
+                  '<i class="bi bi-clipboard"></i>' +
+                '</button>' +
+              '</td>' +
+              '<td class="font-monospace text-gold fw-bold">' + window.UI.formatCurrency(car.Price) + '</td>' +
+              '<td class="text-center">' + availBadge + '</td>' +
+              '<td class="text-secondary small">' + window.UI.formatDate(item.AddedAt) + '</td>' +
+              '<td class="text-end">' +
+                addToCartBtn +
+                '<button type="button" class="btn btn-outline-danger btn-sm" onclick="removeWishlistItem(\'' + window.UI.escapeHtml(car.Vin) + '\')" title="Remove from wishlist">' +
+                  '<i class="bi bi-trash"></i>' +
+                '</button>' +
+              '</td>' +
+            '</tr>';
+          });
+
+          tbody.innerHTML = rowsHtml;
+        });
+      }
+
+      window.addCarToCart = function (vin, btn) {
+        window.Cart.addToCart(vin, btn);
+      };
+
+      window.removeWishlistItem = function (vin) {
+        window.Wishlist.toggleWishlist(vin).then(loadWishlist);
+      };
+
+      loadWishlist();
+
+      window.addEventListener('rf:wishlist-updated', loadWishlist);
+
+    })();
+  </script>
+</body>
+</html>
+

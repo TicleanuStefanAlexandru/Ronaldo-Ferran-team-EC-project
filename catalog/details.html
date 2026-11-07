@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Details | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="bg-charcoal border-bottom border-gold-subtle py-3" aria-label="breadcrumb">
+    <div class="container px-4 px-lg-5">
+      <ol class="breadcrumb mb-0 small" id="details-breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html" class="text-gold text-decoration-none">Catalog</a></li>
+        <li class="breadcrumb-item"><a href="index.html" id="breadcrumb-category" class="text-secondary text-decoration-none">Sports Cars</a></li>
+        <li class="breadcrumb-item active text-light" id="breadcrumb-car" aria-current="page">Loading Vehicle...</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Vehicle Details Main Section -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <!-- Not Found State -->
+      <div id="details-not-found" class="text-center py-5 d-none">
+        <i class="bi bi-exclamation-octagon fs-1 text-gold mb-3 d-block"></i>
+        <h2 class="font-serif text-light">Vehicle Record Not Found</h2>
+        <p class="text-secondary">The requested Vehicle Identification Number (VIN) could not be located in our verified fleet.</p>
+        <a href="index.html" class="btn btn-gold px-4 py-2 mt-2">Return to Catalog</a>
+      </div>
+
+      <!-- Vehicle Detail Content -->
+      <div id="details-content" class="row g-5">
+
+        <!-- Left Column: High-Res Image Gallery -->
+        <div class="col-lg-7">
+          <div class="position-relative bg-charcoal rounded-3 border border-gold-subtle overflow-hidden mb-3" style="aspect-ratio: 16 / 10;">
+            <div id="details-status-badge" class="position-absolute top-0 start-0 m-3 z-2"></div>
+            <img id="details-main-img" src="" alt="Luxury Vehicle" class="w-100 h-100 object-fit-cover" style="transition: opacity 0.3s ease;">
+          </div>
+
+          <!-- Thumbnails (4 angles) -->
+          <div class="row g-2" id="details-thumbnails">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Trust & Authenticity Badges -->
+          <div class="row g-3 mt-4">
+            <div class="col-sm-4">
+              <div class="p-3 bg-charcoal rounded border border-secondary border-opacity-25 text-center">
+                <i class="bi bi-shield-check text-gold fs-4 mb-1 d-block"></i>
+                <div class="fw-bold small text-light">180-Point Inspection</div>
+                <div class="text-secondary" style="font-size:0.75rem;">Porsche / Ferrari / AM Tech Verified</div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="p-3 bg-charcoal rounded border border-secondary border-opacity-25 text-center">
+                <i class="bi bi-file-earmark-check text-gold fs-4 mb-1 d-block"></i>
+                <div class="fw-bold small text-light">Clean European Title</div>
+                <div class="text-secondary" style="font-size:0.75rem;">Single Owner &amp; VAT Qualifying</div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="p-3 bg-charcoal rounded border border-secondary border-opacity-25 text-center">
+                <i class="bi bi-truck text-gold fs-4 mb-1 d-block"></i>
+                <div class="fw-bold small text-light">Enclosed Delivery</div>
+                <div class="text-secondary" style="font-size:0.75rem;">Discreet White-Glove Transport</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Specs, Price, Actions -->
+        <div class="col-lg-5">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span id="details-category-pill" class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans px-3 py-1"></span>
+            <span class="text-secondary small font-monospace">
+              VIN: <span id="details-vin-text" class="text-gold fw-bold"></span>
+              <button type="button" class="btn btn-link btn-sm text-secondary p-0 ms-1 hover-gold" id="details-copy-vin-btn" title="Copy VIN" aria-label="Copy VIN">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            </span>
+          </div>
+
+          <h1 id="details-title" class="display-6 font-serif fw-bold text-light mb-2"></h1>
+
+          <div class="p-3 mb-4 bg-charcoal rounded-3 border border-gold-subtle d-flex align-items-baseline justify-content-between">
+            <div>
+              <div class="text-secondary small text-uppercase" style="font-size: 0.75rem;">Acquisition Price (VAT Included)</div>
+              <div id="details-price" class="h2 font-serif text-gold mb-0 fw-bold"></div>
+            </div>
+            <div id="details-stock-status" class="small text-end"></div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-grid gap-3 mb-4">
+            <button type="button" id="details-add-cart-btn" class="btn btn-gold btn-lg py-3 rounded-2 fw-bold tracking-wide" data-testid="add-to-cart-btn">
+              <i class="bi bi-bag-plus me-2"></i> Add to Acquisition Cart
+            </button>
+            <button type="button" id="details-wishlist-btn" class="btn btn-outline-gold py-2 rounded-2" data-testid="wishlist-toggle-btn">
+              <i class="bi bi-heart me-2"></i> Save to Private Wishlist (B2)
+            </button>
+          </div>
+
+          <!-- Technical Specs Grid -->
+          <h2 class="h6 text-gold text-uppercase tracking-wider fw-bold mb-3">Vehicle Technical Specifications</h2>
+          <div class="row g-2 mb-4">
+            <div class="col-6">
+              <div class="spec-box">
+                <div class="label">Make &amp; Model</div>
+                <div class="value" id="spec-make-model">—</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="spec-box">
+                <div class="label">Model Year</div>
+                <div class="value" id="spec-year">—</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="spec-box">
+                <div class="label">Power Output</div>
+                <div class="value" id="spec-hp">—</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="spec-box">
+                <div class="label">Odometer</div>
+                <div class="value" id="spec-mileage">—</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="spec-box">
+                <div class="label">Transmission</div>
+                <div class="value" id="spec-transmission">—</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="spec-box">
+                <div class="label">Powertrain</div>
+                <div class="value" id="spec-fuel">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Description -->
+          <div class="border-top border-secondary border-opacity-25 pt-4">
+            <h2 class="h6 text-gold text-uppercase tracking-wider fw-bold mb-2">Bespoke Provenance &amp; Equipment</h2>
+            <p id="details-desc" class="text-secondary small lh-lg mb-0"></p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Recommended Vehicles Section (Bonus B3) -->
+      <section class="mt-5 pt-5 border-top border-gold-subtle" id="recommended-section">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+          <div>
+            <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+              ALGORITHMIC RECOMMENDATIONS (B3)
+            </span>
+            <h2 class="h3 font-serif text-light mb-1">Recommended Alternative Vehicles</h2>
+            <p class="text-secondary small mb-0">Suggested vehicles within ±15% price proximity in the same category.</p>
+          </div>
+          <a href="index.html" class="btn btn-outline-gold btn-sm d-none d-sm-inline-block">View Full Fleet</a>
+        </div>
+
+        <div class="row g-4" id="recommended-grid">
+          <!-- Populated dynamically via getRecommended(vin) -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var currentVin = urlParams.get('vin') || 'WP0ZZZ99ZPS291047';
+
+      var contentEl = document.getElementById('details-content');
+      var notFoundEl = document.getElementById('details-not-found');
+      var breadcrumbCategory = document.getElementById('breadcrumb-category');
+      var breadcrumbCar = document.getElementById('breadcrumb-car');
+      var mainImg = document.getElementById('details-main-img');
+      var thumbsEl = document.getElementById('details-thumbnails');
+      var statusBadgeEl = document.getElementById('details-status-badge');
+      var categoryPill = document.getElementById('details-category-pill');
+      var vinText = document.getElementById('details-vin-text');
+      var copyVinBtn = document.getElementById('details-copy-vin-btn');
+      var titleEl = document.getElementById('details-title');
+      var priceEl = document.getElementById('details-price');
+      var stockStatusEl = document.getElementById('details-stock-status');
+      var addCartBtn = document.getElementById('details-add-cart-btn');
+      var wishlistBtn = document.getElementById('details-wishlist-btn');
+      var descEl = document.getElementById('details-desc');
+      var recommendedGrid = document.getElementById('recommended-grid');
+
+      // Spec items
+      var specMakeModel = document.getElementById('spec-make-model');
+      var specYear = document.getElementById('spec-year');
+      var specHp = document.getElementById('spec-hp');
+      var specMileage = document.getElementById('spec-mileage');
+      var specTransmission = document.getElementById('spec-transmission');
+      var specFuel = document.getElementById('spec-fuel');
+
+      window.Api.getCarByVin(currentVin).then(function (car) {
+        if (!car) {
+          contentEl.classList.add('d-none');
+          document.getElementById('recommended-section').classList.add('d-none');
+          notFoundEl.classList.remove('d-none');
+          return;
+        }
+
+        var isSold = !car.IsAvailable || car.StockQuantity <= 0;
+
+        // Title and Breadcrumb
+        var fullTitle = car.Year + ' ' + car.Make + ' ' + car.Model;
+        document.title = fullTitle + ' | RF Prestige Motors';
+        breadcrumbCategory.textContent = car.Category;
+        breadcrumbCategory.href = 'index.html?category=' + encodeURIComponent(car.Category);
+        breadcrumbCar.textContent = fullTitle;
+
+        titleEl.textContent = fullTitle;
+        categoryPill.textContent = car.Category;
+        vinText.textContent = car.Vin;
+        priceEl.textContent = window.UI.formatCurrency(car.Price);
+        descEl.textContent = car.Description;
+
+        // Specs
+        specMakeModel.textContent = car.Make + ' ' + car.Model;
+        specYear.textContent = car.Year;
+        specHp.textContent = car.Horsepower + ' HP';
+        specMileage.textContent = window.UI.formatNumber(car.Mileage) + ' km';
+        specTransmission.textContent = car.Transmission;
+        specFuel.textContent = car.Fuel + ' (' + car.EngineDescription + ')';
+
+        // Stock status
+        if (isSold) {
+          statusBadgeEl.innerHTML = '<span class="badge badge-sold px-3 py-2 fs-6"><i class="bi bi-x-circle me-1"></i> Sold Archive</span>';
+          stockStatusEl.innerHTML = '<span class="text-danger fw-semibold"><i class="bi bi-x-circle"></i> Sold &amp; Reserved</span>';
+          addCartBtn.disabled = true;
+          addCartBtn.className = 'btn btn-secondary btn-lg py-3 rounded-2 opacity-50';
+          addCartBtn.innerHTML = '<i class="bi bi-lock me-2"></i> Vehicle Unavailable (Sold)';
+        } else {
+          statusBadgeEl.innerHTML = '<span class="badge badge-stock px-3 py-2 fs-6"><i class="bi bi-check2-circle me-1"></i> In Stock (1 Unit)</span>';
+          stockStatusEl.innerHTML = '<span class="text-success fw-semibold"><i class="bi bi-check2-circle"></i> In Stock &amp; Ready for Viewing</span>';
+          addCartBtn.addEventListener('click', function () {
+            window.Cart.addToCart(car.Vin, addCartBtn);
+          });
+        }
+
+        // Image Gallery
+        mainImg.src = car.PrimaryImageUrl;
+        mainImg.alt = fullTitle;
+
+        var thumbsHtml = '';
+        car.Images.forEach(function (img, idx) {
+          var activeClass = idx === 0 ? 'active' : '';
+          thumbsHtml += '<div class="col-3">' +
+            '<div class="gallery-thumb ' + activeClass + '" data-img-url="' + window.UI.escapeHtml(img.ImageUrl) + '">' +
+              '<img src="' + window.UI.escapeHtml(img.ImageUrl) + '" alt="' + window.UI.escapeHtml(fullTitle) + ' Angle ' + (idx + 1) + '">' +
+            '</div>' +
+          '</div>';
+        });
+        thumbsEl.innerHTML = thumbsHtml;
+
+        // Thumbnail Click Switcher
+        document.querySelectorAll('.gallery-thumb').forEach(function (thumb) {
+          thumb.addEventListener('click', function () {
+            document.querySelectorAll('.gallery-thumb').forEach(function (t) { t.classList.remove('active'); });
+            this.classList.add('active');
+            var newUrl = this.getAttribute('data-img-url');
+            mainImg.style.opacity = '0.3';
+            setTimeout(function () {
+              mainImg.src = newUrl;
+              mainImg.style.opacity = '1';
+            }, 150);
+          });
+        });
+
+        // Copy VIN
+        copyVinBtn.addEventListener('click', function () {
+          window.UI.copyVin(car.Vin, this);
+        });
+
+        // Wishlist button sync
+        wishlistBtn.setAttribute('data-wishlist-vin', car.Vin);
+        function syncWishlistButton() {
+          var user = window.Auth ? window.Auth.getCurrentUser() : null;
+          if (user && window.Api.isInWishlist(car.Vin, user.Id)) {
+            wishlistBtn.className = 'btn btn-outline-gold active py-2 rounded-2';
+            wishlistBtn.innerHTML = '<i class="bi bi-heart-fill text-gold me-2"></i> Saved in Private Wishlist (B2)';
+          } else {
+            wishlistBtn.className = 'btn btn-outline-gold py-2 rounded-2';
+            wishlistBtn.innerHTML = '<i class="bi bi-heart me-2"></i> Save to Private Wishlist (B2)';
+          }
+        }
+        syncWishlistButton();
+        window.addEventListener('rf:wishlist-updated', syncWishlistButton);
+
+        // Fetch Recommendations (Bonus B3)
+        window.Api.getRecommended(car.Vin).then(function (recCars) {
+          if (!recCars || !recCars.length) {
+            document.getElementById('recommended-section').classList.add('d-none');
+            return;
+          }
+
+          var recHtml = '';
+          recCars.forEach(function (rec) {
+            recHtml += '<div class="col-12 col-md-4">' +
+              '<article class="card-luxury h-100 d-flex flex-column">' +
+                '<div class="car-card-img-wrapper">' +
+                  '<a href="details.html?vin=' + encodeURIComponent(rec.Vin) + '">' +
+                    '<img src="' + window.UI.escapeHtml(rec.PrimaryImageUrl) + '" alt="' + window.UI.escapeHtml(rec.Year + ' ' + rec.Make + ' ' + rec.Model) + '" loading="lazy">' +
+                  '</a>' +
+                '</div>' +
+                '<div class="p-3 d-flex flex-column flex-grow-1 justify-content-between">' +
+                  '<div>' +
+                    '<div class="d-flex justify-content-between align-items-center mb-1">' +
+                      '<span class="badge bg-gold-subtle text-gold text-uppercase" style="font-size:0.7rem;">' + window.UI.escapeHtml(rec.Category) + '</span>' +
+                      '<span class="text-secondary small font-monospace">' + rec.Horsepower + ' HP</span>' +
+                    '</div>' +
+                    '<h3 class="h6 font-serif fw-bold text-light mb-1">' +
+                      '<a href="details.html?vin=' + encodeURIComponent(rec.Vin) + '" class="text-light text-decoration-none hover-gold">' +
+                        window.UI.escapeHtml(rec.Year + ' ' + rec.Make + ' ' + rec.Model) +
+                      '</a>' +
+                    '</h3>' +
+                  '</div>' +
+                  '<div class="pt-2 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-3">' +
+                    '<div class="font-serif text-gold fw-bold">' + window.UI.formatCurrency(rec.Price) + '</div>' +
+                    '<a href="details.html?vin=' + encodeURIComponent(rec.Vin) + '" class="btn btn-outline-gold btn-sm px-2 py-1" style="font-size:0.8rem;">' +
+                      'View <i class="bi bi-arrow-right"></i>' +
+                    '</a>' +
+                  '</div>' +
+                '</div>' +
+              '</article>' +
+            '</div>';
+          });
+
+          recommendedGrid.innerHTML = recHtml;
+        });
+
+      });
+
+    })();
+  </script>
+</body>
+</html>

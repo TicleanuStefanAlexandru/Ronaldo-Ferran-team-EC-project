@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stripe Checkout — RF Prestige (Test Mode)</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --stripe-bg: #f8fafc;
+      --stripe-card: #ffffff;
+      --stripe-border: #e2e8f0;
+      --stripe-text: #1e293b;
+      --stripe-muted: #64748b;
+      --stripe-primary: #6366f1;
+      --stripe-primary-hover: #4f46e5;
+    }
+    body {
+      background-color: var(--stripe-bg);
+      color: var(--stripe-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .stripe-test-badge {
+      background-color: #f59e0b;
+      color: #000000;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      padding: 0.4rem 1rem;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .stripe-box {
+      background: var(--stripe-card);
+      border: 1px solid var(--stripe-border);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    }
+    .btn-stripe {
+      background-color: #0a2540;
+      color: #ffffff;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: 0.85rem;
+      transition: background-color 0.2s ease;
+    }
+    .btn-stripe:hover {
+      background-color: #635bff;
+      color: #ffffff;
+    }
+    .stripe-input {
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0.7rem 0.85rem;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+    .stripe-input:focus {
+      border-color: #635bff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.2);
+    }
+    .test-card-pill {
+      cursor: pointer;
+      background: #eff6ff;
+      border: 1px dashed #3b82f6;
+      color: #1d4ed8;
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+    }
+    .test-card-pill:hover {
+      background: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Test Mode Ribbon -->
+  <div class="stripe-test-badge d-flex justify-content-center align-items-center gap-2">
+    <i class="bi bi-shield-exclamation"></i>
+    <span>TEST MODE — RF PRESTIGE SANDBOX (NO REAL CHARGE OCCURS)</span>
+  </div>
+
+  <div class="container py-5 my-auto" style="max-width: 960px;">
+    
+    <div class="stripe-box p-4 p-md-5">
+      <div class="row g-5">
+
+        <!-- Left Column: Order Summary & Merchant Details -->
+        <div class="col-md-5 border-end-md pe-md-4">
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <a href="cancel.html" class="text-muted text-decoration-none small hover-primary" title="Cancel and return">
+              <i class="bi bi-arrow-left"></i> Cancel
+            </a>
+          </div>
+
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="bg-dark text-warning p-2 rounded" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+              RF
+            </div>
+            <div>
+              <div class="fw-bold fs-5 text-dark">RF Prestige Motors</div>
+              <div class="text-muted small">Bucharest, Romania</div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="text-muted small text-uppercase fw-semibold">Amount to Pay</div>
+            <div class="display-6 fw-bold text-dark font-monospace" id="stripe-display-total">€0</div>
+            <div class="text-muted small mt-1">Includes 19% Romanian VAT &amp; Transport</div>
+          </div>
+
+          <div class="border-top pt-3">
+            <div class="text-muted small fw-semibold text-uppercase mb-2">Order Items</div>
+            <div id="stripe-order-items-list" class="d-flex flex-column gap-2 small">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <div class="border-top pt-3 mt-4 text-muted small">
+            <div class="d-flex align-items-center gap-1 mb-1">
+              <i class="bi bi-shield-lock-fill text-success"></i> End-to-end 256-bit encrypted
+            </div>
+            Powered by <strong class="text-dark">Stripe Checkout</strong>
+          </div>
+        </div>
+
+        <!-- Right Column: Card Payment Form -->
+        <div class="col-md-7 ps-md-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h5 fw-bold text-dark mb-0">Pay with Card</h1>
+            <div class="d-flex gap-1 text-muted fs-4">
+              <i class="bi bi-credit-card-2-front"></i>
+            </div>
+          </div>
+
+          <!-- Quick Test Card helper -->
+          <div class="test-card-pill mb-4 d-flex justify-content-between align-items-center" id="btn-fill-test-card">
+            <span><i class="bi bi-magic me-1"></i> Use Stripe Test Card: <strong>4242 •••• •••• 4242</strong></span>
+            <span class="badge bg-primary text-white">Autofill</span>
+          </div>
+
+          <form id="stripe-payment-form">
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="stripe-email" class="form-label small fw-semibold text-muted">Email Address</label>
+              <input type="email" class="form-control stripe-input" id="stripe-email" required>
+            </div>
+
+            <!-- Card Information -->
+            <div class="mb-3">
+              <label for="stripe-card-number" class="form-label small fw-semibold text-muted">Card Information</label>
+              <div class="position-relative">
+                <input type="text" class="form-control stripe-input font-monospace mb-2" id="stripe-card-number" placeholder="4242 4242 4242 4242" maxlength="19" required>
+                <i class="bi bi-credit-card position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
+              </div>
+              <div class="row g-2">
+                <div class="col-6">
+                  <input type="text" class="form-control stripe-input font-monospace" id="stripe-exp" placeholder="MM / YY" maxlength="5" required>
+                </div>
+                <div class="col-6">
+                  <input type="text" class="form-control stripe-input font-monospace" id="stripe-cvc" placeholder="CVC" maxlength="4" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cardholder Name -->
+            <div class="mb-3">
+              <label for="stripe-name" class="form-label small fw-semibold text-muted">Name on Card</label>
+              <input type="text" class="form-control stripe-input" id="stripe-name" placeholder="John Doe" required>
+            </div>
+
+            <!-- Country or Region -->
+            <div class="mb-4">
+              <label for="stripe-country" class="form-label small fw-semibold text-muted">Country or Region</label>
+              <select class="form-select stripe-input" id="stripe-country">
+                <option value="RO" selected>Romania</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="IT">Italy</option>
+                <option value="AT">Austria</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-stripe w-100 py-3 fs-6 d-flex align-items-center justify-content-center gap-2" id="stripe-pay-btn" data-testid="stripe-submit-btn">
+              <i class="bi bi-lock-fill"></i>
+              <span id="stripe-btn-text">Pay Now</span>
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <a href="cancel.html" class="text-muted text-decoration-none small">
+              Cancel transaction and return to RF Prestige
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var totalDisplay = document.getElementById('stripe-display-total');
+      var itemsList = document.getElementById('stripe-order-items-list');
+      var payBtn = document.getElementById('stripe-pay-btn');
+      var btnText = document.getElementById('stripe-btn-text');
+      var form = document.getElementById('stripe-payment-form');
+
+      var emailInput = document.getElementById('stripe-email');
+      var cardInput = document.getElementById('stripe-card-number');
+      var expInput = document.getElementById('stripe-exp');
+      var cvcInput = document.getElementById('stripe-cvc');
+      var nameInput = document.getElementById('stripe-name');
+      var autofillBtn = document.getElementById('btn-fill-test-card');
+
+      window.Api.getPendingCheckout().then(function (pending) {
+        if (!pending) {
+          window.location.href = '../cart/index.html';
+          return;
+        }
+
+        totalDisplay.textContent = window.UI.formatCurrency(pending.TotalAmount);
+        btnText.textContent = 'Pay ' + window.UI.formatCurrency(pending.TotalAmount);
+
+        emailInput.value = pending.CustomerEmail || 'customer@rfprestige.ro';
+        nameInput.value = pending.CustomerName || 'John Doe';
+
+        var itemsHtml = '';
+        (pending.Items || []).forEach(function (item) {
+          itemsHtml += '<div class="d-flex justify-content-between">' +
+            '<div>' +
+              '<span class="fw-semibold text-dark">' + window.UI.escapeHtml(item.VehicleTitle || 'Vehicle') + '</span>' +
+              '<div class="text-muted" style="font-size:0.75rem;">VIN: ' + window.UI.escapeHtml(item.CarVin) + '</div>' +
+            '</div>' +
+            '<span class="font-monospace text-dark">' + window.UI.formatCurrency(item.UnitPrice) + '</span>' +
+          '</div>';
+        });
+
+        var deliveryFee = pending.DeliveryOption === 1 ? 490 : 0;
+        itemsHtml += '<div class="d-flex justify-content-between text-muted border-top pt-2 mt-2">' +
+          '<span>Delivery (' + (pending.DeliveryOption === 1 ? 'Enclosed Carrier' : 'Showroom') + '):</span>' +
+          '<span class="font-monospace">' + (deliveryFee === 0 ? 'FREE' : window.UI.formatCurrency(deliveryFee)) + '</span>' +
+        '</div>';
+
+        itemsList.innerHTML = itemsHtml;
+      });
+
+      function fillTestCard() {
+        cardInput.value = '4242 4242 4242 4242';
+        expInput.value = '12/28';
+        cvcInput.value = '123';
+      }
+
+      autofillBtn.addEventListener('click', fillTestCard);
+      // Auto-prefill test card by default for convenience
+      fillTestCard();
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        payBtn.disabled = true;
+        btnText.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Processing payment with Stripe...';
+
+        // Simulate asynchronous webhook processing and payment confirmation
+        setTimeout(function () {
+          window.location.href = 'success.html';
+        }, 1200);
+      });
+
+    })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acquisition Cart | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="py-4 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container px-4 px-lg-5">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-1">
+            ACQUISITION SUMMARY (A3)
+          </span>
+          <h1 class="h2 font-serif text-light mb-0">Your Reserved Vehicle Cart</h1>
+        </div>
+        <a href="../catalog/index.html" class="btn btn-outline-secondary btn-sm rounded-pill text-light">
+          <i class="bi bi-arrow-left me-1"></i> Continue Browsing
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <!-- Empty Cart State -->
+      <div id="cart-empty" class="text-center py-5 p-4 bg-charcoal rounded-3 border border-secondary border-opacity-25 d-none">
+        <i class="bi bi-bag-x fs-1 text-secondary mb-3 d-block"></i>
+        <h2 class="font-serif text-gold">Your Acquisition Cart is Empty</h2>
+        <p class="text-secondary mx-auto" style="max-width: 480px;">
+          No vehicles have been reserved in your current session. Explore our verified collection of sports supercars, grand tourers, and luxury sedans.
+        </p>
+        <a href="../catalog/index.html" class="btn btn-gold px-4 py-2 mt-2">Explore Vehicle Collection</a>
+      </div>
+
+      <!-- Active Cart Grid -->
+      <div id="cart-content" class="row g-5">
+
+        <!-- Left Column: Cart Items & Delivery Options -->
+        <div class="col-12 col-lg-8">
+          
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 font-serif text-gold mb-0">Reserved Vehicle Lines</h2>
+            <span class="text-secondary small" id="cart-items-counter">1 Vehicle</span>
+          </div>
+
+          <div id="cart-items-list" class="d-flex flex-column gap-3 mb-5" data-testid="cart-items-container">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Delivery Method Selection (A3) -->
+          <div class="bg-charcoal p-4 rounded-3 border border-gold-subtle">
+            <h2 class="h5 font-serif text-gold mb-2">Fulfillment &amp; Delivery Selection</h2>
+            <p class="text-secondary small mb-3">
+              Select how you would like to receive your verified automobile.
+            </p>
+
+            <div class="d-flex flex-column gap-3">
+              <div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-50">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="deliveryMethod" id="deliv-trailer" value="1" checked>
+                  <label class="form-check-label w-100 ms-2" for="deliv-trailer">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-bold text-light">
+                        <i class="bi bi-truck text-gold me-2"></i> Specialized Enclosed Trailer Delivery
+                      </span>
+                      <span class="font-monospace text-gold fw-bold">+€490</span>
+                    </div>
+                    <div class="text-secondary small mt-1">
+                      Direct white-glove transport to your residence or corporate address anywhere in Romania. Fully insured enclosed carrier with zero road wear.
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-50">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="deliveryMethod" id="deliv-showroom" value="0">
+                  <label class="form-check-label w-100 ms-2" for="deliv-showroom">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-bold text-light">
+                        <i class="bi bi-building text-gold me-2"></i> VIP Showroom Handover &amp; Champagne Reception
+                      </span>
+                      <span class="font-monospace text-success fw-bold">FREE (€0)</span>
+                    </div>
+                    <div class="text-secondary small mt-1">
+                      Personal handover ceremony at our boutique in Calea Floreasca 169A, Bucharest. Dedicated technical briefing and documentation transfer.
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Order Financial Summary -->
+        <div class="col-lg-4">
+          <div class="p-4 bg-charcoal rounded-3 border border-gold sticky-top" style="top: 100px;">
+            <h2 class="h5 font-serif text-gold mb-3 border-bottom border-secondary border-opacity-25 pb-3">
+              Acquisition Summary
+            </h2>
+
+            <div class="d-flex justify-content-between py-2 text-secondary">
+              <span>Vehicle Subtotal:</span>
+              <span class="font-monospace text-light fw-semibold" id="cart-subtotal">€0</span>
+            </div>
+
+            <div class="d-flex justify-content-between py-2 text-secondary">
+              <span>Delivery Option:</span>
+              <span class="font-monospace text-light fw-semibold" id="cart-delivery-fee">€490</span>
+            </div>
+
+            <div class="d-flex justify-content-between py-2 text-secondary small">
+              <span>Included VAT (19% RO):</span>
+              <span class="font-monospace text-secondary" id="cart-vat">€0</span>
+            </div>
+
+            <div class="d-flex justify-content-between py-3 border-top border-secondary border-opacity-50 mt-3 align-items-baseline">
+              <span class="h5 font-serif text-gold mb-0">Total Due:</span>
+              <span class="h3 font-serif text-gold fw-bold font-monospace mb-0" id="cart-total">€0</span>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <a href="../checkout/index.html" class="btn btn-gold btn-lg py-3 rounded-2 fw-bold tracking-wide" id="cart-checkout-btn" data-testid="proceed-checkout-btn">
+                Proceed to Checkout <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+
+            <div class="mt-4 p-3 bg-dark-alt rounded small text-secondary border border-secondary border-opacity-25">
+              <div class="d-flex align-items-center gap-2 text-gold mb-1 fw-semibold">
+                <i class="bi bi-lock-fill"></i> Secured Checkout
+              </div>
+              Stripe sandbox escrow processing. Bank transfer and corporate purchase orders supported with official fiscal invoice.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var emptyEl = document.getElementById('cart-empty');
+      var contentEl = document.getElementById('cart-content');
+      var listEl = document.getElementById('cart-items-list');
+      var counterEl = document.getElementById('cart-items-counter');
+      var subtotalEl = document.getElementById('cart-subtotal');
+      var deliveryFeeEl = document.getElementById('cart-delivery-fee');
+      var vatEl = document.getElementById('cart-vat');
+      var totalEl = document.getElementById('cart-total');
+
+      function renderCart() {
+        window.Api.getCart().then(function (cart) {
+          if (!cart.items || !cart.items.length) {
+            contentEl.classList.add('d-none');
+            emptyEl.classList.remove('d-none');
+            return;
+          }
+
+          emptyEl.classList.add('d-none');
+          contentEl.classList.remove('d-none');
+
+          counterEl.textContent = cart.items.length + (cart.items.length === 1 ? ' Vehicle Line' : ' Vehicle Lines');
+
+          // Render line items
+          var linesHtml = '';
+          cart.items.forEach(function (item) {
+            var car = item.Car;
+            var fullTitle = car.Year + ' ' + car.Make + ' ' + car.Model;
+            linesHtml += '<div class="p-3 bg-charcoal rounded-3 border border-secondary border-opacity-50 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3" data-testid="cart-item-' + window.UI.escapeHtml(car.Vin) + '">' +
+              '<div class="d-flex align-items-center gap-3">' +
+                '<img src="' + window.UI.escapeHtml(car.PrimaryImageUrl) + '" alt="' + window.UI.escapeHtml(fullTitle) + '" class="rounded border border-secondary border-opacity-25 object-fit-cover" style="width: 120px; height: 80px;">' +
+                '<div>' +
+                  '<div class="badge bg-gold-subtle text-gold small mb-1">' + window.UI.escapeHtml(car.Category) + '</div>' +
+                  '<h3 class="h6 font-serif text-light mb-1">' +
+                    '<a href="../catalog/details.html?vin=' + encodeURIComponent(car.Vin) + '" class="text-light text-decoration-none hover-gold">' +
+                      window.UI.escapeHtml(fullTitle) +
+                    '</a>' +
+                  '</h3>' +
+                  '<div class="text-secondary small font-monospace">' +
+                    'VIN: <span class="text-gold">' + window.UI.escapeHtml(car.Vin) + '</span>' +
+                    '<button type="button" class="btn btn-link btn-sm text-secondary p-0 ms-1 hover-gold" onclick="window.UI.copyVin(\'' + window.UI.escapeHtml(car.Vin) + '\', this)" title="Copy VIN" aria-label="Copy VIN">' +
+                      '<i class="bi bi-clipboard"></i>' +
+                    '</button>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="text-sm-end d-flex flex-sm-column justify-content-between align-items-end">' +
+                '<div class="h5 font-serif text-gold mb-1">' + window.UI.formatCurrency(item.UnitPrice) + '</div>' +
+                '<button type="button" class="btn btn-link btn-sm text-danger text-decoration-none p-0 hover-gold" onclick="removeCar(\'' + window.UI.escapeHtml(car.Vin) + '\')">' +
+                  '<i class="bi bi-trash3 me-1"></i> Remove' +
+                '</button>' +
+              '</div>' +
+            '</div>';
+          });
+          listEl.innerHTML = linesHtml;
+
+          // Delivery radio state
+          var trailerRadio = document.getElementById('deliv-trailer');
+          var showroomRadio = document.getElementById('deliv-showroom');
+          if (cart.deliveryOption === 0) {
+            showroomRadio.checked = true;
+          } else {
+            trailerRadio.checked = true;
+          }
+
+          // Totals
+          subtotalEl.textContent = window.UI.formatCurrency(cart.subtotal);
+          deliveryFeeEl.textContent = cart.deliveryFee === 0 ? 'FREE (€0)' : window.UI.formatCurrency(cart.deliveryFee);
+          vatEl.textContent = window.UI.formatCurrency((cart.total * 0.19) / 1.19);
+          totalEl.textContent = window.UI.formatCurrency(cart.total);
+        });
+      }
+
+      window.removeCar = function (vin) {
+        window.Cart.removeFromCart(vin).then(renderCart);
+      };
+
+      // Delivery radio change
+      document.querySelectorAll('input[name="deliveryMethod"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+          window.Api.updateCartDelivery(this.value).then(renderCart);
+        });
+      });
+
+      renderCart();
+
+    })();
+  </script>
+</body>
+</html>
+

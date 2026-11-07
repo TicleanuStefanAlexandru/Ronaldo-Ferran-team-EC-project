@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Addresses | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="py-4 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container px-4 px-lg-5">
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+        <div>
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-1">
+            CLIENT ADDRESS BOOK (A4, A5)
+          </span>
+          <h1 class="h2 font-serif text-light mb-0">Delivery &amp; Billing Addresses</h1>
+        </div>
+        <button type="button" class="btn btn-gold btn-sm px-3 py-2 rounded-2" data-bs-toggle="modal" data-bs-target="#addressModal" id="btn-open-add-address">
+          <i class="bi bi-plus-lg me-1"></i> Add New Address
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Addresses Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <!-- Addresses Table Card -->
+      <div class="card-luxury p-0 overflow-hidden mb-4">
+        <div class="p-4 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+          <h2 class="h5 font-serif text-gold mb-0">Saved Destinations in Romania</h2>
+          <span class="text-secondary small" id="addresses-count-text">Loading addresses...</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-luxury align-middle mb-0" data-testid="addresses-table">
+            <thead>
+              <tr>
+                <th>Street &amp; Number</th>
+                <th>City</th>
+                <th>County (Județ)</th>
+                <th>Postal Code</th>
+                <th>Country</th>
+                <th class="text-center">Default</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="addresses-table-body">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="addresses-empty" class="text-center py-5 d-none">
+          <i class="bi bi-geo-alt fs-1 text-secondary mb-2 d-block"></i>
+          <h3 class="h5 font-serif text-gold">No Addresses Saved Yet</h3>
+          <p class="text-secondary small mx-auto" style="max-width: 420px;">
+            Save your corporate or private residential address for expedited enclosed delivery.
+          </p>
+          <button type="button" class="btn btn-outline-gold btn-sm px-4 py-2 mt-2" data-bs-toggle="modal" data-bs-target="#addressModal">
+            Add First Address
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add / Edit Address Modal -->
+  <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-charcoal text-light border-gold shadow-lg">
+        <div class="modal-header border-secondary border-opacity-25">
+          <h5 class="modal-title font-serif text-gold" id="addressModalLabel">Add Delivery Address</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="address-form" novalidate>
+          <!-- Hidden Anti-Forgery Token (A10) -->
+          <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-address-modal">
+          <input type="hidden" id="modal-address-id" value="">
+
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label for="modal-street" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Street &amp; Number <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="modal-street" placeholder="e.g. Str. Aviatorilor 12" required>
+              <div class="invalid-feedback">Street is required.</div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label for="modal-city" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">City <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="modal-city" placeholder="e.g. Bucharest" required>
+                <div class="invalid-feedback">City is required.</div>
+              </div>
+              <div class="col-6">
+                <label for="modal-county" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">County <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="modal-county" placeholder="e.g. București" required>
+                <div class="invalid-feedback">County is required.</div>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label for="modal-postal" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Postal Code (6 Digits) <span class="text-danger">*</span></label>
+                <input type="text" class="form-control font-monospace" id="modal-postal" placeholder="e.g. 011861" maxlength="6" pattern="[0-9]{6}" required>
+                <div class="invalid-feedback">Exactly 6 numeric digits required (e.g. 011861).</div>
+              </div>
+              <div class="col-6">
+                <label for="modal-country" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Country</label>
+                <input type="text" class="form-control" id="modal-country" value="Romania" readonly>
+              </div>
+            </div>
+
+            <div class="form-check mt-3">
+              <input class="form-check-input" type="checkbox" id="modal-default">
+              <label class="form-check-label small text-secondary" for="modal-default">
+                Set as my primary delivery address
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer border-secondary border-opacity-25">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-gold btn-sm px-4" id="modal-save-btn">Save Address</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      if (!window.Auth.requireAuth()) return;
+
+      var user = window.Auth.getCurrentUser();
+      var tbody = document.getElementById('addresses-table-body');
+      var emptyEl = document.getElementById('addresses-empty');
+      var countText = document.getElementById('addresses-count-text');
+
+      var modalEl = document.getElementById('addressModal');
+      var bsModal = new window.bootstrap.Modal(modalEl);
+      var form = document.getElementById('address-form');
+      var modalTitle = document.getElementById('addressModalLabel');
+      var idInput = document.getElementById('modal-address-id');
+      var streetInput = document.getElementById('modal-street');
+      var cityInput = document.getElementById('modal-city');
+      var countyInput = document.getElementById('modal-county');
+      var postalInput = document.getElementById('modal-postal');
+      var defaultInput = document.getElementById('modal-default');
+
+      var currentAddresses = [];
+
+      function loadAddresses() {
+        window.Api.getAddresses(user ? user.Id : null).then(function (addresses) {
+          currentAddresses = addresses;
+          if (!addresses || !addresses.length) {
+            tbody.innerHTML = '';
+            emptyEl.classList.remove('d-none');
+            countText.textContent = '0 Addresses';
+            return;
+          }
+
+          emptyEl.classList.add('d-none');
+          countText.textContent = addresses.length + (addresses.length === 1 ? ' Destination' : ' Destinations');
+
+          var rowsHtml = '';
+          addresses.forEach(function (addr) {
+            var defaultBadge = addr.IsDefault
+              ? '<span class="badge bg-gold text-dark font-monospace"><i class="bi bi-check2"></i> Default</span>'
+              : '<button type="button" class="btn btn-link btn-sm text-secondary hover-gold p-0" onclick="makeDefault(' + addr.Id + ')">Set Default</button>';
+
+            rowsHtml += '<tr data-testid="address-row-' + addr.Id + '">' +
+              '<td class="fw-bold text-light">' + window.UI.escapeHtml(addr.Street) + '</td>' +
+              '<td>' + window.UI.escapeHtml(addr.City) + '</td>' +
+              '<td>' + window.UI.escapeHtml(addr.County) + '</td>' +
+              '<td class="font-monospace text-gold">' + window.UI.escapeHtml(addr.PostalCode) + '</td>' +
+              '<td class="text-secondary small">' + window.UI.escapeHtml(addr.Country) + '</td>' +
+              '<td class="text-center">' + defaultBadge + '</td>' +
+              '<td class="text-end">' +
+                '<button type="button" class="btn btn-outline-secondary btn-sm me-2" onclick="editAddress(' + addr.Id + ')">' +
+                  '<i class="bi bi-pencil"></i> Edit' +
+                '</button>' +
+                '<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteAddress(' + addr.Id + ')">' +
+                  '<i class="bi bi-trash"></i>' +
+                '</button>' +
+              '</td>' +
+            '</tr>';
+          });
+
+          tbody.innerHTML = rowsHtml;
+        });
+      }
+
+      document.getElementById('btn-open-add-address').addEventListener('click', function () {
+        modalTitle.textContent = 'Add Delivery Address';
+        idInput.value = '';
+        streetInput.value = '';
+        cityInput.value = '';
+        countyInput.value = '';
+        postalInput.value = '';
+        defaultInput.checked = false;
+        streetInput.classList.remove('is-invalid');
+        postalInput.classList.remove('is-invalid');
+      });
+
+      window.editAddress = function (id) {
+        var found = currentAddresses.find(function (a) { return a.Id === Number(id); });
+        if (!found) return;
+        modalTitle.textContent = 'Edit Delivery Address';
+        idInput.value = found.Id;
+        streetInput.value = found.Street;
+        cityInput.value = found.City;
+        countyInput.value = found.County;
+        postalInput.value = found.PostalCode;
+        defaultInput.checked = Boolean(found.IsDefault);
+        bsModal.show();
+      };
+
+      window.deleteAddress = function (id) {
+        if (confirm("Remove this delivery destination from your address book?")) {
+          window.Api.deleteAddress(id).then(function () {
+            window.UI.showToast("Address deleted.", "info");
+            loadAddresses();
+          });
+        }
+      };
+
+      window.makeDefault = function (id) {
+        window.Api.setDefaultAddress(id, user.Id).then(function () {
+          window.UI.showToast("Default delivery destination updated.", "success");
+          loadAddresses();
+        });
+      };
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var street = streetInput.value.trim();
+        var city = cityInput.value.trim();
+        var county = countyInput.value.trim();
+        var postal = postalInput.value.trim();
+
+        var isValid = true;
+        if (!street) { streetInput.classList.add('is-invalid'); isValid = false; } else { streetInput.classList.remove('is-invalid'); }
+        if (!city) { cityInput.classList.add('is-invalid'); isValid = false; } else { cityInput.classList.remove('is-invalid'); }
+        if (!county) { countyInput.classList.add('is-invalid'); isValid = false; } else { countyInput.classList.remove('is-invalid'); }
+
+        // Romanian postal code check
+        if (!/^\d{6}$/.test(postal)) {
+          postalInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          postalInput.classList.remove('is-invalid');
+        }
+
+        if (!isValid) return;
+
+        var payload = {
+          Id: idInput.value ? Number(idInput.value) : null,
+          UserId: user.Id,
+          Street: street,
+          City: city,
+          County: county,
+          PostalCode: postal,
+          Country: "Romania",
+          IsDefault: defaultInput.checked
+        };
+
+        window.Api.saveAddress(payload).then(function () {
+          bsModal.hide();
+          window.UI.showToast("Address saved successfully.", "success");
+          loadAddresses();
+        }).catch(function (err) {
+          window.UI.showToast(err.message, "error");
+        });
+
+      });
+
+      loadAddresses();
+
+    })();
+  </script>
+</body>
+</html>
+

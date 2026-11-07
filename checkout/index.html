@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acquisition Checkout | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Checkout Stepper Bar -->
+  <section class="py-4 bg-charcoal border-bottom border-gold-subtle">
+    <div class="container px-4 px-lg-5">
+      <div class="checkout-stepper mb-0">
+        <div class="step-item active" id="step-indicator-1">
+          <div class="step-number">1</div>
+          <span class="d-none d-sm-inline">Contact &amp; Delivery Address</span>
+        </div>
+        <div class="step-divider" id="step-divider-1"></div>
+        <div class="step-item" id="step-indicator-2">
+          <div class="step-number">2</div>
+          <span class="d-none d-sm-inline">Order Review &amp; Payment</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checkout Content -->
+  <main class="py-5">
+    <div class="container px-4 px-lg-5">
+
+      <div class="row g-5">
+
+        <!-- Left Column: Multi-Step Forms -->
+        <div class="col-lg-8">
+
+          <!-- ================= STEP 1: ADDRESS & CONTACT ================= -->
+          <div id="checkout-step-1" class="bg-charcoal p-4 p-md-5 rounded-3 border border-gold-subtle">
+            <h2 class="h4 font-serif text-gold mb-1">Step 1: Contact &amp; Delivery Destination (A5)</h2>
+            <p class="text-secondary small mb-4">
+              Enter your verified delivery destination in Romania or choose from your saved addresses.
+            </p>
+
+            <form id="checkout-address-form" novalidate>
+              <!-- Hidden Anti-Forgery Token (A10) -->
+              <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-checkout-step1">
+
+              <!-- Recipient Name -->
+              <div class="mb-4">
+                <label for="checkout-recipient" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                  Recipient Legal Name / Entity <span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control" id="checkout-recipient" placeholder="e.g. John Doe or SC Prestige Holding SRL" required>
+                <div class="invalid-feedback">Please enter the recipient full legal name.</div>
+              </div>
+
+              <!-- Saved Addresses Picker (if logged in and has addresses) -->
+              <div id="saved-address-section" class="mb-4 d-none">
+                <label for="saved-address-select" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                  Saved Account Addresses
+                </label>
+                <select class="form-select" id="saved-address-select">
+                  <!-- Injected dynamically -->
+                </select>
+                <div class="text-secondary small mt-2">
+                  <button type="button" class="btn btn-link btn-sm text-gold p-0 text-decoration-none" id="btn-use-custom-address">
+                    <i class="bi bi-plus-circle me-1"></i> Or enter a different destination address
+                  </button>
+                </div>
+              </div>
+
+              <!-- Address Inputs -->
+              <div id="custom-address-fields">
+                <div class="mb-3">
+                  <label for="checkout-street" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                    Street &amp; Number <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" id="checkout-street" placeholder="e.g. Str. Aviatorilor 12, Corp A" required>
+                  <div class="invalid-feedback">Street address is required.</div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label for="checkout-city" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                      City / Municipality <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="checkout-city" placeholder="e.g. Bucharest" required>
+                    <div class="invalid-feedback">City is required.</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="checkout-county" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                      County (Județ) <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="checkout-county" placeholder="e.g. București or Cluj" required>
+                    <div class="invalid-feedback">County is required.</div>
+                  </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6">
+                    <label for="checkout-postal" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                      Romanian Postal Code (6 Digits) <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control font-monospace" id="checkout-postal" placeholder="e.g. 011861" maxlength="6" pattern="[0-9]{6}" required>
+                    <div class="invalid-feedback" id="postal-feedback">Must be exactly 6 digits (e.g. 011861).</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="checkout-country" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                      Country
+                    </label>
+                    <input type="text" class="form-control" id="checkout-country" value="Romania" readonly>
+                  </div>
+                </div>
+
+                <!-- Save Address Checkbox -->
+                <div class="form-check mb-4" id="save-address-check-wrapper">
+                  <input class="form-check-input" type="checkbox" id="checkout-save-address" checked>
+                  <label class="form-check-label small text-secondary" for="checkout-save-address">
+                    Save this address to my account for future acquisitions
+                  </label>
+                </div>
+              </div>
+
+              <!-- Terms & Verification Acceptance -->
+              <div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-50 mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="checkout-terms" required>
+                  <label class="form-check-label small text-light" for="checkout-terms">
+                    I acknowledge that pre-owned vehicles listed on RF Prestige are unique, single-unit inventory with verified 180-point technical inspection, and I accept the acquisition terms and conditions. <span class="text-danger">*</span>
+                  </label>
+                  <div class="invalid-feedback">You must accept the acquisition terms to proceed.</div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-gold btn-lg px-4 py-2" id="checkout-step1-btn">
+                  Continue to Order Review <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- ================= STEP 2: REVIEW ORDER ================= -->
+          <div id="checkout-step-2" class="bg-charcoal p-4 p-md-5 rounded-3 border border-gold-subtle d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h2 class="h4 font-serif text-gold mb-1">Step 2: Review Acquisition &amp; Proceed to Payment</h2>
+                <p class="text-secondary small mb-0">Please review all transaction details before proceeding to the Stripe payment gateway.</p>
+              </div>
+              <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-back-to-step-1">
+                <i class="bi bi-pencil me-1"></i> Edit Address
+              </button>
+            </div>
+
+            <!-- Recipient & Address Summary -->
+            <div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-50 mb-4">
+              <div class="text-gold small text-uppercase tracking-wider fw-bold mb-1">Delivery Destination</div>
+              <div class="fw-bold text-light" id="review-recipient-name"></div>
+              <div class="text-secondary small" id="review-address-text"></div>
+              <div class="text-secondary small mt-1">
+                Fulfillment: <span class="text-gold fw-semibold" id="review-delivery-text"></span>
+              </div>
+            </div>
+
+            <!-- Order Lines List -->
+            <div class="mb-4">
+              <h3 class="h6 text-gold text-uppercase tracking-wider fw-bold mb-3">Vehicle Details</h3>
+              <div id="review-items-list" class="d-flex flex-column gap-3">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Proceed to Payment Action -->
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 pt-4 border-top border-secondary border-opacity-50">
+              <button type="button" class="btn btn-outline-secondary px-4 py-2 w-100 w-sm-auto" id="btn-back-step-2">
+                <i class="bi bi-arrow-left me-1"></i> Back to Contact Info
+              </button>
+              <button type="button" class="btn btn-gold btn-lg px-5 py-3 w-100 w-sm-auto fw-bold tracking-wide" id="btn-proceed-stripe" data-testid="proceed-stripe-btn">
+                <i class="bi bi-credit-card me-2"></i> Proceed to Stripe Payment
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Live Order Summary -->
+        <div class="col-lg-4">
+          <div class="p-4 bg-charcoal rounded-3 border border-gold sticky-top" style="top: 100px;">
+            <h2 class="h5 font-serif text-gold mb-3 border-bottom border-secondary border-opacity-25 pb-3">
+              Order Breakdown
+            </h2>
+
+            <div id="checkout-sidebar-items" class="mb-3">
+              <!-- Dynamically populated with vehicle lines -->
+            </div>
+
+            <div class="border-top border-secondary border-opacity-25 pt-3">
+              <div class="d-flex justify-content-between py-1 text-secondary small">
+                <span>Vehicle Subtotal:</span>
+                <span class="font-monospace text-light" id="sidebar-subtotal">€0</span>
+              </div>
+              <div class="d-flex justify-content-between py-1 text-secondary small">
+                <span>Delivery Charge:</span>
+                <span class="font-monospace text-light" id="sidebar-delivery">€490</span>
+              </div>
+              <div class="d-flex justify-content-between py-1 text-secondary small">
+                <span>Included Romanian VAT (19%):</span>
+                <span class="font-monospace text-light" id="sidebar-vat">€0</span>
+              </div>
+              <div class="d-flex justify-content-between py-3 border-top border-secondary border-opacity-50 mt-2 align-items-baseline">
+                <span class="h5 font-serif text-gold mb-0">Total Due:</span>
+                <span class="h4 font-serif text-gold font-monospace fw-bold mb-0" id="sidebar-total">€0</span>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-dark-alt rounded small text-secondary border border-secondary border-opacity-25">
+              <div class="d-flex align-items-center gap-2 text-gold mb-1 fw-semibold">
+                <i class="bi bi-shield-lock-fill"></i> Stripe Test Sandbox
+              </div>
+              Transactions are processed in mock sandbox mode using test card <span class="font-monospace text-light">4242 4242 4242 4242</span>.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var currentCart = null;
+      var selectedAddressData = null;
+
+      var step1Box = document.getElementById('checkout-step-1');
+      var step2Box = document.getElementById('checkout-step-2');
+      var stepInd1 = document.getElementById('step-indicator-1');
+      var stepInd2 = document.getElementById('step-indicator-2');
+      var stepDivider = document.getElementById('step-divider-1');
+
+      var addressForm = document.getElementById('checkout-address-form');
+      var recipientInput = document.getElementById('checkout-recipient');
+      var streetInput = document.getElementById('checkout-street');
+      var cityInput = document.getElementById('checkout-city');
+      var countyInput = document.getElementById('checkout-county');
+      var postalInput = document.getElementById('checkout-postal');
+      var saveAddressCheck = document.getElementById('checkout-save-address');
+      var termsCheck = document.getElementById('checkout-terms');
+
+      var savedAddressSection = document.getElementById('saved-address-section');
+      var savedAddressSelect = document.getElementById('saved-address-select');
+      var btnUseCustom = document.getElementById('btn-use-custom-address');
+      var customAddressFields = document.getElementById('custom-address-fields');
+
+      var reviewRecipient = document.getElementById('review-recipient-name');
+      var reviewAddress = document.getElementById('review-address-text');
+      var reviewDelivery = document.getElementById('review-delivery-text');
+      var reviewItemsList = document.getElementById('review-items-list');
+
+      var sidebarItems = document.getElementById('checkout-sidebar-items');
+      var sidebarSubtotal = document.getElementById('sidebar-subtotal');
+      var sidebarDelivery = document.getElementById('sidebar-delivery');
+      var sidebarVat = document.getElementById('sidebar-vat');
+      var sidebarTotal = document.getElementById('sidebar-total');
+
+      var proceedStripeBtn = document.getElementById('btn-proceed-stripe');
+
+      // 1. Check cart status
+      window.Api.getCart().then(function (cart) {
+        if (!cart.items || !cart.items.length) {
+          window.location.href = '../cart/index.html';
+          return;
+        }
+        currentCart = cart;
+        renderSidebarSummary();
+      });
+
+      // 2. Prefill user info and saved addresses
+      var currentUser = window.Auth ? window.Auth.getCurrentUser() : null;
+      if (currentUser) {
+        recipientInput.value = currentUser.FirstName + ' ' + currentUser.LastName;
+        loadSavedAddresses(currentUser.Id);
+      }
+
+      function loadSavedAddresses(userId) {
+        window.Api.getAddresses(userId).then(function (addresses) {
+          if (!addresses || !addresses.length) return;
+
+          savedAddressSection.classList.remove('d-none');
+          savedAddressSelect.innerHTML = '<option value="">-- Choose a Saved Delivery Address --</option>';
+
+          addresses.forEach(function (addr) {
+            var isDef = addr.IsDefault ? ' (Default)' : '';
+            var opt = document.createElement('option');
+            opt.value = addr.Id;
+            opt.textContent = addr.Street + ', ' + addr.City + ' (' + addr.PostalCode + ')' + isDef;
+            if (addr.IsDefault) opt.selected = true;
+            savedAddressSelect.appendChild(opt);
+          });
+
+          if (savedAddressSelect.value) {
+            applySelectedSavedAddress(savedAddressSelect.value, addresses);
+          }
+
+          savedAddressSelect.addEventListener('change', function () {
+            if (this.value) {
+              applySelectedSavedAddress(this.value, addresses);
+            }
+          });
+        });
+      }
+
+      function applySelectedSavedAddress(addressId, list) {
+        var found = list.find(function (a) { return a.Id === Number(addressId); });
+        if (found) {
+          streetInput.value = found.Street;
+          cityInput.value = found.City;
+          countyInput.value = found.County;
+          postalInput.value = found.PostalCode;
+          selectedAddressData = found;
+        }
+      }
+
+      btnUseCustom.addEventListener('click', function () {
+        savedAddressSelect.value = '';
+        streetInput.value = '';
+        cityInput.value = '';
+        countyInput.value = '';
+        postalInput.value = '';
+        streetInput.focus();
+      });
+
+      function renderSidebarSummary() {
+        if (!currentCart) return;
+
+        var itemsHtml = '';
+        currentCart.items.forEach(function (item) {
+          itemsHtml += '<div class="d-flex align-items-center justify-content-between py-2 border-bottom border-secondary border-opacity-25">' +
+            '<div>' +
+              '<div class="fw-bold small text-light">' + window.UI.escapeHtml(item.Car.Year + ' ' + item.Car.Make + ' ' + item.Car.Model) + '</div>' +
+              '<div class="text-secondary small font-monospace">VIN: ' + window.UI.escapeHtml(item.Car.Vin) + '</div>' +
+            '</div>' +
+            '<div class="font-monospace text-gold small fw-bold">' + window.UI.formatCurrency(item.UnitPrice) + '</div>' +
+          '</div>';
+        });
+
+        sidebarItems.innerHTML = itemsHtml;
+        sidebarSubtotal.textContent = window.UI.formatCurrency(currentCart.subtotal);
+        sidebarDelivery.textContent = currentCart.deliveryFee === 0 ? 'FREE (€0)' : window.UI.formatCurrency(currentCart.deliveryFee);
+        sidebarVat.textContent = window.UI.formatCurrency((currentCart.total * 0.19) / 1.19);
+        sidebarTotal.textContent = window.UI.formatCurrency(currentCart.total);
+      }
+
+      // Step 1 Validation & Proceed to Step 2
+      addressForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validation
+        var recipient = recipientInput.value.trim();
+        var street = streetInput.value.trim();
+        var city = cityInput.value.trim();
+        var county = countyInput.value.trim();
+        var postal = postalInput.value.trim();
+
+        var isValid = true;
+
+        if (!recipient) {
+          recipientInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          recipientInput.classList.remove('is-invalid');
+        }
+
+        if (!street) {
+          streetInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          streetInput.classList.remove('is-invalid');
+        }
+
+        if (!city) {
+          cityInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          cityInput.classList.remove('is-invalid');
+        }
+
+        if (!county) {
+          countyInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          countyInput.classList.remove('is-invalid');
+        }
+
+        // Postal code must be exactly 6 digits for Romania
+        if (!/^\d{6}$/.test(postal)) {
+          postalInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          postalInput.classList.remove('is-invalid');
+        }
+
+        if (!termsCheck.checked) {
+          termsCheck.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          termsCheck.classList.remove('is-invalid');
+        }
+
+        if (!isValid) return;
+
+        // Build address data
+        selectedAddressData = {
+          Id: selectedAddressData ? selectedAddressData.Id : null,
+          UserId: currentUser ? currentUser.Id : 'usr-cust-001',
+          Recipient: recipient,
+          Street: street,
+          City: city,
+          County: county,
+          PostalCode: postal,
+          Country: "Romania"
+        };
+
+        // If save address checked and logged in
+        if (currentUser && saveAddressCheck && saveAddressCheck.checked && !selectedAddressData.Id) {
+          window.Api.saveAddress(selectedAddressData).then(function (saved) {
+            selectedAddressData.Id = saved.Id;
+          });
+        }
+
+        // Switch to Step 2
+        goToStep2();
+      });
+
+      function goToStep2() {
+        step1Box.classList.add('d-none');
+        step2Box.classList.remove('d-none');
+
+        stepInd1.classList.remove('active');
+        stepInd1.classList.add('completed');
+        stepDivider.classList.add('active');
+        stepInd2.classList.add('active');
+
+        // Populate review details
+        reviewRecipient.textContent = selectedAddressData.Recipient;
+        reviewAddress.textContent = selectedAddressData.Street + ', ' + selectedAddressData.City + ', ' + selectedAddressData.County + ' ' + selectedAddressData.PostalCode + ', Romania';
+        reviewDelivery.textContent = currentCart.deliveryOption === 1 ? 'Enclosed Covered Transporter (+€490)' : 'VIP Showroom Reception (€0)';
+
+        var revHtml = '';
+        currentCart.items.forEach(function (item) {
+          revHtml += '<div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">' +
+            '<div>' +
+              '<div class="fw-bold text-light">' + window.UI.escapeHtml(item.Car.Year + ' ' + item.Car.Make + ' ' + item.Car.Model) + '</div>' +
+              '<div class="text-secondary small font-monospace">VIN: <span class="text-gold">' + window.UI.escapeHtml(item.Car.Vin) + '</span></div>' +
+              '<div class="text-secondary small">' + item.Car.Horsepower + ' HP • ' + window.UI.formatNumber(item.Car.Mileage) + ' km</div>' +
+            '</div>' +
+            '<div class="font-monospace text-gold h5 mb-0 fw-bold">' + window.UI.formatCurrency(item.UnitPrice) + '</div>' +
+          '</div>';
+        });
+        reviewItemsList.innerHTML = revHtml;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function goToStep1() {
+        step2Box.classList.add('d-none');
+        step1Box.classList.remove('d-none');
+
+        stepInd2.classList.remove('active');
+        stepDivider.classList.remove('active');
+        stepInd1.classList.remove('completed');
+        stepInd1.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.getElementById('btn-back-to-step-1').addEventListener('click', goToStep1);
+      document.getElementById('btn-back-step-2').addEventListener('click', goToStep1);
+
+      // Proceed to Stripe Payment
+      proceedStripeBtn.addEventListener('click', function () {
+        // Enforce authentication before payment (as per prompt A5)
+        if (!window.Auth.isAuthenticated()) {
+          window.UI.showToast("Authentication required before proceeding to payment.", "info");
+          setTimeout(function () {
+            var currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = '../account/login.html?returnUrl=' + currentUrl;
+          }, 1000);
+          return;
+        }
+
+        proceedStripeBtn.disabled = true;
+        proceedStripeBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Creating Stripe Session...';
+
+        var orderItems = currentCart.items.map(function (item, idx) {
+          return {
+            Id: 300 + idx,
+            CarVin: item.Car.Vin,
+            UnitPrice: item.UnitPrice,
+            VehicleTitle: item.Car.Year + ' ' + item.Car.Make + ' ' + item.Car.Model
+          };
+        });
+
+        var orderPayload = {
+          UserId: currentUser.Id,
+          CustomerName: selectedAddressData.Recipient,
+          CustomerEmail: currentUser.Email,
+          ShippingAddressId: selectedAddressData.Id || 1,
+          ShippingAddressText: selectedAddressData.Street + ', ' + selectedAddressData.City + ', ' + selectedAddressData.County + ' ' + selectedAddressData.PostalCode + ', Romania',
+          DeliveryOption: currentCart.deliveryOption,
+          TotalAmount: currentCart.total,
+          Items: orderItems
+        };
+
+        window.Api.createCheckoutSession(orderPayload).then(function (session) {
+          window.location.href = session.redirectUrl;
+        }).catch(function (err) {
+          proceedStripeBtn.disabled = false;
+          proceedStripeBtn.innerHTML = '<i class="bi bi-credit-card me-2"></i> Proceed to Stripe Payment';
+          window.UI.showToast(err.message, "error");
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
+

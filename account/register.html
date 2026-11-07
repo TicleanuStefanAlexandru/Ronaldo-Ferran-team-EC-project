@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Registration | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <main class="py-5 my-auto">
+    <div class="container px-4 px-lg-5" style="max-width: 580px;">
+
+      <div class="card-luxury p-4 p-md-5">
+        
+        <div class="text-center mb-4">
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+            PRIVATE MEMBERSHIP
+          </span>
+          <h1 class="h3 font-serif text-light fw-bold mb-1">Create Your Account</h1>
+          <p class="text-secondary small mb-0">Join Romania's premier luxury automotive acquisition community.</p>
+        </div>
+
+        <form id="register-form" novalidate data-testid="register-form">
+          <!-- Hidden Anti-Forgery Token (A10) -->
+          <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-register">
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="reg-first-name" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                First Name <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="reg-first-name" placeholder="John" required>
+              <div class="invalid-feedback">First name is required.</div>
+            </div>
+            <div class="col-md-6">
+              <label for="reg-last-name" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                Last Name <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="reg-last-name" placeholder="Doe" required>
+              <div class="invalid-feedback">Last name is required.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="reg-email" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+              Corporate / Personal Email <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark-alt border-gold-subtle text-gold">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <input type="email" class="form-control" id="reg-email" placeholder="name@domain.ro" required>
+            </div>
+            <div class="invalid-feedback">Valid email address is required.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="reg-password" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+              Security Password <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark-alt border-gold-subtle text-gold">
+                <i class="bi bi-key"></i>
+              </span>
+              <input type="password" class="form-control" id="reg-password" placeholder="Minimum 6 characters" minlength="6" required>
+            </div>
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
+          </div>
+
+          <!-- Alert for Register Error -->
+          <div class="alert alert-danger bg-danger bg-opacity-10 border-danger text-danger small py-2 d-none" id="register-alert" role="alert"></div>
+
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-gold btn-lg py-2" id="reg-submit-btn">
+              Complete Registration
+            </button>
+          </div>
+
+          <div class="text-center text-secondary small">
+            Already have an account? <a href="login.html" class="text-gold text-decoration-none hover-gold fw-semibold">Sign in here</a>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var form = document.getElementById('register-form');
+      var firstNameInput = document.getElementById('reg-first-name');
+      var lastNameInput = document.getElementById('reg-last-name');
+      var emailInput = document.getElementById('reg-email');
+      var passwordInput = document.getElementById('reg-password');
+      var alertBox = document.getElementById('register-alert');
+      var submitBtn = document.getElementById('reg-submit-btn');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var fn = firstNameInput.value.trim();
+        var ln = lastNameInput.value.trim();
+        var email = emailInput.value.trim();
+        var pass = passwordInput.value;
+
+        var isValid = true;
+        if (!fn) { firstNameInput.classList.add('is-invalid'); isValid = false; } else { firstNameInput.classList.remove('is-invalid'); }
+        if (!ln) { lastNameInput.classList.add('is-invalid'); isValid = false; } else { lastNameInput.classList.remove('is-invalid'); }
+        if (!email) { emailInput.classList.add('is-invalid'); isValid = false; } else { emailInput.classList.remove('is-invalid'); }
+        if (!pass || pass.length < 6) { passwordInput.classList.add('is-invalid'); isValid = false; } else { passwordInput.classList.remove('is-invalid'); }
+
+        if (!isValid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Registering...';
+        alertBox.classList.add('d-none');
+
+        window.Auth.register({
+          FirstName: fn,
+          LastName: ln,
+          Email: email,
+          Password: pass
+        }).then(function (user) {
+          window.UI.showToast("Account successfully registered!", "success");
+          setTimeout(function () {
+            window.location.href = '../catalog/index.html';
+          }, 800);
+        }).catch(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Complete Registration';
+          alertBox.textContent = err.message;
+          alertBox.classList.remove('d-none');
+        });
+
+      });
+
+    })();
+  </script>
+</body>
+</html>
+

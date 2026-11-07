@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Sign In | RF Prestige — Luxury Automobiles Bucharest</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body class="bg-obsidian text-light">
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <main class="py-5 my-auto">
+    <div class="container px-4 px-lg-5" style="max-width: 520px;">
+
+      <div class="card-luxury p-4 p-md-5">
+        
+        <div class="text-center mb-4">
+          <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+            CLIENT PORTAL
+          </span>
+          <h1 class="h3 font-serif text-light fw-bold mb-1">Sign In to RF Prestige</h1>
+          <p class="text-secondary small mb-0">Access private wishlist, order documents, and delivery addresses.</p>
+        </div>
+
+        <!-- Quick Demo Accounts Autofill -->
+        <div class="p-3 bg-dark-alt rounded border border-gold-subtle mb-4">
+          <div class="text-gold small text-uppercase tracking-wider fw-bold mb-2 text-center">
+            <i class="bi bi-person-badge me-1"></i> Quick Demo Access
+          </div>
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-outline-gold-subtle btn-sm text-start py-2 d-flex justify-content-between align-items-center" id="btn-fill-customer">
+              <span><i class="bi bi-person text-gold me-2"></i><strong>Customer:</strong> customer@rfprestige.ro</span>
+              <span class="badge bg-gold text-dark" style="font-size: 0.65rem;">DEMO</span>
+            </button>
+            <button type="button" class="btn btn-outline-gold-subtle btn-sm text-start py-2 d-flex justify-content-between align-items-center" id="btn-fill-admin">
+              <span><i class="bi bi-shield-lock text-gold me-2"></i><strong>Admin:</strong> admin@rfprestige.ro</span>
+              <span class="badge bg-danger text-white" style="font-size: 0.65rem;">STAFF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" novalidate data-testid="login-form">
+          <!-- Hidden Anti-Forgery Token (A10) -->
+          <input type="hidden" name="__RequestVerificationToken" value="cf-anti-forgery-token-login">
+
+          <div class="mb-3">
+            <label for="login-email" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+              Email Address <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark-alt border-gold-subtle text-gold">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <input type="email" class="form-control" id="login-email" placeholder="name@domain.ro" required>
+            </div>
+            <div class="invalid-feedback" id="email-error">Please enter a valid email address.</div>
+          </div>
+
+          <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label for="login-password" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-0">
+                Password <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text bg-dark-alt border-gold-subtle text-gold">
+                <i class="bi bi-key"></i>
+              </span>
+              <input type="password" class="form-control" id="login-password" placeholder="••••••••" required>
+              <button class="btn btn-outline-secondary border-gold-subtle text-secondary" type="button" id="btn-toggle-password" aria-label="Toggle password visibility">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" id="password-error">Password is required.</div>
+          </div>
+
+          <!-- Alert for Login Error -->
+          <div class="alert alert-danger bg-danger bg-opacity-10 border-danger text-danger small py-2 d-none" id="login-alert" role="alert"></div>
+
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-gold btn-lg py-2" id="login-submit-btn" data-testid="login-submit-btn">
+              Sign In
+            </button>
+          </div>
+
+          <div class="text-center text-secondary small">
+            Do not have an account yet? <a href="register.html" class="text-gold text-decoration-none hover-gold fw-semibold">Register here</a>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/mockdata.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/wishlist.js"></script>
+  <script src="../assets/js/partials.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var form = document.getElementById('login-form');
+      var emailInput = document.getElementById('login-email');
+      var passwordInput = document.getElementById('login-password');
+      var togglePassBtn = document.getElementById('btn-toggle-password');
+      var alertBox = document.getElementById('login-alert');
+      var submitBtn = document.getElementById('login-submit-btn');
+
+      var fillCustBtn = document.getElementById('btn-fill-customer');
+      var fillAdminBtn = document.getElementById('btn-fill-admin');
+
+      // Autofill buttons
+      fillCustBtn.addEventListener('click', function () {
+        emailInput.value = 'customer@rfprestige.ro';
+        passwordInput.value = 'Demo123!';
+        alertBox.classList.add('d-none');
+      });
+
+      fillAdminBtn.addEventListener('click', function () {
+        emailInput.value = 'admin@rfprestige.ro';
+        passwordInput.value = 'Admin123!';
+        alertBox.classList.add('d-none');
+      });
+
+      // Show / Hide Password
+      togglePassBtn.addEventListener('click', function () {
+        var icon = this.querySelector('i');
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.className = 'bi bi-eye-slash';
+        } else {
+          passwordInput.type = 'password';
+          icon.className = 'bi bi-eye';
+        }
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var email = emailInput.value.trim();
+        var pass = passwordInput.value;
+
+        var isValid = true;
+        if (!email) {
+          emailInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          emailInput.classList.remove('is-invalid');
+        }
+
+        if (!pass) {
+          passwordInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          passwordInput.classList.remove('is-invalid');
+        }
+
+        if (!isValid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Authenticating...';
+        alertBox.classList.add('d-none');
+
+        window.Auth.login(email, pass).then(function (user) {
+          window.UI.showToast("Welcome back, " + user.FirstName + "!", "success");
+
+          // Check for returnUrl
+          var params = new URLSearchParams(window.location.search);
+          var returnUrl = params.get('returnUrl');
+
+          setTimeout(function () {
+            if (returnUrl) {
+              window.location.href = decodeURIComponent(returnUrl);
+            } else if (user.Role === 'Admin') {
+              window.location.href = '../admin/index.html';
+            } else {
+              window.location.href = '../catalog/index.html';
+            }
+          }, 800);
+        }).catch(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign In';
+          alertBox.textContent = err.message;
+          alertBox.classList.remove('d-none');
+        });
+
+      });
+
+    })();
+  </script>
+</body>
+</html>
+
