@@ -1,0 +1,65 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<div class="py-5 my-auto">
+    <div class="container px-4 px-lg-5" style="max-width: 540px;">
+        <div class="card-luxury p-4 p-md-5">
+            <div class="text-center mb-4">
+                <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+                    CLIENT REGISTRATION
+                </span>
+                <h1 class="h3 font-serif text-light fw-bold mb-1">Join RF Prestige</h1>
+                <p class="text-secondary small mb-0">Create your client profile for vehicle acquisitions and wishlist sync.</p>
+            </div>
+
+            <form asp-controller="Account" asp-action="Register" method="post" data-testid="register-form">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 small"></div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label asp-for="FirstName" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">First Name *</label>
+                        <input asp-for="FirstName" class="form-control" placeholder="John" required />
+                        <span asp-validation-for="FirstName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="LastName" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Last Name *</label>
+                        <input asp-for="LastName" class="form-control" placeholder="Doe" required />
+                        <span asp-validation-for="LastName" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Email Address *</label>
+                    <input asp-for="Email" class="form-control" placeholder="name@domain.ro" required />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Password *</label>
+                    <input asp-for="Password" class="form-control" placeholder="••••••••" required />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="ConfirmPassword" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">Confirm Password *</label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="••••••••" required />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-gold py-2 fw-semibold text-uppercase tracking-wider">
+                        Create Account
+                    </button>
+                </div>
+
+                <div class="text-center small text-secondary">
+                    Already registered? <a asp-controller="Account" asp-action="Login" class="text-gold text-decoration-none hover-gold">Sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

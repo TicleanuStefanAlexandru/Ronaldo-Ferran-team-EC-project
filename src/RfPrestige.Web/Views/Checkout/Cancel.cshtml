@@ -1,0 +1,23 @@
+@model Order
+@{
+    ViewData["Title"] = "Payment Cancelled";
+}
+
+<div class="container py-5 px-4 px-lg-5" style="max-width: 600px;">
+    <div class="card-luxury p-5 text-center border-secondary">
+        <i class="bi bi-x-circle text-danger fs-1 mb-3 d-block"></i>
+        <h2 class="font-serif text-light fw-bold mb-2">Acquisition Cancelled</h2>
+        <p class="text-secondary small mb-4">
+            Your transaction was not completed and your card was not charged. The vehicles remain in your cart for future checkout.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-gold px-4 py-2">
+                <i class="bi bi-bag me-2"></i> Return to Cart
+            </a>
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-outline-secondary px-4 py-2 text-light">
+                <i class="bi bi-grid me-2"></i> Browse Fleet
+            </a>
+        </div>
+    </div>
+</div>

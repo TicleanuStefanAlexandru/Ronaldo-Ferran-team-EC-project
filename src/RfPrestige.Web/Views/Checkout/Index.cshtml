@@ -1,0 +1,140 @@
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Secure Checkout";
+}
+
+<div class="container py-5 px-4 px-lg-5">
+    <div class="mb-4">
+        <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">SECURE PAYMENT</span>
+        <h1 class="h3 font-serif fw-bold text-light mb-1">Acquisition Checkout</h1>
+        <p class="text-secondary small mb-0">Confirm delivery destination and proceed to secured Stripe payment gateway.</p>
+    </div>
+
+    <form asp-controller="Checkout" asp-action="ProcessCheckout" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 small mb-4"></div>
+
+        <div class="row g-4">
+            <!-- Left: Checkout Information -->
+            <div class="col-lg-8">
+                <!-- Delivery Destination -->
+                <div class="card-luxury p-4 mb-4">
+                    <h5 class="font-serif text-light mb-3"><i class="bi bi-geo-alt text-gold me-2"></i>Delivery Destination</h5>
+
+                    <div class="mb-3">
+                        <label asp-for="Form.RecipientName" class="form-label text-gold small text-uppercase fw-semibold">Recipient Full Name *</label>
+                        <input asp-for="Form.RecipientName" class="form-control" placeholder="John Doe" required />
+                        <span asp-validation-for="Form.RecipientName" class="text-danger small"></span>
+                    </div>
+
+                    @if (Model.Cart.DeliveryOption == 1)
+                    {
+                        <div class="mb-4">
+                            <label class="form-label text-gold small text-uppercase fw-semibold">Select Saved Address or Enter New</label>
+                            
+                            @if (Model.SavedAddresses.Count > 0)
+                            {
+                                <div class="d-flex flex-column gap-2 mb-3">
+                                    @foreach (var addr in Model.SavedAddresses)
+                                    {
+                                        <label class="p-3 bg-dark-alt rounded border border-secondary border-opacity-25 d-flex align-items-center justify-content-between cursor-pointer">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="radio" asp-for="Form.SelectedAddressId" value="@addr.Id" id="addr_@addr.Id" />
+                                                <label class="form-check-label text-light fw-medium ms-2" for="addr_@addr.Id">
+                                                    @addr.Street, @addr.City (@addr.PostalCode)
+                                                    @if (addr.IsDefault)
+                                                    {
+                                                        <span class="badge bg-gold text-dark ms-1">DEFAULT</span>
+                                                    }
+                                                </label>
+                                            </div>
+                                        </label>
+                                    }
+                                </div>
+                            }
+
+                            <p class="small text-secondary mb-2">Or enter a different Romanian delivery address:</p>
+                            <div class="row g-2">
+                                <div class="col-12 mb-2">
+                                    <input asp-for="Form.Street" class="form-control" placeholder="Street name and number" />
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input asp-for="Form.City" class="form-control" placeholder="City" />
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input asp-for="Form.County" class="form-control" placeholder="County (Județ)" />
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input asp-for="Form.PostalCode" class="form-control" placeholder="6-digit Postal Code" pattern="^\d{6}$" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-3 bg-dark-alt rounded border border-gold-subtle">
+                            <div class="fw-bold text-gold"><i class="bi bi-shop me-2"></i>Showroom Pickup Selected</div>
+                            <div class="small text-secondary mt-1">
+                                Your vehicle will be prepared in our private presentation bay at <strong>Calea Floreasca 169A, Bucharest</strong>.
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Terms & Verification -->
+                <div class="card-luxury p-4">
+                    <h5 class="font-serif text-light mb-3"><i class="bi bi-shield-check text-gold me-2"></i>Legal &amp; Terms Verification</h5>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" asp-for="Form.AcceptTerms" id="acceptTerms" required />
+                        <label class="form-check-label text-secondary small" for="acceptTerms">
+                            I verify that I have reviewed the vehicle VIN provenance documentation and accept the RF Prestige Purchase and Delivery Terms.
+                        </label>
+                    </div>
+                    <span asp-validation-for="Form.AcceptTerms" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary Sidebar -->
+            <div class="col-lg-4">
+                <div class="card-luxury p-4 sticky-top" style="top: 90px;">
+                    <h5 class="font-serif text-light mb-4">Order Summary</h5>
+
+                    @foreach (var item in Model.Cart.Items)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                            <div>
+                                <div class="text-light fw-medium small">@item.Year @item.Make @item.Model</div>
+                                <div class="text-secondary small font-monospace">@item.CarVin</div>
+                            </div>
+                            <div class="text-gold font-sans fw-bold">€@item.Price.ToString("N0")</div>
+                        </div>
+                    }
+
+                    <div class="d-flex justify-content-between mb-2 small text-secondary">
+                        <span>Vehicles Subtotal</span>
+                        <span class="text-light font-sans">€@Model.Cart.Subtotal.ToString("N0")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 small text-secondary">
+                        <span>Delivery</span>
+                        <span class="text-light font-sans">@(Model.Cart.DeliveryFee > 0 ? $"€{Model.Cart.DeliveryFee:N0}" : "Free (€0)")</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-3 border-top border-bottom border-gold-subtle mb-4">
+                        <span class="fw-bold text-light">Total Amount</span>
+                        <span class="fw-bold text-gold font-sans fs-4">€@Model.Cart.Total.ToString("N0")</span>
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-gold py-3 fw-semibold text-uppercase tracking-wider">
+                            Proceed to Stripe Payment <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+
+                    <div class="small text-secondary text-center">
+                        <i class="bi bi-lock text-gold me-1"></i> 256-bit Encrypted SSL Sandbox Checkout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

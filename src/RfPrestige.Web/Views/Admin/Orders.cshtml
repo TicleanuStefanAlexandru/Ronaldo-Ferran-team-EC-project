@@ -1,0 +1,78 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Admin - Orders";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+    <div class="pb-3 mb-4 border-bottom border-gold-subtle">
+        <span class="badge bg-danger text-white font-monospace text-uppercase px-2 py-1 mb-1">ORDER DISPATCH (A9)</span>
+        <h1 class="h3 font-serif fw-bold text-light mb-0">Client Order Management (@Model.Count Orders)</h1>
+    </div>
+
+    <div class="card-luxury p-4">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-gold small text-uppercase">
+                        <th>Order #</th>
+                        <th>Created At</th>
+                        <th>Customer / Destination</th>
+                        <th>Vehicles</th>
+                        <th>Total</th>
+                        <th>Payment Intent</th>
+                        <th>Current Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="font-monospace text-light fw-bold">#@order.Id</td>
+                            <td class="small text-secondary">@order.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td class="small">
+                                @if (order.ShippingAddress != null)
+                                {
+                                    <div class="text-light">@order.ShippingAddress.Street, @order.ShippingAddress.City</div>
+                                    <div class="text-secondary font-monospace">@order.ShippingAddress.PostalCode</div>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-dark-alt text-gold border border-gold-subtle">Showroom Pickup</span>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var item in order.Items)
+                                {
+                                    <div class="small text-light">@item.Car?.Make @item.Car?.Model</div>
+                                    <div class="text-secondary font-monospace" style="font-size:0.75rem;">@item.CarVin</div>
+                                }
+                            </td>
+                            <td class="text-gold fw-bold font-sans">€@order.TotalAmount.ToString("N0")</td>
+                            <td class="font-monospace small text-secondary">@(order.StripePaymentIntentId ?? "—")</td>
+                            <td>
+                                <span class="badge @(order.Status == OrderStatus.Paid ? "bg-success text-dark" : order.Status == OrderStatus.Delivered ? "bg-info text-dark" : "bg-warning text-dark")">
+                                    @order.Status
+                                </span>
+                            </td>
+                            <td>
+                                <form asp-controller="Admin" asp-action="UpdateOrderStatus" method="post" class="d-flex gap-1">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="orderId" value="@order.Id" />
+                                    <select name="status" class="form-select form-select-sm bg-dark text-light border-secondary">
+                                        <option value="Pending" selected="@(order.Status == OrderStatus.Pending)">Pending</option>
+                                        <option value="Paid" selected="@(order.Status == OrderStatus.Paid)">Paid</option>
+                                        <option value="Shipped" selected="@(order.Status == OrderStatus.Shipped)">Shipped</option>
+                                        <option value="Delivered" selected="@(order.Status == OrderStatus.Delivered)">Delivered</option>
+                                        <option value="Cancelled" selected="@(order.Status == OrderStatus.Cancelled)">Cancelled</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-gold btn-sm">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

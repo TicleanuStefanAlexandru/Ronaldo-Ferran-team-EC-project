@@ -1,0 +1,96 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Client Sign In";
+}
+
+<div class="py-5 my-auto">
+    <div class="container px-4 px-lg-5" style="max-width: 520px;">
+        <div class="card-luxury p-4 p-md-5">
+            <div class="text-center mb-4">
+                <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+                    CLIENT PORTAL
+                </span>
+                <h1 class="h3 font-serif text-light fw-bold mb-1">Sign In to RF Prestige</h1>
+                <p class="text-secondary small mb-0">Access private wishlist, order documents, and delivery addresses.</p>
+            </div>
+
+            <!-- Quick Demo Accounts Autofill -->
+            <div class="p-3 bg-dark-alt rounded border border-gold-subtle mb-4">
+                <div class="text-gold small text-uppercase tracking-wider fw-bold mb-2 text-center">
+                    <i class="bi bi-person-badge me-1"></i> Quick Demo Access
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-gold-subtle btn-sm text-start py-2 d-flex justify-content-between align-items-center" onclick="fillForm('customer@rfprestige.ro', 'Demo123!')">
+                        <span><i class="bi bi-person text-gold me-2"></i><strong>Customer:</strong> customer@rfprestige.ro</span>
+                        <span class="badge bg-gold text-dark" style="font-size: 0.65rem;">DEMO</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-gold-subtle btn-sm text-start py-2 d-flex justify-content-between align-items-center" onclick="fillForm('admin@rfprestige.ro', 'Admin123!')">
+                        <span><i class="bi bi-shield-lock text-gold me-2"></i><strong>Admin:</strong> admin@rfprestige.ro</span>
+                        <span class="badge bg-danger text-white" style="font-size: 0.65rem;">STAFF</span>
+                    </button>
+                </div>
+            </div>
+
+            <form asp-controller="Account" asp-action="Login" method="post" data-testid="login-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="ReturnUrl" />
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 small"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label text-gold small text-uppercase tracking-wider fw-semibold">
+                        Email Address <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark-alt border-gold-subtle text-gold">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+                        <input asp-for="Email" id="input-email" class="form-control" placeholder="name@domain.ro" required />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label asp-for="Password" class="form-label text-gold small text-uppercase tracking-wider fw-semibold mb-0">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark-alt border-gold-subtle text-gold">
+                            <i class="bi bi-key"></i>
+                        </span>
+                        <input asp-for="Password" id="input-password" class="form-control" placeholder="••••••••" required />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4 form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label small text-secondary">
+                        Remember this session
+                    </label>
+                </div>
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-gold py-2 fw-semibold text-uppercase tracking-wider">
+                        Sign In
+                    </button>
+                </div>
+
+                <div class="text-center small text-secondary">
+                    Don't have an account? <a asp-controller="Account" asp-action="Register" class="text-gold text-decoration-none hover-gold">Register now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function fillForm(email, pass) {
+            document.getElementById('input-email').value = email;
+            document.getElementById('input-password').value = pass;
+        }
+    </script>
+}

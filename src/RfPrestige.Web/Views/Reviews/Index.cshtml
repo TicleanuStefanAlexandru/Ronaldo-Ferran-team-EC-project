@@ -1,0 +1,105 @@
+@model List<SiteReview>
+@{
+    ViewData["Title"] = "Client Reviews";
+    var avg = ViewData["AverageRating"] is double a ? a : 5.0;
+    var total = ViewData["TotalReviews"] is int t ? t : 0;
+}
+
+<div class="container py-5 px-4 px-lg-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-7">
+            <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">PROVEN SATISFACTION</span>
+            <h1 class="h3 font-serif fw-bold text-light mb-1">Client Reviews &amp; Testimonials</h1>
+            <p class="text-secondary small mb-0">Verified experiences from high-net-worth clients across Romania.</p>
+        </div>
+        <div class="col-md-5 text-md-end mt-3 mt-md-0">
+            <div class="p-3 bg-dark-alt rounded border border-gold-subtle d-inline-block text-start">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="display-6 font-sans fw-bold text-gold">@avg.ToString("0.0")</div>
+                    <div>
+                        <div class="text-gold fs-6">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="bi @(i <= Math.Round(avg) ? "bi-star-fill" : "bi-star")"></i>
+                            }
+                        </div>
+                        <div class="text-secondary small">Based on @total verified client reviews</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left: Submit Review Form -->
+        <div class="col-lg-4">
+            <div class="card-luxury p-4 sticky-top" style="top: 90px;">
+                <h5 class="font-serif text-light mb-3">Leave a Review</h5>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Reviews" asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label text-gold small text-uppercase fw-semibold">Rating (1 to 5 Stars)</label>
+                            <select name="rating" class="form-select">
+                                <option value="5" selected>★★★★★ - Exceptional (5 Stars)</option>
+                                <option value="4">★★★★☆ - Very Good (4 Stars)</option>
+                                <option value="3">★★★☆☆ - Average (3 Stars)</option>
+                                <option value="2">★★☆☆☆ - Below Expectations (2 Stars)</option>
+                                <option value="1">★☆☆☆☆ - Unsatisfactory (1 Star)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-gold small text-uppercase fw-semibold">Review Comment *</label>
+                            <textarea name="comment" rows="4" class="form-control" placeholder="Describe your vehicle acquisition experience, vehicle delivery, or showroom presentation..." required></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-gold py-2 fw-semibold text-uppercase tracking-wider">
+                                Submit Review
+                            </button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+                        <i class="bi bi-person-lock fs-1 text-gold mb-3 d-block"></i>
+                        <p class="text-secondary small mb-3">Please sign in to submit a verified testimonial.</p>
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-gold btn-sm px-4">
+                            Sign In to Review
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Right: Reviews List -->
+        <div class="col-lg-8">
+            <div class="d-flex flex-column gap-3">
+                @foreach (var r in Model)
+                {
+                    <div class="card-luxury p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="fw-bold text-light">
+                                <i class="bi bi-person-circle text-gold me-2"></i>
+                                @(r.User != null ? $"{r.User.FirstName} {r.User.LastName}" : "Verified Client")
+                            </div>
+                            <div class="text-gold">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="bi @(i <= r.Rating ? "bi-star-fill" : "bi-star")"></i>
+                                }
+                            </div>
+                        </div>
+                        <p class="text-secondary mb-2 lh-base">"@r.Comment"</p>
+                        <div class="text-secondary small font-monospace">@r.CreatedAt.ToString("MMM dd, yyyy")</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

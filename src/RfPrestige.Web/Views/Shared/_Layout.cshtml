@@ -1,0 +1,249 @@
+@using Microsoft.AspNetCore.Identity
+@using RfPrestige.Web.Services
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject CartService CartService
+
+@{
+    var currentUser = SignInManager.IsSignedIn(User) ? await UserManager.GetUserAsync(User) : null;
+    var isAdmin = User.IsInRole("Admin") || (currentUser != null && (currentUser.Role == "Admin" || currentUser.Email == "admin@rfprestige.ro"));
+    var cart = await CartService.GetCartAsync();
+    var cartCount = cart.Items.Count;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RF Prestige | Luxury Automotive Bucharest</title>
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/assets/css/theme.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="bg-obsidian text-light">
+
+    <!-- Unified Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-obsidian border-bottom border-gold-subtle sticky-top py-2 py-lg-3" id="rf-main-navbar">
+        <div class="container-fluid px-3 px-lg-5">
+            <!-- Brand Logo -->
+            <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Catalog" asp-action="Index">
+                <img src="~/assets/img/rf-logo.svg" alt="RF Prestige" height="38" class="d-inline-block align-text-top" />
+            </a>
+
+            <!-- Mobile Cart & Hamburger -->
+            <div class="d-flex align-items-center gap-2 d-lg-none flex-shrink-0">
+                <a asp-controller="Cart" asp-action="Index" class="btn btn-link text-light position-relative p-2" aria-label="Cart">
+                    <i class="bi bi-bag fs-5 text-gold"></i>
+                    <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-gold text-dark font-monospace">@cartCount</span>
+                </a>
+                <button class="navbar-toggler border-gold-subtle text-gold p-2" type="button" data-bs-toggle="collapse" data-bs-target="#rfNavbarContent" aria-controls="rfNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <div class="collapse navbar-collapse justify-content-center" id="rfNavbarContent">
+                <ul class="navbar-nav gap-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase tracking-wider px-2" asp-controller="Catalog" asp-action="Index">
+                            <i class="bi bi-grid me-1"></i> Catalog
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase tracking-wider px-2" asp-controller="Wishlist" asp-action="Index">
+                            <i class="bi bi-heart me-1"></i> Wishlist
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase tracking-wider px-2" asp-controller="Reviews" asp-action="Index">
+                            <i class="bi bi-chat-quote me-1"></i> Site Reviews
+                        </a>
+                    </li>
+                    @if (isAdmin)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase tracking-wider px-2 text-warning fw-bold" asp-controller="Admin" asp-action="Index">
+                                <i class="bi bi-shield-lock me-1"></i> Admin Portal
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Right Actions: Cart + User Menu -->
+            <div class="d-none d-lg-flex align-items-center gap-3">
+                <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary border-gold-subtle position-relative px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+                    <i class="bi bi-bag text-gold fs-6"></i>
+                    <span class="small fw-semibold text-light">Cart</span>
+                    <span class="badge rounded-pill bg-gold text-dark font-monospace">@cartCount</span>
+                </a>
+
+                @if (SignInManager.IsSignedIn(User) && currentUser != null)
+                {
+                    <div class="dropdown">
+                        <button class="btn btn-outline-gold-subtle dropdown-toggle d-flex align-items-center gap-2 py-2 px-3 rounded-pill" type="button" id="userMenuBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle fs-5 text-gold"></i>
+                            <span class="d-none d-sm-inline fw-medium text-light">@currentUser.FirstName</span>
+                            @if (isAdmin)
+                            {
+                                <span class="badge bg-gold text-dark ms-1 font-monospace" style="font-size:0.7rem;">ADMIN</span>
+                            }
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark bg-charcoal border-gold shadow-lg py-2 mt-2" aria-labelledby="userMenuBtn" style="min-width: 220px;">
+                            <li class="px-3 py-2 border-bottom border-secondary border-opacity-25">
+                                <div class="fw-bold text-light">@currentUser.FirstName @currentUser.LastName</div>
+                                <div class="text-secondary small font-monospace">@currentUser.Email</div>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Orders" asp-action="History">
+                                    <i class="bi bi-box-seam text-gold"></i> Order History
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Account" asp-action="Addresses">
+                                    <i class="bi bi-geo-alt text-gold"></i> Saved Addresses
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Wishlist" asp-action="Index">
+                                    <i class="bi bi-heart text-gold"></i> Wishlist
+                                </a>
+                            </li>
+                            @if (isAdmin)
+                            {
+                                <li class="dropdown-divider border-secondary border-opacity-25"></li>
+                                <li class="dropdown-header text-gold small text-uppercase tracking-wider fw-bold">Administration</li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Admin" asp-action="Index">
+                                        <i class="bi bi-speedometer2 text-gold"></i> Dashboard &amp; Metrics
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Admin" asp-action="Cars">
+                                        <i class="bi bi-car-front text-gold"></i> Inventory &amp; Cars
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Admin" asp-action="Orders">
+                                        <i class="bi bi-receipt text-gold"></i> Order Management
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" asp-controller="Admin" asp-action="Reviews">
+                                        <i class="bi bi-chat-left-quote text-gold"></i> Review Moderation
+                                    </a>
+                                </li>
+                            }
+                            <li class="dropdown-divider border-secondary border-opacity-25"></li>
+                            <li>
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="px-2">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="dropdown-item py-2 text-danger d-flex align-items-center gap-2 rounded">
+                                        <i class="bi bi-box-arrow-right"></i> Sign Out
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-gold btn-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+                        <i class="bi bi-person"></i> <span>Sign In</span>
+                    </a>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <!-- Alerts / Flash Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show bg-dark text-success border border-success" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="container mt-3">
+            <div class="alert alert-danger alert-dismissible fade show bg-dark text-danger border border-danger" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+
+    <!-- Main Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Unified Footer -->
+    <footer class="bg-obsidian border-top border-gold-subtle pt-5 pb-3 text-secondary mt-5" id="rf-main-footer">
+        <div class="container px-4 px-lg-5">
+            <div class="row g-4 mb-5">
+                <div class="col-12 col-lg-4 col-md-6">
+                    <img src="~/assets/img/rf-logo.svg" alt="RF Prestige" height="40" class="mb-3" />
+                    <p class="small text-secondary lh-lg mb-3">
+                        RF Prestige is Romania's premier automotive boutique specializing in verified, certified pre-owned supercars, grand tourers, and luxury vehicles.
+                    </p>
+                    <div class="d-flex align-items-center gap-3 text-gold fs-5">
+                        <a href="#" class="text-gold text-decoration-none"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-gold text-decoration-none"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-gold text-decoration-none"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-2 col-md-6">
+                    <h6 class="text-gold text-uppercase tracking-wider font-sans fw-bold mb-3 small">Collections</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
+                        <li><a asp-controller="Catalog" asp-action="Index" asp-route-category="Sports" class="text-secondary text-decoration-none hover-gold">Sports Cars</a></li>
+                        <li><a asp-controller="Catalog" asp-action="Index" asp-route-category="Grand Tourer" class="text-secondary text-decoration-none hover-gold">Grand Tourers</a></li>
+                        <li><a asp-controller="Catalog" asp-action="Index" asp-route-category="Luxury Sedan" class="text-secondary text-decoration-none hover-gold">Luxury Sedans</a></li>
+                        <li><a asp-controller="Catalog" asp-action="Index" asp-route-category="SUV" class="text-secondary text-decoration-none hover-gold">Performance SUVs</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-3 col-md-6">
+                    <h6 class="text-gold text-uppercase tracking-wider font-sans fw-bold mb-3 small">Client Concierge</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
+                        <li><a asp-controller="Wishlist" asp-action="Index" class="text-secondary text-decoration-none hover-gold">Private Wishlist (B2)</a></li>
+                        <li><a asp-controller="Reviews" asp-action="Index" class="text-secondary text-decoration-none hover-gold">Client Reviews (B7)</a></li>
+                        <li><a asp-controller="Orders" asp-action="History" class="text-secondary text-decoration-none hover-gold">Order History</a></li>
+                        <li><a asp-controller="Account" asp-action="Addresses" class="text-secondary text-decoration-none hover-gold">Delivery Addresses</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-6">
+                    <h6 class="text-gold text-uppercase tracking-wider font-sans fw-bold mb-3 small">Bucharest Boutique</h6>
+                    <div class="small text-secondary mb-2">
+                        <i class="bi bi-geo-alt text-gold me-2"></i> Calea Floreasca 169A, Sector 1, Bucharest
+                    </div>
+                    <div class="small text-secondary mb-2">
+                        <i class="bi bi-telephone text-gold me-2"></i> <span class="font-monospace">+40 21 987 6543</span>
+                    </div>
+                    <div class="small text-secondary mb-2">
+                        <i class="bi bi-envelope text-gold me-2"></i> concierge@rfprestige.ro
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between pt-3 border-top border-secondary border-opacity-25 small text-secondary gap-2">
+                <div>&copy; 2026 RF Prestige Motors S.R.L. Prepared by Cătălinoiu L. Roberto &amp; Țicleanu Ș. Alexandru.</div>
+                <div class="d-flex gap-3">
+                    <span>ASP.NET Core MVC</span>
+                    <span>•</span>
+                    <span>Stripe Sandbox Ready</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/assets/vendor/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

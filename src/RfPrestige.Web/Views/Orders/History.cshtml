@@ -1,0 +1,92 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<div class="container py-5 px-4 px-lg-5">
+    <div class="mb-4">
+        <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">ACQUISITION RECORDS</span>
+        <h1 class="h3 font-serif fw-bold text-light mb-1">Your Order History (@Model.Count)</h1>
+        <p class="text-secondary small mb-0">Official acquisition records, payment receipts, and delivery statuses.</p>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="card-luxury p-5 text-center my-4">
+            <i class="bi bi-receipt fs-1 text-gold mb-3 d-block"></i>
+            <h4 class="text-light font-serif">No acquisitions found</h4>
+            <p class="text-secondary small mb-4">You have not completed any vehicle acquisitions yet.</p>
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-gold px-4 py-2">
+                <i class="bi bi-grid me-2"></i> Browse Vehicle Fleet
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column gap-4">
+            @foreach (var order in Model)
+            {
+                <div class="card-luxury p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom border-secondary border-opacity-25 gap-3">
+                        <div>
+                            <span class="fw-bold font-serif text-light fs-5">Order #@order.Id</span>
+                            <span class="text-secondary small ms-2 font-monospace">@order.CreatedAt.ToString("yyyy-MM-dd HH:mm")</span>
+                        </div>
+                        <div>
+                            @switch (order.Status)
+                            {
+                                case OrderStatus.Paid:
+                                    <span class="badge bg-success text-dark font-monospace px-3 py-2">PAID &amp; RESERVED</span>
+                                    break;
+                                case OrderStatus.Pending:
+                                    <span class="badge bg-warning text-dark font-monospace px-3 py-2">PAYMENT PENDING</span>
+                                    break;
+                                case OrderStatus.Delivered:
+                                    <span class="badge bg-info text-dark font-monospace px-3 py-2">DELIVERED</span>
+                                    break;
+                                case OrderStatus.Cancelled:
+                                    <span class="badge bg-danger text-white font-monospace px-3 py-2">CANCELLED</span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary font-monospace px-3 py-2">@order.Status</span>
+                                    break;
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        @foreach (var item in order.Items)
+                        {
+                            var img = item.Car?.Images.FirstOrDefault()?.ImageUrl ?? "/assets/img/default-car.svg";
+                            <div class="col-md-6">
+                                <div class="p-3 bg-dark-alt rounded border border-secondary border-opacity-25 d-flex align-items-center gap-3">
+                                    <img src="@img" alt="Car" class="rounded" style="width: 80px; height: 50px; object-fit: cover;" />
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold text-light small">@item.Car?.Year @item.Car?.Make @item.Car?.Model</div>
+                                        <div class="text-secondary small font-monospace">VIN: @item.CarVin</div>
+                                    </div>
+                                    <div class="fw-bold text-gold font-sans">€@item.UnitPrice.ToString("N0")</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-25 gap-2">
+                        <div class="small text-secondary">
+                            <i class="bi bi-truck text-gold me-1"></i>
+                            @(order.DeliveryOption == 1 ? "Specialized Enclosed Carrier (+€490)" : "Bucharest Showroom Handover (€0)")
+                            @if (order.ShippingAddress != null)
+                            {
+                                <span> • Destination: @order.ShippingAddress.Street, @order.ShippingAddress.City</span>
+                            }
+                        </div>
+                        <div class="text-end">
+                            <span class="text-secondary small me-2">Grand Total:</span>
+                            <span class="fw-bold text-gold font-sans fs-5">€@order.TotalAmount.ToString("N0")</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

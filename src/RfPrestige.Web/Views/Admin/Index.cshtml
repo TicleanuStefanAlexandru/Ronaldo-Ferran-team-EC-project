@@ -1,0 +1,116 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    decimal totalRevenue = ViewBag.TotalRevenue ?? 0m;
+    int paidCount = ViewBag.PaidOrdersCount ?? 0;
+    int availCars = ViewBag.AvailableCars ?? 0;
+    int soldCars = ViewBag.SoldCars ?? 0;
+    double avgRating = ViewBag.AvgRating ?? 5.0;
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+    <!-- Subheader -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom border-gold-subtle gap-3">
+        <div>
+            <span class="badge bg-danger text-white font-monospace text-uppercase px-2 py-1 mb-1">STAFF BACK-OFFICE (A9)</span>
+            <h1 class="h3 font-serif fw-bold text-light mb-0">Management Dashboard &amp; Metrics</h1>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-controller="Admin" asp-action="Cars" class="btn btn-outline-gold btn-sm"><i class="bi bi-car-front me-1"></i> Inventory</a>
+            <a asp-controller="Admin" asp-action="Orders" class="btn btn-outline-gold btn-sm"><i class="bi bi-receipt me-1"></i> Orders</a>
+            <a asp-controller="Admin" asp-action="Reviews" class="btn btn-outline-gold btn-sm"><i class="bi bi-chat-quote me-1"></i> Reviews</a>
+        </div>
+    </div>
+
+    <!-- KPI Metrics Row -->
+    <div class="row g-4 mb-5">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-luxury p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small text-uppercase tracking-wider">Total Sales Revenue</span>
+                    <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-currency-euro fs-5"></i></div>
+                </div>
+                <div class="display-6 font-serif text-gold fw-bold mb-1">€@totalRevenue.ToString("N0")</div>
+                <div class="small text-success"><i class="bi bi-check-circle me-1"></i> Confirmed via Stripe Sandbox</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-luxury p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small text-uppercase tracking-wider">Settled Orders</span>
+                    <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-receipt fs-5"></i></div>
+                </div>
+                <div class="display-6 font-serif text-light fw-bold mb-1">@paidCount</div>
+                <div class="small text-secondary">Vehicles reserved &amp; paid</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-luxury p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small text-uppercase tracking-wider">Showroom Stock</span>
+                    <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-car-front fs-5"></i></div>
+                </div>
+                <div class="display-6 font-serif text-success fw-bold mb-1">@availCars</div>
+                <div class="small text-secondary">Available (@soldCars sold)</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-luxury p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small text-uppercase tracking-wider">Client Satisfaction</span>
+                    <div class="p-2 bg-dark-alt rounded text-gold"><i class="bi bi-star fs-5"></i></div>
+                </div>
+                <div class="display-6 font-serif text-gold fw-bold mb-1">@avgRating.ToString("0.0") / 5</div>
+                <div class="small text-secondary">Verified testimonials</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Orders Section -->
+    <div class="card-luxury p-4">
+        <h5 class="font-serif text-light mb-3">Recent Acquisitions</h5>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0">
+                <thead>
+                    <tr class="text-gold small text-uppercase">
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Vehicles</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Handover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="font-monospace text-light">#@order.Id</td>
+                            <td class="text-secondary small">@order.CreatedAt.ToString("MMM dd, yyyy HH:mm")</td>
+                            <td>
+                                @foreach (var item in order.Items)
+                                {
+                                    <span class="badge bg-dark-alt border border-secondary border-opacity-25 text-light me-1">
+                                        @item.CarVin
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-gold fw-bold font-sans">€@order.TotalAmount.ToString("N0")</td>
+                            <td>
+                                <span class="badge @(order.Status == OrderStatus.Paid ? "bg-success text-dark" : "bg-warning text-dark")">
+                                    @order.Status
+                                </span>
+                            </td>
+                            <td class="small text-secondary">
+                                @(order.DeliveryOption == 1 ? "Enclosed Trailer" : "Showroom Pickup")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
