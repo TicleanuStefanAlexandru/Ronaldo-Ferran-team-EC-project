@@ -1,0 +1,88 @@
+@model List<Car>
+@{
+    ViewData["Title"] = "Luxury & High-Performance Automobiles Bucharest";
+}
+
+<!-- Hero Section -->
+<header class="py-5 bg-charcoal border-bottom border-gold-subtle position-relative overflow-hidden">
+    <div class="container px-4 px-lg-5 position-relative" style="z-index: 2;">
+        <div class="row align-items-center g-4">
+            <div class="col-12 col-lg-8">
+                <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase tracking-widest px-3 py-2 mb-3">
+                    VERIFIED PRE-OWNED ACQUISITION
+                </span>
+                <h1 class="display-5 font-serif fw-bold text-light mb-3">Curated Luxury &amp; Performance Fleet</h1>
+                <p class="lead text-secondary mb-4" style="max-width: 650px;">
+                    Single-unit European verified inventory. Inspected, titled, and ready for private showroom viewing in Bucharest or discreet enclosed trailer delivery across Romania.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Catalog" asp-action="Index" class="btn btn-gold px-4 py-3 fw-bold text-uppercase tracking-wider">
+                        <i class="bi bi-grid me-2"></i> Explore Fleet Collection
+                    </a>
+                    <a asp-controller="Reviews" asp-action="Index" class="btn btn-outline-secondary px-4 py-3 text-light">
+                        <i class="bi bi-star me-2 text-gold"></i> Client Reviews
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 text-lg-end">
+                <div class="p-3 bg-dark-alt rounded border border-gold-subtle d-inline-block text-start w-100 w-lg-auto">
+                    <div class="small text-gold text-uppercase tracking-wider fw-semibold mb-2">
+                        <i class="bi bi-shield-check me-1"></i> The RF Prestige Standard
+                    </div>
+                    <div class="small text-secondary lh-lg">
+                        • 180-Point Technical Check<br>
+                        • 100% Verified VIN Provenance<br>
+                        • Transparent Fixed Pricing (€60k–€250k)<br>
+                        • Stripe Sandbox Instant Checkout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Featured Vehicles Preview -->
+<div class="container px-4 px-lg-5 py-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-1">SPOTLIGHT</span>
+            <h2 class="h3 font-serif fw-bold text-light mb-0">Featured Showroom Vehicles</h2>
+        </div>
+        <a asp-controller="Catalog" asp-action="Index" class="btn btn-outline-gold btn-sm">
+            View All Vehicles <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var car in Model)
+        {
+            var img = car.Images.FirstOrDefault()?.ImageUrl ?? "/assets/img/default-car.svg";
+            <div class="col-md-6 col-lg-4">
+                <div class="card-luxury h-100 d-flex flex-column overflow-hidden">
+                    <div style="aspect-ratio: 16/10;">
+                        <img src="@img" alt="@car.Make @car.Model" class="w-100 h-100 object-fit-cover" />
+                    </div>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <span class="badge bg-dark-alt text-gold border border-gold-subtle font-monospace align-self-start mb-2">
+                            @car.Category
+                        </span>
+                        <h5 class="font-serif text-light mb-1">@car.Year @car.Make @car.Model</h5>
+                        <div class="text-secondary small font-monospace mb-3">VIN: @car.Vin</div>
+
+                        <div class="d-flex gap-3 text-secondary small py-2 mb-3 border-top border-bottom border-secondary border-opacity-25">
+                            <span><i class="bi bi-lightning text-gold me-1"></i>@car.Horsepower HP</span>
+                            <span><i class="bi bi-speedometer2 text-gold me-1"></i>@car.Mileage.ToString("N0") km</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
+                            <div class="fw-bold text-gold font-sans fs-5">€@car.Price.ToString("N0")</div>
+                            <a asp-controller="Catalog" asp-action="Details" asp-route-vin="@car.Vin" class="btn btn-outline-gold btn-sm">
+                                View Specs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

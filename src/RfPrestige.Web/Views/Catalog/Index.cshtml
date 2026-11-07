@@ -1,0 +1,148 @@
+@model List<Car>
+@{
+    ViewData["Title"] = "Vehicle Fleet";
+    var query = ViewData["Query"] as string ?? "";
+    var currentCat = ViewData["Category"] as string ?? "All";
+    var sortBy = ViewData["SortBy"] as string ?? "";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-5">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">VERIFIED LUXURY INVENTORY</span>
+            <h1 class="h3 font-serif fw-bold text-light mb-1">Curated Fleet (@Model.Count Available)</h1>
+            <p class="text-secondary small mb-0">Direct showroom stock, inspected with certified European provenance.</p>
+        </div>
+        <div class="col-md-5 mt-3 mt-md-0">
+            <form asp-controller="Catalog" asp-action="Index" method="get" class="d-flex gap-2">
+                <input type="text" name="query" value="@query" class="form-control" placeholder="Search Make, Model, or VIN..." />
+                <button type="submit" class="btn btn-gold px-3">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Sidebar Filters -->
+        <div class="col-lg-3">
+            <div class="card-luxury p-4 sticky-top" style="top: 90px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="font-serif text-light mb-0"><i class="bi bi-funnel text-gold me-2"></i>Filters</h5>
+                    <a asp-controller="Catalog" asp-action="Index" class="text-secondary small text-decoration-none hover-gold">Reset</a>
+                </div>
+
+                <form asp-controller="Catalog" asp-action="Index" method="get">
+                    <div class="mb-3">
+                        <label class="form-label text-gold small text-uppercase fw-semibold">Category</label>
+                        <select name="category" class="form-select" onchange="this.form.submit()">
+                            <option value="All" selected="@(currentCat == "All")">All Categories</option>
+                            <option value="Sports" selected="@(currentCat == "Sports")">Sports</option>
+                            <option value="Grand Tourer" selected="@(currentCat == "Grand Tourer")">Grand Tourer</option>
+                            <option value="Luxury Sedan" selected="@(currentCat == "Luxury Sedan")">Luxury Sedan</option>
+                            <option value="SUV" selected="@(currentCat == "SUV")">Performance SUV</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-gold small text-uppercase fw-semibold">Sort By</label>
+                        <select name="sortBy" class="form-select" onchange="this.form.submit()">
+                            <option value="" selected="@(sortBy == "")">Featured</option>
+                            <option value="price-asc" selected="@(sortBy == "price-asc")">Price: Low to High</option>
+                            <option value="price-desc" selected="@(sortBy == "price-desc")">Price: High to Low</option>
+                            <option value="hp-desc" selected="@(sortBy == "hp-desc")">Horsepower: High to Low</option>
+                            <option value="year-desc" selected="@(sortBy == "year-desc")">Year: Newest First</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-outline-gold btn-sm py-2">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Vehicle Grid -->
+        <div class="col-lg-9">
+            @if (Model.Count == 0)
+            {
+                <div class="card-luxury p-5 text-center">
+                    <i class="bi bi-search fs-1 text-secondary mb-3 d-block"></i>
+                    <h5 class="text-light font-serif">No vehicles match your criteria</h5>
+                    <p class="text-secondary small">Try adjusting your search terms or filters.</p>
+                </div>
+            }
+            else
+            {
+                <div class="row g-4">
+                    @foreach (var car in Model)
+                    {
+                        var primaryImg = car.Images.FirstOrDefault()?.ImageUrl ?? "/assets/img/default-car.svg";
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-luxury h-100 d-flex flex-column overflow-hidden position-relative group">
+                                <div class="position-relative overflow-hidden" style="aspect-ratio: 16/10;">
+                                    <img src="@primaryImg" alt="@car.Make @car.Model" class="w-100 h-100 object-fit-cover" style="transition: transform 0.4s ease;" />
+                                    <span class="badge bg-dark-alt text-gold border border-gold-subtle position-absolute top-0 start-0 m-3 font-monospace small">
+                                        @car.Category
+                                    </span>
+                                    @if (!car.IsAvailable || car.StockQuantity == 0)
+                                    {
+                                        <div class="position-absolute bottom-0 start-0 w-100 bg-danger text-center text-white py-1 small fw-bold tracking-wider">
+                                            SOLD / ACQUIRED
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="font-serif text-light mb-1">@car.Year @car.Make @car.Model</h5>
+                                            <div class="text-secondary small font-monospace">VIN: @car.Vin</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-3 text-secondary small py-2 my-2 border-top border-bottom border-secondary border-opacity-25">
+                                        <span><i class="bi bi-lightning text-gold me-1"></i>@car.Horsepower HP</span>
+                                        <span><i class="bi bi-speedometer2 text-gold me-1"></i>@car.Mileage.ToString("N0") km</span>
+                                        <span><i class="bi bi-fuel-pump text-gold me-1"></i>@car.Fuel</span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3">
+                                        <div class="fw-bold text-gold font-sans fs-5">
+                                            €@car.Price.ToString("N0")
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <form asp-controller="Wishlist" asp-action="Toggle" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="vin" value="@car.Vin" />
+                                                <button type="submit" class="btn btn-outline-secondary btn-sm" title="Save to Wishlist">
+                                                    <i class="bi bi-heart text-gold"></i>
+                                                </button>
+                                            </form>
+
+                                            @if (car.IsAvailable && car.StockQuantity > 0)
+                                            {
+                                                <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="vin" value="@car.Vin" />
+                                                    <button type="submit" class="btn btn-gold btn-sm px-3" title="Add to Cart">
+                                                        <i class="bi bi-bag-plus"></i> Cart
+                                                    </button>
+                                                </form>
+                                            }
+
+                                            <a asp-controller="Catalog" asp-action="Details" asp-route-vin="@car.Vin" class="btn btn-outline-secondary btn-sm" title="View Details">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

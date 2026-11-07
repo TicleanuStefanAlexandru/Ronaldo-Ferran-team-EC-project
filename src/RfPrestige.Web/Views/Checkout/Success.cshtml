@@ -1,0 +1,60 @@
+@model Order
+@{
+    ViewData["Title"] = "Acquisition Confirmed";
+}
+
+<div class="container py-5 px-4 px-lg-5" style="max-width: 800px;">
+    <div class="card-luxury p-4 p-md-5 text-center mb-4 border-gold">
+        <div class="mb-4">
+            <span class="d-inline-flex align-items-center justify-content-center bg-gold-subtle text-gold rounded-circle" style="width: 72px; height: 72px;">
+                <i class="bi bi-check2-circle fs-1"></i>
+            </span>
+        </div>
+
+        <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+            ACQUISITION COMPLETED
+        </span>
+        <h1 class="h2 font-serif text-light fw-bold mb-2">Payment Successfully Processed</h1>
+        <p class="text-secondary mb-4">
+            Order <strong class="text-light font-monospace">#@Model.Id</strong> is confirmed. The vehicle inventory has been updated and reserved exclusively for you.
+        </p>
+
+        <div class="p-3 bg-dark-alt rounded border border-gold-subtle text-start mb-4">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <div class="text-secondary small">Transaction Reference:</div>
+                    <div class="text-light font-monospace small">@Model.StripePaymentIntentId</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-secondary small">Handover Method:</div>
+                    <div class="text-light small">
+                        @(Model.DeliveryOption == 1 ? "Specialized Enclosed Trailer Delivery (+€490)" : "Bucharest Showroom Pickup (€0)")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="font-serif text-light text-start mb-3">Purchased Vehicles</h5>
+        <div class="list-group list-group-flush text-start mb-4">
+            @foreach (var item in Model.Items)
+            {
+                <div class="list-group-item bg-transparent text-light border-secondary border-opacity-25 px-0 py-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fw-bold">@item.Car?.Year @item.Car?.Make @item.Car?.Model</div>
+                        <div class="text-secondary small font-monospace">VIN: @item.CarVin</div>
+                    </div>
+                    <div class="text-gold font-sans fw-bold">€@item.UnitPrice.ToString("N0")</div>
+                </div>
+            }
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a asp-controller="Orders" asp-action="History" class="btn btn-gold px-4 py-2">
+                <i class="bi bi-box-seam me-2"></i> View Order History &amp; Invoice
+            </a>
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-outline-secondary px-4 py-2 text-light">
+                <i class="bi bi-grid me-2"></i> Return to Catalog
+            </a>
+        </div>
+    </div>
+</div>

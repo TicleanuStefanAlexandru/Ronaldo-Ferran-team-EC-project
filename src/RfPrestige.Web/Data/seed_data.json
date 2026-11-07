@@ -1,0 +1,1336 @@
+{
+  "Users": [
+    {
+      "Id": "usr-cust-001",
+      "Email": "customer@rfprestige.ro",
+      "PasswordHash": "Demo123!",
+      "FirstName": "John",
+      "LastName": "Doe",
+      "Role": "Customer"
+    },
+    {
+      "Id": "usr-admin-001",
+      "Email": "admin@rfprestige.ro",
+      "PasswordHash": "Admin123!",
+      "FirstName": "Roberto",
+      "LastName": "Admin",
+      "Role": "Admin"
+    }
+  ],
+  "Addresses": [
+    {
+      "Id": 1,
+      "UserId": "usr-cust-001",
+      "Street": "Str. Aviatorilor 12",
+      "City": "Bucharest",
+      "County": "București",
+      "PostalCode": "011861",
+      "Country": "Romania",
+      "IsDefault": true
+    },
+    {
+      "Id": 2,
+      "UserId": "usr-cust-001",
+      "Street": "Bd. Eroilor 5",
+      "City": "Cluj-Napoca",
+      "County": "Cluj",
+      "PostalCode": "400129",
+      "Country": "Romania",
+      "IsDefault": false
+    }
+  ],
+  "Cars": [
+    {
+      "Vin": "WP0ZZZ99ZPS291047",
+      "Make": "Porsche",
+      "Model": "911 GT3",
+      "Year": 2023,
+      "Category": "Sports",
+      "Price": 215000,
+      "Horsepower": 510,
+      "Mileage": 4200,
+      "Transmission": "7-Speed PDK",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Naturally Aspirated Flat-6",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Finished in Shark Blue with Clubsport Package, carbon bucket seats, carbon ceramic brakes (PCCB), front-axle lift system, and lightweight carbon roof. Single owner, full Porsche Centre Bucharest service history, factory warranty active."
+    },
+    {
+      "Vin": "ZFF92LLA9N0267841",
+      "Make": "Ferrari",
+      "Model": "F8 Tributo",
+      "Year": 2022,
+      "Category": "Sports",
+      "Price": 248000,
+      "Horsepower": 720,
+      "Mileage": 1800,
+      "Transmission": "7-Speed F1 Dual-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "3.9L Twin-Turbo V8",
+      "StockQuantity": 0,
+      "IsAvailable": false,
+      "Description": "Rosso Corsa over Nero leather with Giallo stitching. Equipped with carbon fiber racing seats, passenger display, Scuderia fender shields, and titanium exhaust pipes. Official Ferrari Power15 warranty included."
+    },
+    {
+      "Vin": "SBM14ABA8MW005128",
+      "Make": "McLaren",
+      "Model": "720S Performance",
+      "Year": 2021,
+      "Category": "Sports",
+      "Price": 229000,
+      "Horsepower": 720,
+      "Mileage": 6400,
+      "Transmission": "7-Speed SSG",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Papaya Spark exterior with full Carbon Fiber Exterior Upgrade Packs 1, 2, and 3. Bowers & Wilkins 12-speaker audio, 360-degree park assist, sports exhaust, and McLaren Qualified warranty."
+    },
+    {
+      "Vin": "ZHWEF4ZF4NLA14290",
+      "Make": "Lamborghini",
+      "Model": "Huracán EVO",
+      "Year": 2022,
+      "Category": "Sports",
+      "Price": 235000,
+      "Horsepower": 640,
+      "Mileage": 5100,
+      "Transmission": "7-Speed LDF Dual-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "5.2L Naturally Aspirated V10",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Verde Mantis pearl finish with matching Q-Citura hexagonal stitching on Alcantara. Equipped with LDVI active dynamics, magnetorheological suspension, dynamic steering, and transparent engine cover."
+    },
+    {
+      "Vin": "1G1YB2D37P5604812",
+      "Make": "Chevrolet",
+      "Model": "Corvette Z06",
+      "Year": 2023,
+      "Category": "Sports",
+      "Price": 145000,
+      "Horsepower": 670,
+      "Mileage": 2900,
+      "Transmission": "8-Speed Dual-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "5.5L Flat-Plane Crank LT6 V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Accelerate Yellow Metallic with carbon ground effects aero package, Level 2 carbon interior trim, competition sport seats, and performance data recorder. European homologated."
+    },
+    {
+      "Vin": "WDD1903791A083145",
+      "Make": "Mercedes-AMG",
+      "Model": "GT R PRO",
+      "Year": 2021,
+      "Category": "Sports",
+      "Price": 188000,
+      "Horsepower": 585,
+      "Mileage": 8300,
+      "Transmission": "7-Speed AMG SPEEDSHIFT",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Biturbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "AMG Green Hell Magno with track package, ceramic high-performance compound brake system, carbon bucket seats with 4-point harnesses, and adjustable coilover suspension."
+    },
+    {
+      "Vin": "ZAM85VMA8PX398214",
+      "Make": "Maserati",
+      "Model": "MC20 Cielo",
+      "Year": 2023,
+      "Category": "Sports",
+      "Price": 242000,
+      "Horsepower": 630,
+      "Mileage": 1200,
+      "Transmission": "8-Speed Dual-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "3.0L Nettuno Twin-Turbo V6",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Acquamarina three-layer paint with smart electrochromic glass roof, carbon interior package, Sonus Faber high-premium sound system, and Formula 1 pre-chamber combustion technology."
+    },
+    {
+      "Vin": "SCFRMFAW7N8M02841",
+      "Make": "Aston Martin",
+      "Model": "Vantage F1 Edition",
+      "Year": 2022,
+      "Category": "Sports",
+      "Price": 168000,
+      "Horsepower": 535,
+      "Mileage": 4900,
+      "Transmission": "8-Speed ZF Automatic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 0,
+      "IsAvailable": false,
+      "Description": "Aston Martin Racing Green in satin finish with bespoke aerodynamic kit producing 200kg of downforce. Carbon bucket seats, 21-inch satin black wheels, and verified low mileage."
+    },
+    {
+      "Vin": "SCBDG4ZG4NC087412",
+      "Make": "Bentley",
+      "Model": "Continental GT V8",
+      "Year": 2022,
+      "Category": "Grand Tourer",
+      "Price": 218000,
+      "Horsepower": 550,
+      "Mileage": 7400,
+      "Transmission": "8-Speed Dual-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Anthracite Metallic with Mulliner Driving Specification, Linen and Beluga hides with diamond-in-diamond quilting, Bentley Rotating Display, Naim for Bentley 2,200W sound system."
+    },
+    {
+      "Vin": "ZFF94LHA1P0281945",
+      "Make": "Ferrari",
+      "Model": "Roma",
+      "Year": 2023,
+      "Category": "Grand Tourer",
+      "Price": 225000,
+      "Horsepower": 620,
+      "Mileage": 3500,
+      "Transmission": "8-Speed F1 Dual-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "3.9L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Grigio Silverstone with Cuoio full leather interior, Magneride dual-mode suspension, ADAS full package, surround view cameras, and ventilated electric memory seats."
+    },
+    {
+      "Vin": "SCFEAHAW6NC012785",
+      "Make": "Aston Martin",
+      "Model": "DB11 V8 Volante",
+      "Year": 2022,
+      "Category": "Grand Tourer",
+      "Price": 179000,
+      "Horsepower": 535,
+      "Mileage": 9200,
+      "Transmission": "8-Speed Automatic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Onyx Black with Chancellor Red leather interior, 8-layer acoustically insulated fabric hood, piano black fascia trim, Nexus quilting, and 360-degree camera system."
+    },
+    {
+      "Vin": "WP0ZZZ99ZPS283719",
+      "Make": "Porsche",
+      "Model": "911 Turbo S",
+      "Year": 2023,
+      "Category": "Grand Tourer",
+      "Price": 249000,
+      "Horsepower": 650,
+      "Mileage": 2100,
+      "Transmission": "8-Speed PDK",
+      "Fuel": "Petrol",
+      "EngineDescription": "3.8L Twin-Turbo Flat-6",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Agate Grey Metallic, Burmester High-End Surround Sound, Porsche Ceramic Composite Brake (PCCB) with calipers in high gloss black, sports exhaust system with silver tailpipes, PDCC active roll stabilization."
+    },
+    {
+      "Vin": "WBAAE0C05MCH18924",
+      "Make": "BMW",
+      "Model": "M8 Competition Coupé",
+      "Year": 2021,
+      "Category": "Grand Tourer",
+      "Price": 112000,
+      "Horsepower": 625,
+      "Mileage": 18500,
+      "Transmission": "8-Speed M Steptronic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.4L M TwinPower Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Marina Bay Blue Metallic, M Carbon exterior package, Bowers & Wilkins Diamond surround sound, M Carbon ceramic brakes, M Drivers package with 305 km/h top speed delimiter."
+    },
+    {
+      "Vin": "W1K2324871F019283",
+      "Make": "Mercedes-AMG",
+      "Model": "SL 63 4MATIC+",
+      "Year": 2022,
+      "Category": "Grand Tourer",
+      "Price": 184000,
+      "Horsepower": 585,
+      "Mileage": 6800,
+      "Transmission": "9-Speed AMG SPEEDSHIFT MCT",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Biturbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "MANUFAKTUR Alpine Grey solid, AMG Night Package II, AMG DYNAMIC PLUS package with rear-axle steering, AIRSCARF neck-level heating, Burmester 3D Surround Sound."
+    },
+    {
+      "Vin": "JTHHP5AY5MA009842",
+      "Make": "Lexus",
+      "Model": "LC 500 Sport+",
+      "Year": 2021,
+      "Category": "Grand Tourer",
+      "Price": 78000,
+      "Horsepower": 477,
+      "Mileage": 22000,
+      "Transmission": "10-Speed Direct-Shift",
+      "Fuel": "Petrol",
+      "EngineDescription": "5.0L Naturally Aspirated V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Sonic Amber with Dark Rose Alcantara upholstery, carbon fiber roof and active rear spoiler, Lexus Dynamic Handling with 4-wheel active steering, Mark Levinson 13-speaker audio."
+    },
+    {
+      "Vin": "ZAM45RMA1L0382914",
+      "Make": "Maserati",
+      "Model": "GranTurismo MC",
+      "Year": 2020,
+      "Category": "Grand Tourer",
+      "Price": 84000,
+      "Horsepower": 460,
+      "Mileage": 28000,
+      "Transmission": "6-Speed ZF Automatic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.7L Naturally Aspirated Ferrari V8",
+      "StockQuantity": 0,
+      "IsAvailable": false,
+      "Description": "Bianco Fuji pearlescent paint, carbon fiber bonnet and aerodynamic package, Nero leather/Alcantara with Rosso stitching, legendary Ferrari-engineered exhaust note."
+    },
+    {
+      "Vin": "WP0ZZZ97ZNL189423",
+      "Make": "Porsche",
+      "Model": "Panamera Turbo S",
+      "Year": 2022,
+      "Category": "Luxury Sedan",
+      "Price": 175000,
+      "Horsepower": 700,
+      "Mileage": 11400,
+      "Transmission": "8-Speed PDK",
+      "Fuel": "Hybrid",
+      "EngineDescription": "4.0L Biturbo V8 + Electric Motor E-Hybrid",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Night Blue Metallic, full natural leather in Saddle Brown, 21-inch Exclusive Design wheels, Porsche Ceramic Composite Brake (PCCB), night vision assist, panoramic roof system."
+    },
+    {
+      "Vin": "W1K2231761A058291",
+      "Make": "Mercedes-Maybach",
+      "Model": "S 580 4MATIC",
+      "Year": 2022,
+      "Category": "Luxury Sedan",
+      "Price": 198000,
+      "Horsepower": 503,
+      "Mileage": 14200,
+      "Transmission": "9-Speed 9G-TRONIC",
+      "Fuel": "Hybrid",
+      "EngineDescription": "4.0L Biturbo V8 Mild-Hybrid EQ Boost",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Two-tone Obsidian Black over Kalahari Gold, First-Class rear compartment with folding tables, champagne flutes, refrigerator, Burmester High-End 4D sound, active ambient lighting."
+    },
+    {
+      "Vin": "WAUZZZF28PA082194",
+      "Make": "Audi",
+      "Model": "RS6 Avant Vorsprung",
+      "Year": 2023,
+      "Category": "Luxury Sedan",
+      "Price": 142000,
+      "Horsepower": 600,
+      "Mileage": 16300,
+      "Transmission": "8-Speed Tiptronic",
+      "Fuel": "Hybrid",
+      "EngineDescription": "4.0L Twin-Turbo TFSI V8 Mild-Hybrid",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Daytona Grey Matte, Vorsprung top-tier specification, HD Matrix LED headlights with Audi laser light, RS sport exhaust system, Bang & Olufsen Advanced 3D Sound, all-wheel steering."
+    },
+    {
+      "Vin": "WBS33CH07NCB48219",
+      "Make": "BMW",
+      "Model": "M5 CS Edition",
+      "Year": 2022,
+      "Category": "Luxury Sedan",
+      "Price": 169000,
+      "Horsepower": 635,
+      "Mileage": 8900,
+      "Transmission": "8-Speed M Steptronic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.4L M TwinPower Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Frozen Deep Green Metallic with Gold Bronze accents and yellow daytime running lights. 1 of 1,000 limited units worldwide. Carbon bucket seats with Nürburgring track map debossed on headrests."
+    },
+    {
+      "Vin": "SCA664S59MUX82149",
+      "Make": "Rolls-Royce",
+      "Model": "Ghost Extended",
+      "Year": 2021,
+      "Category": "Luxury Sedan",
+      "Price": 249500,
+      "Horsepower": 571,
+      "Mileage": 9800,
+      "Transmission": "8-Speed Satellite Aided",
+      "Fuel": "Petrol",
+      "EngineDescription": "6.75L Twin-Turbo V12",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Diamond Black with Grace White and Mandarin bespoke interior, Shooting Star Starlight Headliner, Planar Suspension System, illuminated fascia, rear theater configuration."
+    },
+    {
+      "Vin": "SCBDH4ZG8PC098231",
+      "Make": "Bentley",
+      "Model": "Flying Spur Azure",
+      "Year": 2023,
+      "Category": "Luxury Sedan",
+      "Price": 228000,
+      "Horsepower": 544,
+      "Mileage": 4700,
+      "Transmission": "8-Speed Dual-Clutch",
+      "Fuel": "Hybrid",
+      "EngineDescription": "2.9L Twin-Turbo V6 + E-Motor Hybrid",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Portofino Blue with Portland and Imperial Blue hide, Azure wellness specification with massage and climate-controlled seating, Flying B mascot in bright finish with illuminated wings."
+    },
+    {
+      "Vin": "WAUZZZF25NA049218",
+      "Make": "Audi",
+      "Model": "RS7 Sportback",
+      "Year": 2022,
+      "Category": "Luxury Sedan",
+      "Price": 129000,
+      "Horsepower": 630,
+      "Mileage": 19100,
+      "Transmission": "8-Speed Tiptronic",
+      "Fuel": "Hybrid",
+      "EngineDescription": "4.0L TFSI Twin-Turbo V8 Mild-Hybrid",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Nardo Grey, Gloss Carbon styling package, RS ceramic brakes with blue calipers, RS Dynamic package plus (top speed 305 km/h), heads-up display, Audi virtual cockpit plus."
+    },
+    {
+      "Vin": "W1K2130891A928174",
+      "Make": "Mercedes-AMG",
+      "Model": "E 63 S Final Edition",
+      "Year": 2021,
+      "Category": "Luxury Sedan",
+      "Price": 118000,
+      "Horsepower": 612,
+      "Mileage": 24500,
+      "Transmission": "9-Speed AMG SPEEDSHIFT MCT",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Biturbo V8",
+      "StockQuantity": 0,
+      "IsAvailable": false,
+      "Description": "MANUFAKTUR Graphite Grey Magno, AMG Ceramic High-Performance braking system, AMG Performance seats in titanium grey pearl, carbon exterior mirror housings and boot lip."
+    },
+    {
+      "Vin": "SCFEAUBW7P8M04912",
+      "Make": "Aston Martin",
+      "Model": "DBX707",
+      "Year": 2023,
+      "Category": "SUV",
+      "Price": 239000,
+      "Horsepower": 707,
+      "Mileage": 3200,
+      "Transmission": "9-Speed Wet-Clutch",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Apex Grey exterior with semi-aniline leather interior in Electron Yellow and Onyx Black. Carbon ceramic brakes with bronze calipers, 23-inch forged textured wheels, sports exhaust with quad active bypass valves."
+    },
+    {
+      "Vin": "ZPBUA1ZL8NLA82914",
+      "Make": "Lamborghini",
+      "Model": "Urus Performante",
+      "Year": 2022,
+      "Category": "SUV",
+      "Price": 249000,
+      "Horsepower": 666,
+      "Mileage": 6100,
+      "Transmission": "8-Speed Automatic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Giallo Auge with visible carbon fiber bonnet, roof and rear spoiler. Akrapovic titanium exhaust system, full ADAS package with head-up display, 23-inch Pelope diamond-cut rims."
+    },
+    {
+      "Vin": "WP1ZZZ9YZPDA82149",
+      "Make": "Porsche",
+      "Model": "Cayenne Turbo GT",
+      "Year": 2023,
+      "Category": "SUV",
+      "Price": 212000,
+      "Horsepower": 659,
+      "Mileage": 5400,
+      "Transmission": "8-Speed Tiptronic S",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Arctic Grey with Neodyme gold 22-inch GT Design wheels, titanium central exhaust system, carbon roof, PCCB ceramic brakes, interior trim in lightweight Alcantara."
+    },
+    {
+      "Vin": "SALWK2EX5NA829140",
+      "Make": "Land Rover",
+      "Model": "Range Rover SV LWB",
+      "Year": 2022,
+      "Category": "SUV",
+      "Price": 225000,
+      "Horsepower": 530,
+      "Mileage": 8700,
+      "Transmission": "8-Speed Automatic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.4L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "SV Serenity theme with Corinthian Bronze accents over Caraway and Perlino semi-aniline leather. SV Signature Suite 4-seat configuration with electrically deployable club table and refrigerator."
+    },
+    {
+      "Vin": "SCBDH4ZG2MC048192",
+      "Make": "Bentley",
+      "Model": "Bentayga V8 First Edition",
+      "Year": 2021,
+      "Category": "SUV",
+      "Price": 182000,
+      "Horsepower": 550,
+      "Mileage": 19800,
+      "Transmission": "8-Speed Automatic",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Twin-Turbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Glacier White with Blackline Specification, Saddle leather with contrast stitching, touring specification with head-up display and night vision, Naim for Bentley 1,780W premium audio."
+    },
+    {
+      "Vin": "W1N4632761X391824",
+      "Make": "Mercedes-AMG",
+      "Model": "G 63 Magno Edition",
+      "Year": 2022,
+      "Category": "SUV",
+      "Price": 229000,
+      "Horsepower": 585,
+      "Mileage": 11200,
+      "Transmission": "9-Speed AMG SPEEDSHIFT",
+      "Fuel": "Petrol",
+      "EngineDescription": "4.0L Biturbo V8",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "MANUFAKTUR Night Black Magno with AMG Night Package, 22-inch cross-spoke forged wheels in matte black, Superior Line interior with diamond-quilted designo nappa leather, Burmester surround sound."
+    },
+    {
+      "Vin": "5YMJU0C07P9B82914",
+      "Make": "BMW",
+      "Model": "X5 M Competition",
+      "Year": 2023,
+      "Category": "SUV",
+      "Price": 138000,
+      "Horsepower": 625,
+      "Mileage": 12300,
+      "Transmission": "8-Speed M Steptronic",
+      "Fuel": "Hybrid",
+      "EngineDescription": "4.4L M TwinPower Turbo V8 Mild-Hybrid",
+      "StockQuantity": 1,
+      "IsAvailable": true,
+      "Description": "Isle of Man Green Metallic with Silverstone full Merino leather, Bowers & Wilkins Diamond surround sound system, M compound brakes in high-gloss red, Sky Lounge panoramic glass roof."
+    },
+    {
+      "Vin": "WAUZZZF17MA039184",
+      "Make": "Audi",
+      "Model": "RS Q8 Carbon Black",
+      "Year": 2021,
+      "Category": "SUV",
+      "Price": 126000,
+      "Horsepower": 600,
+      "Mileage": 21400,
+      "Transmission": "8-Speed Tiptronic",
+      "Fuel": "Hybrid",
+      "EngineDescription": "4.0L TFSI Twin-Turbo V8 Mild-Hybrid",
+      "StockQuantity": 0,
+      "IsAvailable": false,
+      "Description": "Orca Black Metallic, Carbon Black edition with carbon styling pack, sports exhaust system, electromechanical active roll stabilization (eAWS), panoramic sunroof."
+    }
+  ],
+  "CarImages": [
+    {
+      "Id": 1,
+      "CarVin": "WP0ZZZ99ZPS291047",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS291047-1.svg"
+    },
+    {
+      "Id": 2,
+      "CarVin": "WP0ZZZ99ZPS291047",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS291047-2.svg"
+    },
+    {
+      "Id": 3,
+      "CarVin": "WP0ZZZ99ZPS291047",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS291047-3.svg"
+    },
+    {
+      "Id": 4,
+      "CarVin": "WP0ZZZ99ZPS291047",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS291047-4.svg"
+    },
+    {
+      "Id": 5,
+      "CarVin": "ZFF92LLA9N0267841",
+      "ImageUrl": "../assets/img/ZFF92LLA9N0267841-1.svg"
+    },
+    {
+      "Id": 6,
+      "CarVin": "ZFF92LLA9N0267841",
+      "ImageUrl": "../assets/img/ZFF92LLA9N0267841-2.svg"
+    },
+    {
+      "Id": 7,
+      "CarVin": "ZFF92LLA9N0267841",
+      "ImageUrl": "../assets/img/ZFF92LLA9N0267841-3.svg"
+    },
+    {
+      "Id": 8,
+      "CarVin": "ZFF92LLA9N0267841",
+      "ImageUrl": "../assets/img/ZFF92LLA9N0267841-4.svg"
+    },
+    {
+      "Id": 9,
+      "CarVin": "SBM14ABA8MW005128",
+      "ImageUrl": "../assets/img/SBM14ABA8MW005128-1.svg"
+    },
+    {
+      "Id": 10,
+      "CarVin": "SBM14ABA8MW005128",
+      "ImageUrl": "../assets/img/SBM14ABA8MW005128-2.svg"
+    },
+    {
+      "Id": 11,
+      "CarVin": "SBM14ABA8MW005128",
+      "ImageUrl": "../assets/img/SBM14ABA8MW005128-3.svg"
+    },
+    {
+      "Id": 12,
+      "CarVin": "SBM14ABA8MW005128",
+      "ImageUrl": "../assets/img/SBM14ABA8MW005128-4.svg"
+    },
+    {
+      "Id": 13,
+      "CarVin": "ZHWEF4ZF4NLA14290",
+      "ImageUrl": "../assets/img/ZHWEF4ZF4NLA14290-1.svg"
+    },
+    {
+      "Id": 14,
+      "CarVin": "ZHWEF4ZF4NLA14290",
+      "ImageUrl": "../assets/img/ZHWEF4ZF4NLA14290-2.svg"
+    },
+    {
+      "Id": 15,
+      "CarVin": "ZHWEF4ZF4NLA14290",
+      "ImageUrl": "../assets/img/ZHWEF4ZF4NLA14290-3.svg"
+    },
+    {
+      "Id": 16,
+      "CarVin": "ZHWEF4ZF4NLA14290",
+      "ImageUrl": "../assets/img/ZHWEF4ZF4NLA14290-4.svg"
+    },
+    {
+      "Id": 17,
+      "CarVin": "1G1YB2D37P5604812",
+      "ImageUrl": "../assets/img/1G1YB2D37P5604812-1.svg"
+    },
+    {
+      "Id": 18,
+      "CarVin": "1G1YB2D37P5604812",
+      "ImageUrl": "../assets/img/1G1YB2D37P5604812-2.svg"
+    },
+    {
+      "Id": 19,
+      "CarVin": "1G1YB2D37P5604812",
+      "ImageUrl": "../assets/img/1G1YB2D37P5604812-3.svg"
+    },
+    {
+      "Id": 20,
+      "CarVin": "1G1YB2D37P5604812",
+      "ImageUrl": "../assets/img/1G1YB2D37P5604812-4.svg"
+    },
+    {
+      "Id": 21,
+      "CarVin": "WDD1903791A083145",
+      "ImageUrl": "../assets/img/WDD1903791A083145-1.svg"
+    },
+    {
+      "Id": 22,
+      "CarVin": "WDD1903791A083145",
+      "ImageUrl": "../assets/img/WDD1903791A083145-2.svg"
+    },
+    {
+      "Id": 23,
+      "CarVin": "WDD1903791A083145",
+      "ImageUrl": "../assets/img/WDD1903791A083145-3.svg"
+    },
+    {
+      "Id": 24,
+      "CarVin": "WDD1903791A083145",
+      "ImageUrl": "../assets/img/WDD1903791A083145-4.svg"
+    },
+    {
+      "Id": 25,
+      "CarVin": "ZAM85VMA8PX398214",
+      "ImageUrl": "../assets/img/ZAM85VMA8PX398214-1.svg"
+    },
+    {
+      "Id": 26,
+      "CarVin": "ZAM85VMA8PX398214",
+      "ImageUrl": "../assets/img/ZAM85VMA8PX398214-2.svg"
+    },
+    {
+      "Id": 27,
+      "CarVin": "ZAM85VMA8PX398214",
+      "ImageUrl": "../assets/img/ZAM85VMA8PX398214-3.svg"
+    },
+    {
+      "Id": 28,
+      "CarVin": "ZAM85VMA8PX398214",
+      "ImageUrl": "../assets/img/ZAM85VMA8PX398214-4.svg"
+    },
+    {
+      "Id": 29,
+      "CarVin": "SCFRMFAW7N8M02841",
+      "ImageUrl": "../assets/img/SCFRMFAW7N8M02841-1.svg"
+    },
+    {
+      "Id": 30,
+      "CarVin": "SCFRMFAW7N8M02841",
+      "ImageUrl": "../assets/img/SCFRMFAW7N8M02841-2.svg"
+    },
+    {
+      "Id": 31,
+      "CarVin": "SCFRMFAW7N8M02841",
+      "ImageUrl": "../assets/img/SCFRMFAW7N8M02841-3.svg"
+    },
+    {
+      "Id": 32,
+      "CarVin": "SCFRMFAW7N8M02841",
+      "ImageUrl": "../assets/img/SCFRMFAW7N8M02841-4.svg"
+    },
+    {
+      "Id": 33,
+      "CarVin": "SCBDG4ZG4NC087412",
+      "ImageUrl": "../assets/img/SCBDG4ZG4NC087412-1.svg"
+    },
+    {
+      "Id": 34,
+      "CarVin": "SCBDG4ZG4NC087412",
+      "ImageUrl": "../assets/img/SCBDG4ZG4NC087412-2.svg"
+    },
+    {
+      "Id": 35,
+      "CarVin": "SCBDG4ZG4NC087412",
+      "ImageUrl": "../assets/img/SCBDG4ZG4NC087412-3.svg"
+    },
+    {
+      "Id": 36,
+      "CarVin": "SCBDG4ZG4NC087412",
+      "ImageUrl": "../assets/img/SCBDG4ZG4NC087412-4.svg"
+    },
+    {
+      "Id": 37,
+      "CarVin": "ZFF94LHA1P0281945",
+      "ImageUrl": "../assets/img/ZFF94LHA1P0281945-1.svg"
+    },
+    {
+      "Id": 38,
+      "CarVin": "ZFF94LHA1P0281945",
+      "ImageUrl": "../assets/img/ZFF94LHA1P0281945-2.svg"
+    },
+    {
+      "Id": 39,
+      "CarVin": "ZFF94LHA1P0281945",
+      "ImageUrl": "../assets/img/ZFF94LHA1P0281945-3.svg"
+    },
+    {
+      "Id": 40,
+      "CarVin": "ZFF94LHA1P0281945",
+      "ImageUrl": "../assets/img/ZFF94LHA1P0281945-4.svg"
+    },
+    {
+      "Id": 41,
+      "CarVin": "SCFEAHAW6NC012785",
+      "ImageUrl": "../assets/img/SCFEAHAW6NC012785-1.svg"
+    },
+    {
+      "Id": 42,
+      "CarVin": "SCFEAHAW6NC012785",
+      "ImageUrl": "../assets/img/SCFEAHAW6NC012785-2.svg"
+    },
+    {
+      "Id": 43,
+      "CarVin": "SCFEAHAW6NC012785",
+      "ImageUrl": "../assets/img/SCFEAHAW6NC012785-3.svg"
+    },
+    {
+      "Id": 44,
+      "CarVin": "SCFEAHAW6NC012785",
+      "ImageUrl": "../assets/img/SCFEAHAW6NC012785-4.svg"
+    },
+    {
+      "Id": 45,
+      "CarVin": "WP0ZZZ99ZPS283719",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS283719-1.svg"
+    },
+    {
+      "Id": 46,
+      "CarVin": "WP0ZZZ99ZPS283719",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS283719-2.svg"
+    },
+    {
+      "Id": 47,
+      "CarVin": "WP0ZZZ99ZPS283719",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS283719-3.svg"
+    },
+    {
+      "Id": 48,
+      "CarVin": "WP0ZZZ99ZPS283719",
+      "ImageUrl": "../assets/img/WP0ZZZ99ZPS283719-4.svg"
+    },
+    {
+      "Id": 49,
+      "CarVin": "WBAAE0C05MCH18924",
+      "ImageUrl": "../assets/img/WBAAE0C05MCH18924-1.svg"
+    },
+    {
+      "Id": 50,
+      "CarVin": "WBAAE0C05MCH18924",
+      "ImageUrl": "../assets/img/WBAAE0C05MCH18924-2.svg"
+    },
+    {
+      "Id": 51,
+      "CarVin": "WBAAE0C05MCH18924",
+      "ImageUrl": "../assets/img/WBAAE0C05MCH18924-3.svg"
+    },
+    {
+      "Id": 52,
+      "CarVin": "WBAAE0C05MCH18924",
+      "ImageUrl": "../assets/img/WBAAE0C05MCH18924-4.svg"
+    },
+    {
+      "Id": 53,
+      "CarVin": "W1K2324871F019283",
+      "ImageUrl": "../assets/img/W1K2324871F019283-1.svg"
+    },
+    {
+      "Id": 54,
+      "CarVin": "W1K2324871F019283",
+      "ImageUrl": "../assets/img/W1K2324871F019283-2.svg"
+    },
+    {
+      "Id": 55,
+      "CarVin": "W1K2324871F019283",
+      "ImageUrl": "../assets/img/W1K2324871F019283-3.svg"
+    },
+    {
+      "Id": 56,
+      "CarVin": "W1K2324871F019283",
+      "ImageUrl": "../assets/img/W1K2324871F019283-4.svg"
+    },
+    {
+      "Id": 57,
+      "CarVin": "JTHHP5AY5MA009842",
+      "ImageUrl": "../assets/img/JTHHP5AY5MA009842-1.svg"
+    },
+    {
+      "Id": 58,
+      "CarVin": "JTHHP5AY5MA009842",
+      "ImageUrl": "../assets/img/JTHHP5AY5MA009842-2.svg"
+    },
+    {
+      "Id": 59,
+      "CarVin": "JTHHP5AY5MA009842",
+      "ImageUrl": "../assets/img/JTHHP5AY5MA009842-3.svg"
+    },
+    {
+      "Id": 60,
+      "CarVin": "JTHHP5AY5MA009842",
+      "ImageUrl": "../assets/img/JTHHP5AY5MA009842-4.svg"
+    },
+    {
+      "Id": 61,
+      "CarVin": "ZAM45RMA1L0382914",
+      "ImageUrl": "../assets/img/ZAM45RMA1L0382914-1.svg"
+    },
+    {
+      "Id": 62,
+      "CarVin": "ZAM45RMA1L0382914",
+      "ImageUrl": "../assets/img/ZAM45RMA1L0382914-2.svg"
+    },
+    {
+      "Id": 63,
+      "CarVin": "ZAM45RMA1L0382914",
+      "ImageUrl": "../assets/img/ZAM45RMA1L0382914-3.svg"
+    },
+    {
+      "Id": 64,
+      "CarVin": "ZAM45RMA1L0382914",
+      "ImageUrl": "../assets/img/ZAM45RMA1L0382914-4.svg"
+    },
+    {
+      "Id": 65,
+      "CarVin": "WP0ZZZ97ZNL189423",
+      "ImageUrl": "../assets/img/WP0ZZZ97ZNL189423-1.svg"
+    },
+    {
+      "Id": 66,
+      "CarVin": "WP0ZZZ97ZNL189423",
+      "ImageUrl": "../assets/img/WP0ZZZ97ZNL189423-2.svg"
+    },
+    {
+      "Id": 67,
+      "CarVin": "WP0ZZZ97ZNL189423",
+      "ImageUrl": "../assets/img/WP0ZZZ97ZNL189423-3.svg"
+    },
+    {
+      "Id": 68,
+      "CarVin": "WP0ZZZ97ZNL189423",
+      "ImageUrl": "../assets/img/WP0ZZZ97ZNL189423-4.svg"
+    },
+    {
+      "Id": 69,
+      "CarVin": "W1K2231761A058291",
+      "ImageUrl": "../assets/img/W1K2231761A058291-1.svg"
+    },
+    {
+      "Id": 70,
+      "CarVin": "W1K2231761A058291",
+      "ImageUrl": "../assets/img/W1K2231761A058291-2.svg"
+    },
+    {
+      "Id": 71,
+      "CarVin": "W1K2231761A058291",
+      "ImageUrl": "../assets/img/W1K2231761A058291-3.svg"
+    },
+    {
+      "Id": 72,
+      "CarVin": "W1K2231761A058291",
+      "ImageUrl": "../assets/img/W1K2231761A058291-4.svg"
+    },
+    {
+      "Id": 73,
+      "CarVin": "WAUZZZF28PA082194",
+      "ImageUrl": "../assets/img/WAUZZZF28PA082194-1.svg"
+    },
+    {
+      "Id": 74,
+      "CarVin": "WAUZZZF28PA082194",
+      "ImageUrl": "../assets/img/WAUZZZF28PA082194-2.svg"
+    },
+    {
+      "Id": 75,
+      "CarVin": "WAUZZZF28PA082194",
+      "ImageUrl": "../assets/img/WAUZZZF28PA082194-3.svg"
+    },
+    {
+      "Id": 76,
+      "CarVin": "WAUZZZF28PA082194",
+      "ImageUrl": "../assets/img/WAUZZZF28PA082194-4.svg"
+    },
+    {
+      "Id": 77,
+      "CarVin": "WBS33CH07NCB48219",
+      "ImageUrl": "../assets/img/WBS33CH07NCB48219-1.svg"
+    },
+    {
+      "Id": 78,
+      "CarVin": "WBS33CH07NCB48219",
+      "ImageUrl": "../assets/img/WBS33CH07NCB48219-2.svg"
+    },
+    {
+      "Id": 79,
+      "CarVin": "WBS33CH07NCB48219",
+      "ImageUrl": "../assets/img/WBS33CH07NCB48219-3.svg"
+    },
+    {
+      "Id": 80,
+      "CarVin": "WBS33CH07NCB48219",
+      "ImageUrl": "../assets/img/WBS33CH07NCB48219-4.svg"
+    },
+    {
+      "Id": 81,
+      "CarVin": "SCA664S59MUX82149",
+      "ImageUrl": "../assets/img/SCA664S59MUX82149-1.svg"
+    },
+    {
+      "Id": 82,
+      "CarVin": "SCA664S59MUX82149",
+      "ImageUrl": "../assets/img/SCA664S59MUX82149-2.svg"
+    },
+    {
+      "Id": 83,
+      "CarVin": "SCA664S59MUX82149",
+      "ImageUrl": "../assets/img/SCA664S59MUX82149-3.svg"
+    },
+    {
+      "Id": 84,
+      "CarVin": "SCA664S59MUX82149",
+      "ImageUrl": "../assets/img/SCA664S59MUX82149-4.svg"
+    },
+    {
+      "Id": 85,
+      "CarVin": "SCBDH4ZG8PC098231",
+      "ImageUrl": "../assets/img/SCBDH4ZG8PC098231-1.svg"
+    },
+    {
+      "Id": 86,
+      "CarVin": "SCBDH4ZG8PC098231",
+      "ImageUrl": "../assets/img/SCBDH4ZG8PC098231-2.svg"
+    },
+    {
+      "Id": 87,
+      "CarVin": "SCBDH4ZG8PC098231",
+      "ImageUrl": "../assets/img/SCBDH4ZG8PC098231-3.svg"
+    },
+    {
+      "Id": 88,
+      "CarVin": "SCBDH4ZG8PC098231",
+      "ImageUrl": "../assets/img/SCBDH4ZG8PC098231-4.svg"
+    },
+    {
+      "Id": 89,
+      "CarVin": "WAUZZZF25NA049218",
+      "ImageUrl": "../assets/img/WAUZZZF25NA049218-1.svg"
+    },
+    {
+      "Id": 90,
+      "CarVin": "WAUZZZF25NA049218",
+      "ImageUrl": "../assets/img/WAUZZZF25NA049218-2.svg"
+    },
+    {
+      "Id": 91,
+      "CarVin": "WAUZZZF25NA049218",
+      "ImageUrl": "../assets/img/WAUZZZF25NA049218-3.svg"
+    },
+    {
+      "Id": 92,
+      "CarVin": "WAUZZZF25NA049218",
+      "ImageUrl": "../assets/img/WAUZZZF25NA049218-4.svg"
+    },
+    {
+      "Id": 93,
+      "CarVin": "W1K2130891A928174",
+      "ImageUrl": "../assets/img/W1K2130891A928174-1.svg"
+    },
+    {
+      "Id": 94,
+      "CarVin": "W1K2130891A928174",
+      "ImageUrl": "../assets/img/W1K2130891A928174-2.svg"
+    },
+    {
+      "Id": 95,
+      "CarVin": "W1K2130891A928174",
+      "ImageUrl": "../assets/img/W1K2130891A928174-3.svg"
+    },
+    {
+      "Id": 96,
+      "CarVin": "W1K2130891A928174",
+      "ImageUrl": "../assets/img/W1K2130891A928174-4.svg"
+    },
+    {
+      "Id": 97,
+      "CarVin": "SCFEAUBW7P8M04912",
+      "ImageUrl": "../assets/img/SCFEAUBW7P8M04912-1.svg"
+    },
+    {
+      "Id": 98,
+      "CarVin": "SCFEAUBW7P8M04912",
+      "ImageUrl": "../assets/img/SCFEAUBW7P8M04912-2.svg"
+    },
+    {
+      "Id": 99,
+      "CarVin": "SCFEAUBW7P8M04912",
+      "ImageUrl": "../assets/img/SCFEAUBW7P8M04912-3.svg"
+    },
+    {
+      "Id": 100,
+      "CarVin": "SCFEAUBW7P8M04912",
+      "ImageUrl": "../assets/img/SCFEAUBW7P8M04912-4.svg"
+    },
+    {
+      "Id": 101,
+      "CarVin": "ZPBUA1ZL8NLA82914",
+      "ImageUrl": "../assets/img/ZPBUA1ZL8NLA82914-1.svg"
+    },
+    {
+      "Id": 102,
+      "CarVin": "ZPBUA1ZL8NLA82914",
+      "ImageUrl": "../assets/img/ZPBUA1ZL8NLA82914-2.svg"
+    },
+    {
+      "Id": 103,
+      "CarVin": "ZPBUA1ZL8NLA82914",
+      "ImageUrl": "../assets/img/ZPBUA1ZL8NLA82914-3.svg"
+    },
+    {
+      "Id": 104,
+      "CarVin": "ZPBUA1ZL8NLA82914",
+      "ImageUrl": "../assets/img/ZPBUA1ZL8NLA82914-4.svg"
+    },
+    {
+      "Id": 105,
+      "CarVin": "WP1ZZZ9YZPDA82149",
+      "ImageUrl": "../assets/img/WP1ZZZ9YZPDA82149-1.svg"
+    },
+    {
+      "Id": 106,
+      "CarVin": "WP1ZZZ9YZPDA82149",
+      "ImageUrl": "../assets/img/WP1ZZZ9YZPDA82149-2.svg"
+    },
+    {
+      "Id": 107,
+      "CarVin": "WP1ZZZ9YZPDA82149",
+      "ImageUrl": "../assets/img/WP1ZZZ9YZPDA82149-3.svg"
+    },
+    {
+      "Id": 108,
+      "CarVin": "WP1ZZZ9YZPDA82149",
+      "ImageUrl": "../assets/img/WP1ZZZ9YZPDA82149-4.svg"
+    },
+    {
+      "Id": 109,
+      "CarVin": "SALWK2EX5NA829140",
+      "ImageUrl": "../assets/img/SALWK2EX5NA829140-1.svg"
+    },
+    {
+      "Id": 110,
+      "CarVin": "SALWK2EX5NA829140",
+      "ImageUrl": "../assets/img/SALWK2EX5NA829140-2.svg"
+    },
+    {
+      "Id": 111,
+      "CarVin": "SALWK2EX5NA829140",
+      "ImageUrl": "../assets/img/SALWK2EX5NA829140-3.svg"
+    },
+    {
+      "Id": 112,
+      "CarVin": "SALWK2EX5NA829140",
+      "ImageUrl": "../assets/img/SALWK2EX5NA829140-4.svg"
+    },
+    {
+      "Id": 113,
+      "CarVin": "SCBDH4ZG2MC048192",
+      "ImageUrl": "../assets/img/SCBDH4ZG2MC048192-1.svg"
+    },
+    {
+      "Id": 114,
+      "CarVin": "SCBDH4ZG2MC048192",
+      "ImageUrl": "../assets/img/SCBDH4ZG2MC048192-2.svg"
+    },
+    {
+      "Id": 115,
+      "CarVin": "SCBDH4ZG2MC048192",
+      "ImageUrl": "../assets/img/SCBDH4ZG2MC048192-3.svg"
+    },
+    {
+      "Id": 116,
+      "CarVin": "SCBDH4ZG2MC048192",
+      "ImageUrl": "../assets/img/SCBDH4ZG2MC048192-4.svg"
+    },
+    {
+      "Id": 117,
+      "CarVin": "W1N4632761X391824",
+      "ImageUrl": "../assets/img/W1N4632761X391824-1.svg"
+    },
+    {
+      "Id": 118,
+      "CarVin": "W1N4632761X391824",
+      "ImageUrl": "../assets/img/W1N4632761X391824-2.svg"
+    },
+    {
+      "Id": 119,
+      "CarVin": "W1N4632761X391824",
+      "ImageUrl": "../assets/img/W1N4632761X391824-3.svg"
+    },
+    {
+      "Id": 120,
+      "CarVin": "W1N4632761X391824",
+      "ImageUrl": "../assets/img/W1N4632761X391824-4.svg"
+    },
+    {
+      "Id": 121,
+      "CarVin": "5YMJU0C07P9B82914",
+      "ImageUrl": "../assets/img/5YMJU0C07P9B82914-1.svg"
+    },
+    {
+      "Id": 122,
+      "CarVin": "5YMJU0C07P9B82914",
+      "ImageUrl": "../assets/img/5YMJU0C07P9B82914-2.svg"
+    },
+    {
+      "Id": 123,
+      "CarVin": "5YMJU0C07P9B82914",
+      "ImageUrl": "../assets/img/5YMJU0C07P9B82914-3.svg"
+    },
+    {
+      "Id": 124,
+      "CarVin": "5YMJU0C07P9B82914",
+      "ImageUrl": "../assets/img/5YMJU0C07P9B82914-4.svg"
+    },
+    {
+      "Id": 125,
+      "CarVin": "WAUZZZF17MA039184",
+      "ImageUrl": "../assets/img/WAUZZZF17MA039184-1.svg"
+    },
+    {
+      "Id": 126,
+      "CarVin": "WAUZZZF17MA039184",
+      "ImageUrl": "../assets/img/WAUZZZF17MA039184-2.svg"
+    },
+    {
+      "Id": 127,
+      "CarVin": "WAUZZZF17MA039184",
+      "ImageUrl": "../assets/img/WAUZZZF17MA039184-3.svg"
+    },
+    {
+      "Id": 128,
+      "CarVin": "WAUZZZF17MA039184",
+      "ImageUrl": "../assets/img/WAUZZZF17MA039184-4.svg"
+    }
+  ],
+  "Orders": [
+    {
+      "Id": 1042,
+      "UserId": "usr-cust-001",
+      "CustomerName": "John Doe",
+      "CustomerEmail": "customer@rfprestige.ro",
+      "ShippingAddressId": 1,
+      "ShippingAddressText": "Str. Aviatorilor 12, Bucharest, București 011861, Romania",
+      "TotalAmount": 215490,
+      "Status": "Paid",
+      "StripePaymentIntentId": "pi_mock_1O9s8d9f12345",
+      "DeliveryOption": 1,
+      "CreatedAt": "2026-10-28T14:30:00Z",
+      "Items": [
+        {
+          "Id": 201,
+          "OrderId": 1042,
+          "CarVin": "WP0ZZZ99ZPS291047",
+          "UnitPrice": 215000,
+          "VehicleTitle": "2023 Porsche 911 GT3"
+        }
+      ]
+    },
+    {
+      "Id": 1041,
+      "UserId": "usr-cust-001",
+      "CustomerName": "John Doe",
+      "CustomerEmail": "customer@rfprestige.ro",
+      "ShippingAddressId": 2,
+      "ShippingAddressText": "Bd. Eroilor 5, Cluj-Napoca, Cluj 400129, Romania",
+      "TotalAmount": 168000,
+      "Status": "Delivered",
+      "StripePaymentIntentId": "pi_mock_98234abcfed",
+      "DeliveryOption": 0,
+      "CreatedAt": "2026-09-14T10:15:00Z",
+      "Items": [
+        {
+          "Id": 200,
+          "OrderId": 1041,
+          "CarVin": "SCFRMFAW7N8M02841",
+          "UnitPrice": 168000,
+          "VehicleTitle": "2022 Aston Martin Vantage F1 Edition"
+        }
+      ]
+    },
+    {
+      "Id": 1043,
+      "UserId": "usr-cust-001",
+      "CustomerName": "Ana Popescu",
+      "CustomerEmail": "ana@mail.ro",
+      "ShippingAddressId": 2,
+      "ShippingAddressText": "Bd. Eroilor 5, Cluj-Napoca, Cluj 400129, Romania",
+      "TotalAmount": 248000,
+      "Status": "Pending",
+      "StripePaymentIntentId": "pi_mock_55182903bbca",
+      "DeliveryOption": 0,
+      "CreatedAt": "2026-11-04T16:45:00Z",
+      "Items": [
+        {
+          "Id": 202,
+          "OrderId": 1043,
+          "CarVin": "ZFF92LLA9N0267841",
+          "UnitPrice": 248000,
+          "VehicleTitle": "2022 Ferrari F8 Tributo"
+        }
+      ]
+    }
+  ],
+  "WishlistItems": [
+    {
+      "Id": 1,
+      "UserId": "usr-cust-001",
+      "CarVin": "WP0ZZZ99ZPS291047",
+      "AddedAt": "2026-10-30T09:12:00Z"
+    },
+    {
+      "Id": 2,
+      "UserId": "usr-cust-001",
+      "CarVin": "ZFF92LLA9N0267841",
+      "AddedAt": "2026-11-02T11:45:00Z"
+    },
+    {
+      "Id": 3,
+      "UserId": "usr-cust-001",
+      "CarVin": "SCBDG4ZG4NC087412",
+      "AddedAt": "2026-11-05T17:20:00Z"
+    }
+  ],
+  "SiteReviews": [
+    {
+      "Id": 1,
+      "UserId": "usr-cust-001",
+      "UserName": "Andrei M.",
+      "Rating": 5,
+      "Comment": "Smooth purchase, the car matched its description perfectly. The enclosed trailer delivery arrived in pristine condition right outside my office in Pipera.",
+      "CreatedAt": "2026-11-01T14:20:00Z"
+    },
+    {
+      "Id": 2,
+      "UserId": "usr-cust-002",
+      "UserName": "Ioana P.",
+      "Rating": 4,
+      "Comment": "Great selection of pristine supercars. Inspection report was exhaustive. Delivery took two days longer than estimated, but the team communicated proactively throughout.",
+      "CreatedAt": "2026-11-03T11:05:00Z"
+    },
+    {
+      "Id": 3,
+      "UserId": "usr-cust-003",
+      "UserName": "Radu D.",
+      "Rating": 5,
+      "Comment": "Unmatched level of professionalism in Romania. Acquired the Bentley Continental GT; the concierge service handled all registration documents in record time.",
+      "CreatedAt": "2026-10-25T08:30:00Z"
+    },
+    {
+      "Id": 4,
+      "UserId": "usr-cust-004",
+      "UserName": "Constantin V.",
+      "Rating": 5,
+      "Comment": "The VIN verification system provides immense peace of mind when transacting over €150k. My Porsche Turbo S drives like it just rolled out of Zuffenhausen.",
+      "CreatedAt": "2026-10-18T16:50:00Z"
+    },
+    {
+      "Id": 5,
+      "UserId": "usr-cust-005",
+      "UserName": "Mihai B.",
+      "Rating": 4,
+      "Comment": "Very transparent pricing without hidden dealer surcharges. Showroom pickup in Bucharest was an enjoyable VIP experience.",
+      "CreatedAt": "2026-10-09T13:10:00Z"
+    },
+    {
+      "Id": 6,
+      "UserId": "usr-cust-006",
+      "UserName": "Elena T.",
+      "Rating": 5,
+      "Comment": "Flawless acquisition of our family Range Rover SV. RF Prestige sets a new benchmark for luxury automotive retail in Southeast Europe.",
+      "CreatedAt": "2026-09-29T10:00:00Z"
+    }
+  ]
+}

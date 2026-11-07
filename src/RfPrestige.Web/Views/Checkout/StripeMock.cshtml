@@ -1,0 +1,69 @@
+@model Order
+@{
+    ViewData["Title"] = "Stripe Sandbox Checkout";
+}
+
+<div class="py-5">
+    <div class="container px-4 px-lg-5" style="max-width: 600px;">
+        <div class="card-luxury p-4 p-md-5 border-gold">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-stripe fs-2 text-primary"></i>
+                    <span class="font-serif fw-bold text-light">Stripe Checkout</span>
+                </div>
+                <span class="badge bg-warning text-dark font-monospace px-2 py-1">TEST MODE (SANDBOX)</span>
+            </div>
+
+            <div class="text-center mb-4">
+                <div class="text-secondary small text-uppercase tracking-wider mb-1">Total Payment Due</div>
+                <div class="display-5 font-sans fw-bold text-gold">€@Model.TotalAmount.ToString("N0")</div>
+                <div class="text-secondary small mt-1">Order #@Model.Id • RF Prestige Motors</div>
+            </div>
+
+            <!-- Test Card Info Box -->
+            <div class="p-3 bg-dark-alt rounded border border-warning mb-4">
+                <div class="text-warning small text-uppercase tracking-wider fw-bold mb-1">
+                    <i class="bi bi-info-circle me-1"></i> Stripe Sandbox Test Credentials
+                </div>
+                <div class="small text-secondary">
+                    Card Number: <strong class="text-light font-monospace">4242 4242 4242 4242</strong><br />
+                    Expiry: <strong class="text-light font-monospace">12/28</strong> • CVC: <strong class="text-light font-monospace">123</strong>
+                </div>
+            </div>
+
+            <form asp-controller="Checkout" asp-action="ConfirmMockPayment" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="orderId" value="@Model.Id" />
+
+                <div class="mb-3">
+                    <label class="form-label text-gold small text-uppercase fw-semibold">Card Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark-alt border-gold-subtle text-gold"><i class="bi bi-credit-card"></i></span>
+                        <input type="text" class="form-control font-monospace" value="4242 •••• •••• 4242" readonly />
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-4">
+                    <div class="col-6">
+                        <label class="form-label text-gold small text-uppercase fw-semibold">Expiry Date</label>
+                        <input type="text" class="form-control font-monospace" value="12/28" readonly />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label text-gold small text-uppercase fw-semibold">CVC / CVV</label>
+                        <input type="text" class="form-control font-monospace" value="123" readonly />
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-gold py-3 fw-bold text-uppercase tracking-wider">
+                        <i class="bi bi-check-circle me-2"></i> Authorize &amp; Pay €@Model.TotalAmount.ToString("N0")
+                    </button>
+
+                    <a asp-controller="Checkout" asp-action="Cancel" asp-route-orderId="@Model.Id" class="btn btn-outline-secondary py-2 small text-secondary">
+                        Cancel Payment and Return to Store
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

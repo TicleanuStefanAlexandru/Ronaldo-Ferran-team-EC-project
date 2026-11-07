@@ -1,0 +1,154 @@
+@model Car
+@{
+    ViewData["Title"] = $"{Model.Year} {Model.Make} {Model.Model}";
+    var recommendations = ViewData["Recommendations"] as List<Car> ?? new List<Car>();
+}
+
+<div class="container py-5 px-4 px-lg-5">
+    <div class="mb-4">
+        <a asp-controller="Catalog" asp-action="Index" class="text-secondary small text-decoration-none hover-gold">
+            <i class="bi bi-arrow-left me-1"></i> Back to Fleet Collection
+        </a>
+    </div>
+
+    <div class="row g-5">
+        <!-- Left: Image Gallery -->
+        <div class="col-lg-7">
+            <div class="card-luxury p-3 mb-4">
+                @{
+                    var primary = Model.Images.FirstOrDefault()?.ImageUrl ?? "/assets/img/default-car.svg";
+                }
+                <div class="rounded overflow-hidden mb-3" style="aspect-ratio: 16/10;">
+                    <img id="mainVehicleImage" src="@primary" alt="@Model.Make @Model.Model" class="w-100 h-100 object-fit-cover" />
+                </div>
+
+                @if (Model.Images.Count > 1)
+                {
+                    <div class="row g-2">
+                        @foreach (var img in Model.Images)
+                        {
+                            <div class="col-3">
+                                <img src="@img.ImageUrl" alt="Thumbnail" class="img-fluid rounded border border-secondary border-opacity-25 cursor-pointer" onclick="document.getElementById('mainVehicleImage').src = this.src" style="aspect-ratio: 16/10; object-fit: cover; width: 100%;" />
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Description -->
+            <div class="card-luxury p-4">
+                <h5 class="font-serif text-light mb-3">Vehicle Overview &amp; Provenance</h5>
+                <p class="text-secondary lh-lg mb-0">@Model.Description</p>
+            </div>
+        </div>
+
+        <!-- Right: Specs & Actions -->
+        <div class="col-lg-5">
+            <div class="card-luxury p-4 sticky-top" style="top: 90px;">
+                <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">
+                    @Model.Category
+                </span>
+                <h1 class="h3 font-serif fw-bold text-light mb-2">@Model.Year @Model.Make @Model.Model</h1>
+                <div class="text-secondary small font-monospace mb-4">VIN: @Model.Vin</div>
+
+                <div class="display-6 font-sans fw-bold text-gold mb-4">
+                    €@Model.Price.ToString("N0")
+                    <span class="fs-6 text-secondary fw-normal">VAT included</span>
+                </div>
+
+                <!-- Technical Specs Table -->
+                <div class="table-responsive mb-4">
+                    <table class="table table-dark table-sm mb-0">
+                        <tbody>
+                            <tr>
+                                <td class="text-secondary py-2">Power Output</td>
+                                <td class="text-light fw-medium text-end py-2">@Model.Horsepower HP</td>
+                            </tr>
+                            <tr>
+                                <td class="text-secondary py-2">Mileage</td>
+                                <td class="text-light fw-medium text-end py-2">@Model.Mileage.ToString("N0") km</td>
+                            </tr>
+                            <tr>
+                                <td class="text-secondary py-2">Engine</td>
+                                <td class="text-light fw-medium text-end py-2">@Model.EngineDescription</td>
+                            </tr>
+                            <tr>
+                                <td class="text-secondary py-2">Transmission</td>
+                                <td class="text-light fw-medium text-end py-2">@Model.Transmission</td>
+                            </tr>
+                            <tr>
+                                <td class="text-secondary py-2">Fuel Type</td>
+                                <td class="text-light fw-medium text-end py-2">@Model.Fuel</td>
+                            </tr>
+                            <tr>
+                                <td class="text-secondary py-2">Availability</td>
+                                <td class="text-end py-2">
+                                    @if (Model.IsAvailable && Model.StockQuantity > 0)
+                                    {
+                                        <span class="badge bg-success text-dark">Available (1 unit)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger text-white">Sold / Acquired</span>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-grid gap-2 mb-3">
+                    @if (Model.IsAvailable && Model.StockQuantity > 0)
+                    {
+                        <form asp-controller="Cart" asp-action="Add" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="vin" value="@Model.Vin" />
+                            <button type="submit" class="btn btn-gold py-3 w-100 fw-bold text-uppercase tracking-wider">
+                                <i class="bi bi-bag-plus me-2"></i> Acquire Vehicle (Add to Cart)
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary py-3 w-100" disabled>
+                            Vehicle Currently Unavailable
+                        </button>
+                    }
+
+                    <form asp-controller="Wishlist" asp-action="Toggle" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="vin" value="@Model.Vin" />
+                        <button type="submit" class="btn btn-outline-secondary w-100 py-2 text-light">
+                            <i class="bi bi-heart text-gold me-2"></i> Add / Remove from Wishlist
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bonus B3: Recommendations -->
+    @if (recommendations.Count > 0)
+    {
+        <div class="mt-5 pt-5 border-top border-secondary border-opacity-25">
+            <h4 class="font-serif text-light mb-4">Recommended Alternative Vehicles</h4>
+            <div class="row g-4">
+                @foreach (var rec in recommendations)
+                {
+                    var recImg = rec.Images.FirstOrDefault()?.ImageUrl ?? "/assets/img/default-car.svg";
+                    <div class="col-md-4">
+                        <div class="card-luxury p-3 h-100">
+                            <img src="@recImg" alt="@rec.Make" class="w-100 rounded mb-3" style="aspect-ratio: 16/10; object-fit: cover;" />
+                            <h6 class="text-light mb-1">@rec.Year @rec.Make @rec.Model</h6>
+                            <div class="text-gold font-sans fw-bold mb-2">€@rec.Price.ToString("N0")</div>
+                            <a asp-controller="Catalog" asp-action="Details" asp-route-vin="@rec.Vin" class="btn btn-outline-gold btn-sm w-100">
+                                View Specs
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

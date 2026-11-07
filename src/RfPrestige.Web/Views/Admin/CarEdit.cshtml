@@ -1,0 +1,121 @@
+@model Car
+@{
+    bool isNew = string.IsNullOrEmpty(Model.Vin);
+    ViewData["Title"] = isNew ? "Add Vehicle" : $"Edit {Model.Make} {Model.Model}";
+}
+
+<div class="container py-4 px-4 px-lg-5" style="max-width: 800px;">
+    <div class="mb-4">
+        <a asp-controller="Admin" asp-action="Cars" class="text-secondary small text-decoration-none hover-gold">
+            <i class="bi bi-arrow-left me-1"></i> Back to Inventory
+        </a>
+        <h1 class="h3 font-serif fw-bold text-light mt-2">@(isNew ? "Add New Vehicle to Fleet" : $"Edit Vehicle {Model.Make} {Model.Model}")</h1>
+    </div>
+
+    <div class="card-luxury p-4 p-md-5">
+        <form asp-controller="Admin" asp-action="CarSave" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 small mb-3"></div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Vin" class="form-label text-gold small text-uppercase fw-semibold">VIN (17 Characters) *</label>
+                    <input asp-for="Vin" class="form-control font-monospace" placeholder="e.g. WP0ZZZ99ZPS291047" maxlength="17" readonly="@(!isNew)" required />
+                    <span asp-validation-for="Vin" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Category" class="form-label text-gold small text-uppercase fw-semibold">Category *</label>
+                    <select asp-for="Category" class="form-select">
+                        <option value="Sports">Sports</option>
+                        <option value="Grand Tourer">Grand Tourer</option>
+                        <option value="Luxury Sedan">Luxury Sedan</option>
+                        <option value="SUV">Performance SUV</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label asp-for="Make" class="form-label text-gold small text-uppercase fw-semibold">Make (Brand) *</label>
+                    <input asp-for="Make" class="form-control" placeholder="Porsche" required />
+                    <span asp-validation-for="Make" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Model" class="form-label text-gold small text-uppercase fw-semibold">Model *</label>
+                    <input asp-for="Model" class="form-control" placeholder="911 GT3" required />
+                    <span asp-validation-for="Model" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Year" class="form-label text-gold small text-uppercase fw-semibold">Year *</label>
+                    <input asp-for="Year" class="form-control" type="number" min="2015" max="2027" required />
+                    <span asp-validation-for="Year" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label asp-for="Price" class="form-label text-gold small text-uppercase fw-semibold">Price (€ EUR) *</label>
+                    <input asp-for="Price" class="form-control" type="number" step="1000" min="60000" max="250000" required />
+                    <span asp-validation-for="Price" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Horsepower" class="form-label text-gold small text-uppercase fw-semibold">Power (HP) *</label>
+                    <input asp-for="Horsepower" class="form-control" type="number" min="300" max="1500" required />
+                    <span asp-validation-for="Horsepower" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Mileage" class="form-label text-gold small text-uppercase fw-semibold">Mileage (km) *</label>
+                    <input asp-for="Mileage" class="form-control" type="number" min="0" required />
+                    <span asp-validation-for="Mileage" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Transmission" class="form-label text-gold small text-uppercase fw-semibold">Transmission</label>
+                    <input asp-for="Transmission" class="form-control" placeholder="7-Speed Dual Clutch" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Fuel" class="form-label text-gold small text-uppercase fw-semibold">Powertrain / Fuel</label>
+                    <input asp-for="Fuel" class="form-control" placeholder="Petrol / Hybrid / Electric" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EngineDescription" class="form-label text-gold small text-uppercase fw-semibold">Engine Details</label>
+                <input asp-for="EngineDescription" class="form-control" placeholder="4.0L Naturally Aspirated Flat-6" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-gold small text-uppercase fw-semibold">Primary Image Path</label>
+                <input type="text" name="imageUrl" class="form-control" placeholder="/assets/img/default-car.svg" value="@Model.Images.FirstOrDefault()?.ImageUrl" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label text-gold small text-uppercase fw-semibold">Detailed Description &amp; Equipment</label>
+                <textarea asp-for="Description" rows="4" class="form-control" placeholder="Finished in Shark Blue, PCCB brakes, factory warranty..."></textarea>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6">
+                    <label asp-for="StockQuantity" class="form-label text-gold small text-uppercase fw-semibold">Stock Quantity</label>
+                    <input asp-for="StockQuantity" class="form-control" type="number" min="0" max="1" />
+                </div>
+                <div class="col-6 d-flex align-items-end">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" asp-for="IsAvailable" id="availCheck" />
+                        <label class="form-check-label text-light fw-medium" for="availCheck">
+                            Available for Purchase
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-controller="Admin" asp-action="Cars" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-gold px-4">Save Vehicle</button>
+            </div>
+        </form>
+    </div>
+</div>

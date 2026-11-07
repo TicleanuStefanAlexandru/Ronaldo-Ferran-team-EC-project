@@ -11,3 +11,18 @@ test.png
 .vscode/
 .vs/
 .idea/
+
+# .NET Build artifacts
+**/bin/
+**/obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3

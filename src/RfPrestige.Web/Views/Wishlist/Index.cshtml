@@ -1,0 +1,68 @@
+@model List<WishlistItem>
+@{
+    ViewData["Title"] = "Private Wishlist";
+}
+
+<div class="container py-5 px-4 px-lg-5">
+    <div class="mb-4">
+        <span class="badge bg-gold-subtle text-gold border border-gold-subtle text-uppercase font-sans small mb-2">SAVED SPECIMENS</span>
+        <h1 class="h3 font-serif fw-bold text-light mb-1">Private Client Wishlist (@Model.Count)</h1>
+        <p class="text-secondary small mb-0">Bookmarked luxury automobiles reserved for review and rapid checkout.</p>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="card-luxury p-5 text-center my-4">
+            <i class="bi bi-heart fs-1 text-gold mb-3 d-block"></i>
+            <h4 class="text-light font-serif">Your wishlist is currently empty</h4>
+            <p class="text-secondary small mb-4">Click the bookmark icon on any vehicle to add it to your private list.</p>
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-gold px-4 py-2">
+                <i class="bi bi-grid me-2"></i> Explore Fleet
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                var car = item.Car;
+                if (car == null) continue;
+                var img = car.Images.FirstOrDefault()?.ImageUrl ?? "/assets/img/default-car.svg";
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card-luxury h-100 d-flex flex-column overflow-hidden">
+                        <div style="aspect-ratio: 16/10;">
+                            <img src="@img" alt="@car.Make @car.Model" class="w-100 h-100 object-fit-cover" />
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <h5 class="font-serif text-light mb-1">@car.Year @car.Make @car.Model</h5>
+                            <div class="text-secondary small font-monospace mb-3">VIN: @car.Vin</div>
+                            <div class="fw-bold text-gold font-sans fs-5 mb-3">€@car.Price.ToString("N0")</div>
+
+                            <div class="d-flex gap-2 mt-auto">
+                                @if (car.IsAvailable && car.StockQuantity > 0)
+                                {
+                                    <form asp-controller="Cart" asp-action="Add" method="post" class="flex-grow-1">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="vin" value="@car.Vin" />
+                                        <button type="submit" class="btn btn-gold btn-sm w-100">
+                                            <i class="bi bi-bag-plus me-1"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                }
+                                <form asp-controller="Wishlist" asp-action="Toggle" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="vin" value="@car.Vin" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Remove">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
